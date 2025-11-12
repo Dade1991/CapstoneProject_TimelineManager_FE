@@ -1,0 +1,36 @@
+.howItWorksMenuCard {
+  background-color: beige;
+  border-bottom-left-radius: 40px;
+  border-top-left-radius: 40px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+  max-height: 85vh;
+  min-height: 85vh;
+  height: auto;
+  text-align: justify;
+  padding-left: 35px;
+  padding-right: 35px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.textDocumentationWelcomeText {
+  height: 100%;
+  align-items: center;
+}
+
+.textDocumentationList {
+  font-size: 1em;
+  text-overflow: ellipsis;
+}
+
+.textDocumentation {
+  font-size: 1em;
+  text-overflow: ellipsis;
+  margin-bottom: 0px;
+}
+
+.wrapper {
+  width: 100%;
+  height: auto;
+  font-size: 1rem;
+}

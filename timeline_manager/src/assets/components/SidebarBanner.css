@@ -1,12 +1,89 @@
 .sideBanner {
-  width: 60px;
+  background-color: chartreuse;
+  width: 4vw;
+  min-width: 82px;
+  overflow: hidden;
+  height: 100vh;
+  z-index: 1050;
+  position: fixed;
+  top: 0;
+  left: 0;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+  border-right: 2px ridge rgb(0, 0, 0);
 }
 
-.sideBannerText {
-  position: absolute;
-  top: 150px;
+.iconDot {
+  width: 100%;
+  font-size: 2em;
+}
+
+.sideBannerDots {
+  position: relative;
   transform: rotate(270deg);
-  left: -120px;
-  font-size: 2.2em;
+  left: 3px;
+  font-size: 1.5em;
   font-weight: 600;
+  width: 100vh;
+}
+
+.scrollContent {
+  color: antiquewhite;
+  display: flex;
+  flex-direction: row;
+  transform: rotate(270deg);
+  width: 200vh;
+  animation: scrollHorizontal 16420ms linear infinite;
+  white-space: nowrap;
+}
+
+@keyframes scrollHorizontal {
+  0% {
+    transform: translateX(0) rotate(180deg);
+  }
+  100% {
+    transform: translateX(+65%) rotate(180deg);
+  }
+}
+
+.titleContainer {
+  position: absolute;
+  right: -120px;
+  top: 325px;
+}
+
+.sideBannerTitle {
+  transform: rotate(270deg);
+  font-size: 5em;
+  font-weight: 600;
+}
+
+.sideBannerUnderTitle {
+  position: absolute;
+  top: -210px;
+  left: 90px;
+  transform: rotate(270deg);
+  font-size: 2.3em;
+  font-weight: 600;
+  color: blue;
+}
+
+/* .sideBannerLogoDiv {
+  position: absolute;
+  top: 650px;
+  transform: rotate(270deg);
+  left: -50px;
+  width: 180px;
+  height: 100px;
+  overflow: hidden;
+} */
+
+/* .sideBannerLogoImg {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+} */
+
+.wrapper {
+  width: 100%;
 }

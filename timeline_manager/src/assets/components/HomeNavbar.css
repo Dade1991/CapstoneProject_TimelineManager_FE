@@ -1,0 +1,71 @@
+.homeNavbar {
+  border-radius: 40px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+.linkIconSymbol {
+  position: relative;
+  right: 20px;
+  top: 2px;
+}
+
+.homeLink {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  transition: color 0.4s ease, text-shadow 0.4s ease;
+}
+
+.homeLink:hover {
+  color: rgb(255, 0, 0) !important;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+.functionalityLink {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  transition: color 0.4s ease, text-shadow 0.4s ease;
+}
+
+.functionalityLink:hover {
+  color: rgb(255, 0, 0) !important;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+.contact_usLink {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  transition: color 0.4s ease, text-shadow 0.4s ease;
+}
+
+.contact_usLink:hover {
+  color: rgb(255, 0, 0) !important;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+.loginLink {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  transition: color 0.4s ease, text-shadow 0.4s ease;
+}
+
+.loginLink:hover {
+  color: rgb(255, 0, 0) !important;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+.navbarSpacer {
+  border-top: 5px solid black !important;
+}
+
+.homeSearchField {
+  border-radius: 50px;
+  width: 250px;
+}
+
+.homeSearchButton {
+  border-radius: 50%;
+  position: relative;
+  right: 40px;
+  background-color: red !important;
+  border-color: black !important;
+}
+
+.homeSearchIcon {
+  font-size: 0.9rem;
+}
