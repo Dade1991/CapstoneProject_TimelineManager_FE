@@ -1,0 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Genos:ital,wght@0,100..900;1,100..900&display=swap");
+
+#root {
+  background: #1f1f1f;
+  height: 100vh;
+  margin: 0;
+  font-family: "Genos", sans-serif;
+  font-size: 2em;
+}

@@ -1,0 +1,12 @@
+.sideBanner {
+  width: 60px;
+}
+
+.sideBannerText {
+  position: absolute;
+  top: 150px;
+  transform: rotate(270deg);
+  left: -120px;
+  font-size: 2.2em;
+  font-weight: 600;
+}
