@@ -115,10 +115,10 @@ function ContactUsPage() {
                       <i className="bi bi-linkedin"></i>
                     </a>
                     <a href="*" className=" socialIcon m-0 p-0">
-                      <i class="bi bi-twitter"></i>
+                      <i className="bi bi-twitter"></i>
                     </a>
                     <a href="*" className="socialIcon m-0 p-0">
-                      <i class="bi bi-whatsapp"></i>
+                      <i className="bi bi-whatsapp"></i>
                     </a>
                   </div>
                 </div>

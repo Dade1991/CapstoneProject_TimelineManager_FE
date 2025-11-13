@@ -13,6 +13,7 @@
 .homeLink {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   transition: color 0.4s ease, text-shadow 0.4s ease;
+  background-color: inherit !important;
 }
 
 .homeLink:hover {
@@ -50,9 +51,20 @@
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
 }
 
+.yourAreaLink {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  transition: color 0.4s ease, text-shadow 0.4s ease;
+}
+
+.yourAreaLink:hover {
+  color: #f23d7f !important;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}
+
 .projectsLink {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   transition: color 0.4s ease, text-shadow 0.4s ease;
+  background-color: inherit !important;
 }
 
 .projectsLink:hover {

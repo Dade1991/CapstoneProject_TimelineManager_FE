@@ -1,4 +1,4 @@
-.signUpForm {
+.updateForm {
   border-bottom-left-radius: 40px;
   border-top-left-radius: 40px;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
@@ -16,22 +16,22 @@
   color: #f23d7f !important;
 }
 
-.signUpStatus {
+.updateStatus {
   width: 180%;
 }
 
-.signUpFormWelcomeText {
+.updateFormWelcomeText {
   height: 100%;
   align-items: center;
 }
 
-.signUpAdds {
+.updateAdds {
   font-size: 0.8em;
   font-weight: 300;
   white-space: nowrap;
 }
 
-.signUpButton {
+.updateButton {
   font-size: 1.1em;
   font-weight: 700;
   white-space: nowrap;

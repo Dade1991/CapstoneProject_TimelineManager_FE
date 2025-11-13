@@ -3,16 +3,19 @@ import Container from "react-bootstrap/Container"
 import Form from "react-bootstrap/Form"
 import Nav from "react-bootstrap/Nav"
 import Navbar from "react-bootstrap/Navbar"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import "./HomeNavbar.css"
 
 function NavScrollExample() {
+  const navigatePJT = useNavigate()
+  const navigateHome = useNavigate()
+
   return (
     <Navbar
       expand="lg"
-      className="homeNavbar frosted-glass-homeNavbar p-4 ps-5 pe-3"
+      className="homeNavbar frosted-glass-homeNavbar ms-5 py-4 ps-5 pe-3"
     >
-      <Container fluid>
+      <Container>
         <Navbar.Brand className="d-lg-none" href="#">
           Logo
         </Navbar.Brand>
@@ -21,9 +24,15 @@ function NavScrollExample() {
           <Nav className="me-auto my-2 my-lg-0 d-flex flex-column" navbarScroll>
             <div className="d-flex flex-row align-items-center my-2">
               <i className="linkIconSymbol bi bi-house"></i>
-              <Link className="homeLink nav-link" to="/Home">
+              <Button
+                onClick={() => {
+                  navigateHome("/Home")
+                }}
+                className="homeLink nav-link"
+                to="/Home"
+              >
                 Home
-              </Link>
+              </Button>
             </div>
             <div className="d-flex flex-row align-items-center my-2">
               <i className="linkIconSymbol bi bi-gear-wide-connected"></i>
@@ -44,10 +53,22 @@ function NavScrollExample() {
               </Link>
             </div>
             <div className="d-flex flex-row align-items-center my-2">
-              <i className="linkIconSymbol bi bi-diagram-3"></i>
-              <Link className="projectsLink nav-link" to="/Projects">
-                Projects
+              <i className="linkIconSymbol bi bi-person-circle"></i>
+              <Link className="yourAreaLink nav-link" to="/YourArea">
+                Your Area
               </Link>
+            </div>
+            <div className="d-flex flex-row align-items-center my-2">
+              <i className="linkIconSymbol bi bi-diagram-3"></i>
+              <Button
+                onClick={() => {
+                  navigatePJT("/Projects")
+                }}
+                className="projectsLink nav-link"
+                to="/Projects"
+              >
+                Projects
+              </Button>
             </div>
           </Nav>
           <Form className="homeSearchForm d-flex mt-5 pb-3">

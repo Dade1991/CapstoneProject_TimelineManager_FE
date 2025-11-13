@@ -1,0 +1,31 @@
+.homeBanner {
+  position: relative;
+  transform: rotate();
+  max-height: 85vh;
+  min-height: 85vh;
+  height: auto;
+  text-align: justify;
+  padding-left: 35px;
+  padding-right: 35px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.homeBannerTitle {
+  font-family: "Bruno Ace SC", sans-serif;
+  font-size: 6em;
+  font-weight: 600;
+  text-shadow: 5px 5px 5px #a82562;
+  color: #f2e0d0;
+}
+
+.homeBannerUnderTitle {
+  font-family: "Bruno Ace SC", sans-serif;
+  font-size: 2em;
+  font-weight: 600;
+  color: #a82562;
+  text-shadow: 2px 2px 5px #f2e0d0;
+  position: relative;
+  left: 202px;
+  bottom: 32px;
+}

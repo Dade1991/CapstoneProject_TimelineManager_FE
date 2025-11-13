@@ -1,0 +1,22 @@
+.footerBanner {
+  background-color: #5f7385;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.footerBannerText {
+  font-size: 1.5rem;
+  color: #a82562;
+  text-shadow: 2px 2px 5px #f2e0d0;
+  font-weight: 500;
+}
+
+.specialFooter {
+  color: #f2e0d0;
+  text-shadow: 2px 2px 5px #a82562;
+}
+
+.wrapper {
+  width: 100%;
+  height: auto;
+  font-size: 1rem;
+}
