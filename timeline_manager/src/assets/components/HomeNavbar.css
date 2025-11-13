@@ -1,9 +1,10 @@
 .homeNavbar {
   border-radius: 40px;
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
 }
 
 .linkIconSymbol {
+  color: #f23d7f !important;
   position: relative;
   right: 20px;
   top: 2px;
@@ -15,18 +16,18 @@
 }
 
 .homeLink:hover {
-  color: rgb(255, 0, 0) !important;
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+  color: #f23d7f !important;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
 }
 
-.functionalityLink {
+.howItWorksLink {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   transition: color 0.4s ease, text-shadow 0.4s ease;
 }
 
-.functionalityLink:hover {
-  color: rgb(255, 0, 0) !important;
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+.howItWorksLink:hover {
+  color: #f23d7f !important;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
 }
 
 .contact_usLink {
@@ -35,8 +36,8 @@
 }
 
 .contact_usLink:hover {
-  color: rgb(255, 0, 0) !important;
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+  color: #f23d7f !important;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
 }
 
 .loginLink {
@@ -45,8 +46,18 @@
 }
 
 .loginLink:hover {
-  color: rgb(255, 0, 0) !important;
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+  color: #f23d7f !important;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+.projectsLink {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  transition: color 0.4s ease, text-shadow 0.4s ease;
+}
+
+.projectsLink:hover {
+  color: #f23d7f !important;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
 }
 
 .navbarSpacer {
@@ -54,18 +65,30 @@
 }
 
 .homeSearchField {
-  border-radius: 50px;
+  border-radius: 50px !important;
   width: 250px;
 }
 
 .homeSearchButton {
-  border-radius: 50%;
+  border-radius: 50% !important;
   position: relative;
   right: 40px;
-  background-color: red !important;
-  border-color: black !important;
+  background-color: #69b7bf !important;
+  border-color: #69b7bf !important;
 }
 
 .homeSearchIcon {
   font-size: 0.9rem;
+}
+
+.frosted-glass-homeNavbar {
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.664
+  ) !important; /* sfondo semitrasparente */
+  backdrop-filter: blur(10px); /* effetto sfocatura */
+  -webkit-backdrop-filter: blur(10px); /* supporto Safari */
+  border: 1px solid rgba(255, 255, 255, 0.4); /* bordo leggero */
 }

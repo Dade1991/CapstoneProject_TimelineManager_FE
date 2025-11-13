@@ -3,11 +3,15 @@ import Container from "react-bootstrap/Container"
 import Form from "react-bootstrap/Form"
 import Nav from "react-bootstrap/Nav"
 import Navbar from "react-bootstrap/Navbar"
+import { Link } from "react-router-dom"
 import "./HomeNavbar.css"
 
 function NavScrollExample() {
   return (
-    <Navbar expand="lg" className="homeNavbar bg-body-tertiary p-4 ps-5 pe-3">
+    <Navbar
+      expand="lg"
+      className="homeNavbar frosted-glass-homeNavbar p-4 ps-5 pe-3"
+    >
       <Container fluid>
         <Navbar.Brand className="d-lg-none" href="#">
           Logo
@@ -17,27 +21,33 @@ function NavScrollExample() {
           <Nav className="me-auto my-2 my-lg-0 d-flex flex-column" navbarScroll>
             <div className="d-flex flex-row align-items-center my-2">
               <i className="linkIconSymbol bi bi-house"></i>
-              <Nav.Link className="homeLink" href="#action1">
+              <Link className="homeLink nav-link" to="/Home">
                 Home
-              </Nav.Link>
+              </Link>
             </div>
             <div className="d-flex flex-row align-items-center my-2">
               <i className="linkIconSymbol bi bi-gear-wide-connected"></i>
-              <Nav.Link className="functionalityLink" href="#action2">
+              <Link className="howItWorksLink nav-link" to="/HowItWorks">
                 How it works?!
-              </Nav.Link>
+              </Link>
             </div>
             <div className="d-flex flex-row align-items-center my-2">
               <i className="linkIconSymbol bi bi-people-fill"></i>
-              <Nav.Link className="contact_usLink" href="#action2">
+              <Link className="contact_usLink nav-link" to="/ContactUs">
                 Contact us
-              </Nav.Link>
+              </Link>
             </div>
             <div className="d-flex flex-row align-items-center my-2">
               <i className="linkIconSymbol bi bi-box-arrow-in-right"></i>
-              <Nav.Link className="loginLink" href="#action2">
+              <Link className="loginLink nav-link" to="/LoginForm">
                 Login
-              </Nav.Link>
+              </Link>
+            </div>
+            <div className="d-flex flex-row align-items-center my-2">
+              <i className="linkIconSymbol bi bi-diagram-3"></i>
+              <Link className="projectsLink nav-link" to="/Projects">
+                Projects
+              </Link>
             </div>
           </Nav>
           <Form className="homeSearchForm d-flex mt-5 pb-3">

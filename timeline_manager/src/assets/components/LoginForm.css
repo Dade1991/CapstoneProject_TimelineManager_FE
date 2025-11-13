@@ -1,11 +1,15 @@
 .loginForm {
-  background-color: beige;
   border-bottom-left-radius: 40px;
   border-top-left-radius: 40px;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
   max-height: 85vh;
   min-height: 85vh;
   height: auto;
+  text-align: justify;
+  padding-left: 35px;
+  padding-right: 35px;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .loginFormWelcomeText {
@@ -13,12 +17,54 @@
   align-items: center;
 }
 
+.loginFormWelcomeText > h3 {
+  position: relative;
+  top: 50px;
+  z-index: 10;
+}
+
 .signUpAdds {
-  font-size: 0.8em;
+  font-size: 1.2rem !important;
   font-weight: 300;
 }
 
 .signUpButton {
   font-size: 1.8em;
   font-weight: 700;
+}
+
+.custom-btn {
+  background-color: #a82562 !important;
+  border-color: #a82562 !important;
+}
+
+.custom-btn:hover {
+  background-color: #8b1a52 !important;
+  border-color: #8b1a52 !important;
+}
+
+.gifDiv {
+  width: 100%;
+  height: auto;
+  font-size: 1rem;
+}
+
+.checkGif {
+  position: relative;
+  left: 470px;
+  bottom: 30px;
+  height: auto;
+}
+
+.wrapper {
+  width: 100%;
+  height: auto;
+  font-size: 1rem;
+}
+
+.frosted-glass {
+  background-color: rgba(255, 255, 255, 0.3); /* sfondo semitrasparente */
+  backdrop-filter: blur(10px); /* effetto sfocatura */
+  -webkit-backdrop-filter: blur(10px); /* supporto Safari */
+  border: 1px solid rgba(255, 255, 255, 0.4); /* bordo leggero */
 }

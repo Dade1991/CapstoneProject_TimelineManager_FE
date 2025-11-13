@@ -2,17 +2,27 @@ import Col from "react-bootstrap/Col"
 import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
 import InputGroup from "react-bootstrap/InputGroup"
+import { useNavigate } from "react-router-dom"
 import "./LoginForm.css"
 
 function LoginForm() {
+  const navigate = useNavigate()
+
   return (
     <>
-      <Form className="loginForm px-5 py-3 d-flex justify-content-center">
+      <Form className="loginForm wrapper frosted-glass px-5 py-5 d-flex justify-content-center">
         <div className="loginFormDiv d-flex flex-column">
           <div className="loginFormWelcomeText align-content-center">
             <h3 className="text-center">
               Welcome back, ready to timemanage your activities?
             </h3>
+            <div className="gifDiv m-0 p-0">
+              <img
+                className="checkGif m-0 p-0"
+                src="/gif/Check_Animation.gif"
+                alt="checkAnimation"
+              />
+            </div>
           </div>
           <div className="loginFormAuth d-flex flex-column justify-content-center">
             <Form.Group className="" controlId="formPlaintextEmail">
@@ -58,7 +68,13 @@ function LoginForm() {
               If your not yet registered to our webiste, click the following
               link: it's free!😉
             </h3>
-            <Button size="lg" className="mt-5">
+            <Button
+              onClick={() => {
+                navigate("/SignUpForm")
+              }}
+              size="lg"
+              className="custom-btn mt-5"
+            >
               <p className="signUpButton m-0">Sign-up!</p>
             </Button>
           </div>

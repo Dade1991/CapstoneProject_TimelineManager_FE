@@ -1,5 +1,5 @@
 .sideBanner {
-  background-color: chartreuse;
+  background-color: #69b7bf;
   width: 4vw;
   min-width: 82px;
   overflow: hidden;
@@ -20,14 +20,13 @@
 .sideBannerDots {
   position: relative;
   transform: rotate(270deg);
-  left: 3px;
   font-size: 1.5em;
   font-weight: 600;
   width: 100vh;
 }
 
 .scrollContent {
-  color: antiquewhite;
+  color: #0e93a1;
   display: flex;
   flex-direction: row;
   transform: rotate(270deg);
@@ -47,24 +46,29 @@
 
 .titleContainer {
   position: absolute;
-  right: -120px;
-  top: 325px;
+  right: -170px;
+  top: 400px;
 }
 
 .sideBannerTitle {
+  font-family: "Bruno Ace SC", sans-serif;
   transform: rotate(270deg);
-  font-size: 5em;
+  font-size: 4.5em;
   font-weight: 600;
+  text-shadow: 5px 5px 5px #a82562;
+  color: #f2e0d0;
 }
 
 .sideBannerUnderTitle {
+  font-family: "Bruno Ace SC", sans-serif;
   position: absolute;
-  top: -210px;
-  left: 90px;
+  bottom: 340px;
+  left: 95px;
   transform: rotate(270deg);
   font-size: 2.3em;
   font-weight: 600;
-  color: blue;
+  color: #a82562;
+  text-shadow: 2px 2px 5px #f2e0d0;
 }
 
 /* .sideBannerLogoDiv {

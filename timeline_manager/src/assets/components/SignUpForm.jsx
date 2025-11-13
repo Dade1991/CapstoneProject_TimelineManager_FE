@@ -7,17 +7,18 @@ import "./SignUpForm.css"
 function SignUpForm() {
   return (
     <>
-      <Form className="signUpForm wrapper px-5 py-3 d-flex justify-content-center">
+      <Form className="signUpForm wrapper frosted-glass px-5 py-3 d-flex justify-content-center">
         <div className="signUpFormDiv d-flex flex-column">
           <div className="signUpFormWelcomeText align-content-center mb-3">
             <h3 className="text-center">
-              Get ready with <strong>Timeline Manager</strong> functionalities{" "}
-              <br />
+              Get ready with{" "}
+              <strong className="boldText">Timeline Manager</strong>{" "}
+              functionalities <br />
               and organize at best you Projects!
             </h3>
           </div>
           <div className="signUpFormAuth d-flex flex-row">
-            <div className="d-flex flex-column justify-content-center flex-grow-1">
+            <div className="signUpStatus d-flex flex-column justify-content-center">
               <Form.Group className="" controlId="formPlaintextEmail">
                 <Form.Label column sm="3">
                   Name:
@@ -92,23 +93,27 @@ function SignUpForm() {
                 </Col>
               </Form.Group>
             </div>
-            <div className="flex-grow-1 d-flex justify-content-center align-items-center">
-              <p>IMG/GIF</p>
+            <div className="gifDiv d-flex justify-content-center align-items-center">
+              <img
+                className="gifImg"
+                src="/gif/Compiler.gif"
+                alt="compilerGif"
+              />
             </div>
           </div>
-          <div className="my-2 text-center d-flex flex-row justify-content-around align-items-center">
+          <div className="my-2 text-center d-flex flex-row justify-content-start align-items-center">
             <div className="d-flex flex-row align-items-center">
               <h3 className="signUpAdds m-0">
                 You're ready to enjoy our <strong>COMMUNITY</strong>
               </h3>
               <div className="pt-1 d-flex flex-row">
-                <i className="bi bi-caret-right-fill ms-3"></i>
-                <i className="bi bi-caret-right ms-3"></i>
-                <i className="bi bi-caret-right-fill ms-3"></i>
+                <i className="boldText bi bi-caret-right-fill ms-3"></i>
+                <i className="boldText bi bi-caret-right ms-3"></i>
+                <i className="boldText bi bi-caret-right-fill ms-3"></i>
               </div>
             </div>
             <div className="">
-              <Button size="lg" className="ms-5 py-2">
+              <Button size="lg" className="custom-btn ms-5 py-2">
                 <p className="signUpButton m-0">Sign-up!</p>
               </Button>
             </div>
