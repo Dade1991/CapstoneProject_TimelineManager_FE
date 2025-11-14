@@ -8,7 +8,7 @@ import "./ContactUsPage.css"
 function ContactUsPage() {
   return (
     <>
-      <Form className="contactUsForm wrapper frosted-glass px-5 py-3 d-flex justify-content-center">
+      <Form className="contactUsForm wrapper frosted-glass d-flex px-5 py-3 justify-content-center">
         <div className="d-flex flex-column">
           <div className="signUpFormWelcomeText align-content-center">
             <h3 className="text-center mb-3">

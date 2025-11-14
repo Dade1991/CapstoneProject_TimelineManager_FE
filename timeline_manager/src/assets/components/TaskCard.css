@@ -1,0 +1,37 @@
+.taskCard {
+  font-weight: 600;
+  font-size: 1.1em !important;
+  text-shadow: 0px 0px 1px #0e93a1;
+  background-color: #f2e0d0 !important;
+}
+
+.taskCardText {
+  font-size: 0.6em;
+}
+
+.taskCardTextTitle {
+  font-family: "Bruno Ace SC", sans-serif;
+  color: #a82562 !important;
+  font-size: 0.7em !important;
+  font-weight: 600 !important;
+}
+
+.taskCardTextDescription {
+  font-weight: 400;
+  font-size: 0.5em;
+}
+
+.taskCardTextTimeInfo {
+  font-size: 0.5em;
+}
+
+.brInterruption {
+  color: #5f7385;
+}
+
+.taskCardButton {
+  background-color: #6aa4b7 !important;
+  font-size: 1.2rem !important;
+  font-weight: 700 !important;
+  border-color: #a82562 !important;
+}

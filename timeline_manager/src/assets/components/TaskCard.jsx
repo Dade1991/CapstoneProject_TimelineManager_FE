@@ -1,20 +1,61 @@
+import { Container, Row, Col } from "react-bootstrap"
 import Button from "react-bootstrap/Button"
 import Card from "react-bootstrap/Card"
+
 import "./TaskCard.css"
 
 function TaskCard() {
   return (
     <>
-      <h1>sono una card</h1>
-      <Card style={{ width: "18rem" }}>
-        <Card.Img variant="top" src="holder.js/100px180" />
-        <Card.Body>
-          <Card.Title>Card Title</Card.Title>
-          <Card.Text>
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
+      <Card>
+        <Card.Body className="taskCard">
+          {" "}
+          <Card.Text className="taskCardText m-0">Category:</Card.Text>
+          <Card.Title className="taskCardTextTitle m-0">ONGOING</Card.Title>
+          <hr className="brInterruption my-2" />
+          <Card.Text className="taskCardText m-0">Task: </Card.Text>
+          <Card.Title className="taskCardTextTitle m-0">CACCA</Card.Title>
+          <hr className="brInterruption my-2" />
+          <Card.Text className="taskCardText m-0">Project Name: </Card.Text>
+          <Card.Title className="taskCardTextTitle m-0">CAPSTONE </Card.Title>
+          <hr className="brInterruption my-2" />
+          <Row className="mb-2">
+            <Col>
+              <Card.Text className="taskCardTextTimeInfo m-0">
+                Task Priority:{" "}
+              </Card.Text>
+            </Col>
+            <Col>
+              <Card.Text className="taskCardTextTimeInfo m-0 ">
+                Task Expiry Date:{" "}
+              </Card.Text>
+            </Col>
+          </Row>
+          <Card.Text className="taskCardTextTimeInfo text-center">
+            Status
           </Card.Text>
-          <Button variant="primary">Go somewhere</Button>
+          <hr className="brInterruption my-2" />
+          <Card.Text className="taskCardText m-0">Task Description:</Card.Text>
+          <Card.Text className="taskCardTextDescription m-0">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illum
+            laboriosam repellat quaerat commodi temporibus fugiat cupiditate
+            magni reprehenderit dolore at. Quo autem voluptas reprehenderit
+            dolorem consequuntur in quae suscipit nulla! Lorem ipsum dolor sit,
+            amet consectetur adipisicing elit. Quam veniam quae delectus ab
+            ullam error, beatae, possimus velit officiis in cumque? Nihil earum
+            maxime iure adipisci fuga distinctio ipsum veritatis.
+          </Card.Text>
+          <hr className="brInterruption my-2" />
+          <Card.Text className="taskCardText m-0">Task's Creator: </Card.Text>
+          <Card.Text className="taskCardTextTimeInfo">
+            Task last update by: - at:
+          </Card.Text>
+          <hr className="brInterruption my-2" />
+          <div className="d-flex justify-content-end">
+            <Button className="taskCardButton" variant="primary">
+              Update Task infos
+            </Button>
+          </div>
         </Card.Body>
       </Card>
     </>

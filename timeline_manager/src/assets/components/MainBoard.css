@@ -4,4 +4,12 @@
   overflow-y: auto; /* scroll verticale */
   max-height: 500px; /* o altezza desiderata */
   max-width: 100%; /* o larghezza fissa */
+  border-radius: 10px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+  border-right: 2px ridge rgb(0, 0, 0);
+}
+
+.mainBaordRows {
+  min-width: 400px;
+  max-width: 500px;
 }

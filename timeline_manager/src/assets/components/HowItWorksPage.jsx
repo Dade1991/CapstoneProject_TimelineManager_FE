@@ -4,7 +4,10 @@ import "./HowItWorksPage.css"
 function HowItWorksPage() {
   return (
     <>
-      <Container className="howItWorksMenuCard wrapper frosted-glass d-flex flex-column justify-content-center py-5 px-4">
+      <Container
+        fluid
+        className="howItWorksMenuCard wrapper frosted-glass d-flex flex-column justify-content-center py-5 px-4"
+      >
         <div className="flex-grow-1 d-flex flex-column justify-content-center align-items-center">
           <div className="textDocumentationWelcomeText">
             <h3 className="text-center">
