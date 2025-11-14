@@ -1,0 +1,7 @@
+.mainBoard {
+  background-color: beige !important;
+  overflow-x: auto; /* scroll orizzontale */
+  overflow-y: auto; /* scroll verticale */
+  max-height: 500px; /* o altezza desiderata */
+  max-width: 100%; /* o larghezza fissa */
+}

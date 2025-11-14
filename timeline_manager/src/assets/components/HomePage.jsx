@@ -36,6 +36,7 @@ function HomePage() {
                   <Route path="/ContactUs" element={<ContactUsPage />} />
                   <Route path="*" element={<NotFoundPage />} />
                   <Route path="/YourArea" element={<YourArea />} />
+                  <Route path="/" element={<Home />} />
                 </Routes>
               </Col>
             </Col>

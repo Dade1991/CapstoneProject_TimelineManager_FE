@@ -1,0 +1,94 @@
+.projectNavbar {
+  font-size: 1.3rem;
+}
+
+.linkIconSymbol {
+  color: #f23d7f !important;
+  position: relative;
+  right: 20px;
+  top: 2px;
+}
+
+.newProjectLink {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  transition: color 0.4s ease, text-shadow 0.4s ease;
+}
+
+.newProjectLink:hover {
+  color: #f23d7f !important;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+.projectSettingsLink {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  transition: color 0.4s ease, text-shadow 0.4s ease;
+}
+
+.projectSettingsLink:hover {
+  color: #f23d7f !important;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+.addTaskLink {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  transition: color 0.4s ease, text-shadow 0.4s ease;
+}
+
+.addTaskLink:hover {
+  color: #f23d7f !important;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+.taskSettingsLink {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  transition: color 0.4s ease, text-shadow 0.4s ease;
+}
+
+.taskSettingsLink:hover {
+  color: #f23d7f !important;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+.activityLogLink {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  transition: color 0.4s ease, text-shadow 0.4s ease;
+}
+
+.activityLogLink:hover {
+  color: #f23d7f !important;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+.homepageLink {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  transition: color 0.4s ease, text-shadow 0.4s ease;
+  background-color: inherit !important;
+}
+
+.homepageLink:hover {
+  color: #f23d7f !important;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+.frosted-glass-project {
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.664
+  ) !important; /* sfondo semitrasparente */
+  backdrop-filter: blur(10px); /* effetto sfocatura */
+  -webkit-backdrop-filter: blur(10px); /* supporto Safari */
+  border: 1px solid rgba(255, 255, 255, 0.4); /* bordo leggero */
+}
+
+.saveProjectButton {
+  background-color: #f23d7f !important;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+  border-color: #f23d7f !important ;
+}
+
+.saveProjectButtonDetails {
+  color: #f2e0d0;
+  font-size: 1.6rem !important;
+}
