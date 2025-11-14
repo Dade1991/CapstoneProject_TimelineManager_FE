@@ -71,7 +71,7 @@ function NavScrollExample() {
               </Button>
             </div>
           </Nav>
-          <Form className="homeSearchForm d-flex mt-5 pb-3">
+          {/* <Form className="homeSearchForm d-flex mt-5 pb-3">
             <Form.Control
               type="search"
               placeholder="Search here..."
@@ -81,7 +81,7 @@ function NavScrollExample() {
             <Button className="homeSearchButton d-flex justify-content-center align-items-center">
               <i className="homeSearchIcon bi bi-search"></i>
             </Button>
-          </Form>
+          </Form> */}
         </Navbar.Collapse>
       </Container>
     </Navbar>

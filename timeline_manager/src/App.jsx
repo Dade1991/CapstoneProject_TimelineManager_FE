@@ -1,8 +1,8 @@
 import "./App.css"
 import HomePage from "./assets/components/HomePage"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
-import NotFoundPage from "./assets/components/NotFoundPage"
 import Projects from "./assets/components/Projects"
+import Project from "./assets/components/Project"
 
 function App() {
   return (
@@ -11,6 +11,7 @@ function App() {
         <Routes>
           <Route path="/*" element={<HomePage />} />
           <Route path="/Projects" element={<Projects />} />
+          <Route path="/Project" element={<Project />} />
         </Routes>
       </BrowserRouter>
     </>

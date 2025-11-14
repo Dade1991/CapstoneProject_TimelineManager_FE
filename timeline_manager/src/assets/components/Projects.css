@@ -1,62 +1,6 @@
 .projectNavbar {
-  font-size: 1.3rem;
-}
-
-.linkIconSymbol {
-  color: #f23d7f !important;
-  position: relative;
-  right: 20px;
-  top: 2px;
-}
-
-.newProjectLink {
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-  transition: color 0.4s ease, text-shadow 0.4s ease;
-}
-
-.newProjectLink:hover {
-  color: #f23d7f !important;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-}
-
-.projectSettingsLink {
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-  transition: color 0.4s ease, text-shadow 0.4s ease;
-}
-
-.projectSettingsLink:hover {
-  color: #f23d7f !important;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-}
-
-.addTaskLink {
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-  transition: color 0.4s ease, text-shadow 0.4s ease;
-}
-
-.addTaskLink:hover {
-  color: #f23d7f !important;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-}
-
-.taskSettingsLink {
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-  transition: color 0.4s ease, text-shadow 0.4s ease;
-}
-
-.taskSettingsLink:hover {
-  color: #f23d7f !important;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-}
-
-.activityLogLink {
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-  transition: color 0.4s ease, text-shadow 0.4s ease;
-}
-
-.activityLogLink:hover {
-  color: #f23d7f !important;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+  height: 66px !important;
+  font-size: 1.3rem !important;
 }
 
 .homepageLink {
@@ -68,6 +12,52 @@
 .homepageLink:hover {
   color: #f23d7f !important;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+.unorderListDiv {
+  border-radius: 15px;
+}
+
+.searchBox {
+  border-radius: 15px;
+}
+
+.newProjectButton {
+  border-radius: 15px;
+  font-family: "Bruno Ace SC", sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 1.2rem !important;
+  color: #f23d7f !important;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+.projectText {
+  font-family: "Bruno Ace SC", sans-serif;
+  font-size: 1em;
+  font-weight: 600;
+  color: #f2e0d0;
+  text-shadow: 2px 2px 5px #a82562;
+}
+
+.highlightText {
+  font-family: "Bruno Ace SC", sans-serif;
+  font-size: 1.1em;
+  font-weight: 600;
+  color: #a82562;
+  text-shadow: 2px 2px 5px #f2e0d0;
+}
+
+.projectJoke {
+  font-size: 0.8em;
+  font-weight: 600;
+  color: #a82562;
+  text-shadow: 2px 2px 5px #f2e0d0;
+}
+
+.wrapper {
+  width: 100%;
+  height: auto;
+  font-size: 1rem;
 }
 
 .frosted-glass-project {
@@ -82,13 +72,28 @@
   border: 1px solid rgba(255, 255, 255, 0.4); /* bordo leggero */
 }
 
-.saveProjectButton {
-  background-color: #f23d7f !important;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-  border-color: #f23d7f !important ;
+.frosted-glass {
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7) !important;
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.3
+  ) !important; /* sfondo semitrasparente */
+  backdrop-filter: blur(10px) !important; /* effetto sfocatura */
+  -webkit-backdrop-filter: blur(10px) !important; /* supporto Safari */
+  border: 1px solid rgba(255, 255, 255, 0.4) !important; /* bordo leggero */
 }
 
-.saveProjectButtonDetails {
-  color: #f2e0d0;
-  font-size: 1.6rem !important;
+.frosted-glass-newProject {
+  box-shadow: 2px 2px 8px#f23d7f !important;
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.3
+  ) !important; /* sfondo semitrasparente */
+  backdrop-filter: blur(10px) !important; /* effetto sfocatura */
+  -webkit-backdrop-filter: blur(10px) !important; /* supporto Safari */
+  border: 1px solid rgba(255, 255, 255, 0.4) !important; /* bordo leggero */
 }
