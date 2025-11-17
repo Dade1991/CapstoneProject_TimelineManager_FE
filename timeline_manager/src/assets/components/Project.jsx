@@ -17,20 +17,6 @@ import { useNavigate } from "react-router-dom"
 function Project() {
   const navigateHome = useNavigate()
 
-  // Project
-
-  const [showProjectModal, setShowProjectModal] = useState(false)
-
-  const handleShowProject = () => setShowProjectModal(true)
-  const handleCloseProject = () => setShowProjectModal(false)
-
-  const handleProjectSubmit = (projectData) => {
-    // Logica per inviare dati al backend o Redux
-    console.log("Dati progetto da inviare:", projectData)
-    // Chiudere modale dopo submit
-    handleCloseProject()
-  }
-
   // Task
 
   const [showTaskModal, setShowTaskModal] = useState(false)
@@ -75,14 +61,6 @@ function Project() {
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav className="me-auto my-2 my-lg-0" navbarScroll>
-              <Nav.Link className="newProjectLink" onClick={handleShowProject}>
-                New Project
-              </Nav.Link>
-              <ProjectModalForm
-                show={showProjectModal}
-                handleClose={handleCloseProject}
-                onSubmit={handleProjectSubmit}
-              />
               <NavDropdown
                 title="Project Settings"
                 className="projectSettingsLink z-3"

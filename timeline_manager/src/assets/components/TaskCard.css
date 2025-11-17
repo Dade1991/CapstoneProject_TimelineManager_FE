@@ -29,9 +29,26 @@
   color: #5f7385;
 }
 
+.form-check {
+  font-size: 1.1rem !important;
+  font-weight: 700 !important;
+  border-color: white !important;
+}
+
+.form-check-label {
+  color: #a82562 !important;
+}
+
+.taskCardDeleteButton {
+  background-color: #d98299 !important;
+  font-size: 1.2rem !important;
+  font-weight: 700 !important;
+  border-color: white !important;
+}
+
 .taskCardButton {
   background-color: #6aa4b7 !important;
   font-size: 1.2rem !important;
   font-weight: 700 !important;
-  border-color: #a82562 !important;
+  border-color: white !important;
 }

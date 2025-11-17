@@ -51,7 +51,21 @@ function TaskCard() {
             Task last update by: - at:
           </Card.Text>
           <hr className="brInterruption my-2" />
-          <div className="d-flex justify-content-end">
+          <div className="d-flex flex-row justify-content-end align-items-center">
+            <div className="form-check me-3">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                value=""
+                id="flexCheckDisabled"
+              />
+              <label className="form-check-label" for="flexCheckDisabled">
+                Complete
+              </label>
+            </div>
+            <Button className="taskCardDeleteButton me-1" variant="primary">
+              Delete Task
+            </Button>
             <Button className="taskCardButton" variant="primary">
               Update Task infos
             </Button>

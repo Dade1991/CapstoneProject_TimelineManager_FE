@@ -2,9 +2,21 @@ import Col from "react-bootstrap/Col"
 import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
 import InputGroup from "react-bootstrap/InputGroup"
+// import { useNavigate } from "react-router-dom"
+// import { useState, useEffect } from "react"
 import "./YourArea.css"
 
 function YourArea() {
+  // const [name, setName] = useState("")
+  // const [surname, setSurname] = useState("")
+  // const [nickname, setNickname] = useState("")
+  // const [avatar, setAvatar] = useState("")
+  // const [email, setEmail] = useState("")
+  // const [password, setPassword] = useState("")
+
+  // const [error, setError] = useState("")
+  // const [loading, setLoading] = useState(false)
+
   return (
     <>
       <Form className="updateForm wrapper frosted-glass px-5 py-3 d-flex justify-content-center">

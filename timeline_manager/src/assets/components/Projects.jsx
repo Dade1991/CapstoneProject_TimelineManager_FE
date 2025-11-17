@@ -4,11 +4,26 @@ import Form from "react-bootstrap/Form"
 import Navbar from "react-bootstrap/Navbar"
 import MainBoard from "./MainBoard"
 import { useNavigate } from "react-router-dom"
+import React, { useState } from "react"
+import ProjectModalForm from "./ProjectModalForm"
 import "./Projects.css"
 
 function Projects() {
   const navigateHome = useNavigate()
-  const navigateSinglePJT = useNavigate()
+
+  // Project
+
+  const [showProjectModal, setShowProjectModal] = useState(false)
+
+  const handleShowProject = () => setShowProjectModal(true)
+  const handleCloseProject = () => setShowProjectModal(false)
+
+  const handleProjectSubmit = (projectData) => {
+    // Logica per inviare dati al backend o Redux
+    console.log("Dati progetto da inviare:", projectData)
+    // Chiudere modale dopo submit
+    handleCloseProject()
+  }
 
   return (
     <>
@@ -29,7 +44,7 @@ function Projects() {
         </Container>
       </Navbar>
 
-      <Container fluid wrapper className="bg-info mt-4">
+      <Container fluid wrapper className="mt-4">
         <div className="me-4 ms-4 mb-4 m-0">
           <h3 className="projectText m-0 text-center">
             In this area <br />
@@ -41,25 +56,26 @@ function Projects() {
             "If at first you don’t succeed, call it version 1.0."
           </p>
         </div>
+        <hr className="brInterruption my-5" />
         <Row className="flex-grow-1 p-3">
-          <Col className="bg-warning" lg={8}>
-            <h3>Your Projects:</h3>
-            <div className="unorderListDiv frosted-glass bg-danger p-2">
+          <Col className="" lg={8}>
+            <h3 className="projectListTextTitle">Your Projects:</h3>
+            <div className="unorderListDiv p-2">
               <ul className="unorderList">
-                <li className="singleProjectList">Progetto1</li>
-                <li className="singleProjectList">Progetto2</li>
-                <li className="singleProjectList">Progetto3</li>
-                <li className="singleProjectList">Progetto4</li>
-                <li className="singleProjectList">Progetto5</li>
+                <li className="singleProjectList py-1">Progetto1</li>
+                <li className="singleProjectList py-1">Progetto2</li>
+                <li className="singleProjectList py-1">Progetto3</li>
+                <li className="singleProjectList py-1">Progetto4</li>
+                <li className="singleProjectList py-1">Progetto5</li>
               </ul>
             </div>
           </Col>
           <Col
-            className="bg-success d-flex flex-column justify-content-center align-items-center"
+            className="d-flex flex-column justify-content-center align-items-center"
             lg={4}
           >
-            <div className="searchBox frosted-glass p-3 px-5 text-center">
-              <h3>Search Project</h3>
+            <div className="searchBox frosted-glass py-5 px-5 text-center">
+              <h3>Search your Project here</h3>
               <Form className="homeSearchForm d-flex pb-3">
                 <Form.Control
                   type="search"
@@ -76,13 +92,19 @@ function Projects() {
               </div>
               <Button
                 className="newProjectButton frosted-glass-newProject p-3 px-5 text-center m-0"
-                onClick={() => {
-                  navigateSinglePJT("/Project")
-                }}
-                to="/Project"
+                onClick={handleShowProject}
+                // onClick={() => {
+                //   navigateSinglePJT("/Project")
+                // }}
+                // to="/Project"
               >
                 START <br /> a brend new ONE!
               </Button>
+              <ProjectModalForm
+                show={showProjectModal}
+                handleClose={handleCloseProject}
+                onSubmit={handleProjectSubmit}
+              />
             </div>
           </Col>
         </Row>
@@ -92,3 +114,8 @@ function Projects() {
 }
 
 export default Projects
+
+// <Nav.Link className="newProjectLink" onClick={handleShowProject}>
+//   New Project
+// </Nav.Link>
+//

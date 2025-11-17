@@ -25,7 +25,12 @@
 
 .signUpAdds {
   font-size: 1.2rem !important;
-  font-weight: 300;
+  font-weight: 500 !important;
+}
+
+.submitButton {
+  font-size: 1.2em;
+  font-weight: 700;
 }
 
 .signUpButton {

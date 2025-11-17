@@ -1,10 +1,15 @@
 import React, { useState } from "react"
 import { Modal, Button, Form } from "react-bootstrap"
+// import { useNavigate } from "react-router-dom"
 import "./ProjectModals.css"
 
 const ProjectModalForm = ({ show, handleClose, onSubmit }) => {
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
+  const [expiryDate, setExpiryDate] = useState("")
+  // const navigateSinglePJT = useNavigate()
+
+  // collegamento con il modale che deve salvare e reindirizzare alla pagina "project"
 
   const handleSubmit = () => {
     // invia i dati al parent o direttamente con fetch
@@ -14,10 +19,6 @@ const ProjectModalForm = ({ show, handleClose, onSubmit }) => {
     setDescription("")
     handleClose()
   }
-
-  // calendario
-
-  const [expiryDate, setExpiryDate] = useState("")
 
   return (
     <Modal className="modalText" show={show} onHide={handleClose} centered>

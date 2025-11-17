@@ -3,14 +3,51 @@ import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
 import InputGroup from "react-bootstrap/InputGroup"
 import { useNavigate } from "react-router-dom"
+import { useState } from "react"
 import "./LoginForm.css"
 
 function LoginForm() {
   const navigate = useNavigate()
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+
+  const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    setError("")
+    setLoading(true)
+
+    fetch("http://localhost:3001/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    })
+      .then((res) => {
+        setLoading(false)
+        if (res.ok) {
+          return res.json()
+        } else {
+          throw new Error("Error has occurred during retrieving info")
+        }
+      })
+      .then((data) => {
+        localStorage.setItem("token", data.token)
+        navigate("/home")
+      })
+      .catch((err) => {
+        setLoading(false)
+        setError(err.message || "Network error")
+      })
+  }
 
   return (
     <>
-      <Form className="loginForm wrapper frosted-glass px-5 py-5 d-flex justify-content-center">
+      <Form
+        onSubmit={handleSubmit}
+        className="loginForm wrapper frosted-glass px-5 py-5 d-flex justify-content-center"
+      >
         <div className="loginFormDiv d-flex flex-column">
           <div className="loginFormWelcomeText align-content-center">
             <h3 className="text-center">
@@ -36,6 +73,8 @@ function LoginForm() {
                     type="text"
                     placeholder="Insert here your @email..."
                     name="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                   <Form.Control.Feedback
                     type="invalid"
@@ -54,14 +93,27 @@ function LoginForm() {
                     type="password"
                     placeholder="Insert here your password..."
                     name="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                   <Form.Control.Feedback
                     type="invalid"
                     tooltip
                   ></Form.Control.Feedback>
                 </InputGroup>
+                <div className="d-flex justify-content-center align-items-center">
+                  <Button
+                    type="submit"
+                    size="lg"
+                    className="custom-btn mt-5"
+                    disabled={loading}
+                  >
+                    <p className="submitButton m-0">Submit</p>
+                  </Button>
+                </div>
               </Col>
             </Form.Group>
+            {error && <p className="text-danger text-center">{error}</p>}
           </div>
           <div className="my-5 text-center">
             <h3 className="signUpAdds">

@@ -14,10 +14,6 @@
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
 }
 
-.unorderListDiv {
-  border-radius: 15px;
-}
-
 .searchBox {
   border-radius: 15px;
 }
@@ -39,6 +35,26 @@
   text-shadow: 2px 2px 5px #a82562;
 }
 
+.projectListTextTitle {
+  color: #f2e0d0 !important;
+  font-weight: 600;
+  font-size: 2.5rem !important;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+.unorderListDiv {
+  background-color: beige !important;
+  border-radius: 15px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7) !important;
+  backdrop-filter: blur(10px) !important; /* effetto sfocatura */
+  -webkit-backdrop-filter: blur(10px) !important; /* supporto Safari */
+  border: 1px solid rgba(255, 255, 255, 0.4) !important; /* bordo leggero */
+}
+
+.unorderList > li {
+  font-size: 1.7rem !important;
+}
+
 .highlightText {
   font-family: "Bruno Ace SC", sans-serif;
   font-size: 1.1em;
@@ -52,6 +68,10 @@
   font-weight: 600;
   color: #a82562;
   text-shadow: 2px 2px 5px #f2e0d0;
+}
+
+.brInterruption {
+  color: #5f7385;
 }
 
 .wrapper {
