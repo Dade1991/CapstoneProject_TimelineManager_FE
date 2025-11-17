@@ -42,6 +42,14 @@
 .custom-btn {
   background-color: #a82562 !important;
   border-color: #a82562 !important;
+  font-size: 1rem !important;
+}
+
+.custom-btn-password {
+  background-color: #0e93a1 !important;
+  border-color: #0e93a1 !important;
+  font-weight: 700 !important;
+  font-size: 1.1rem !important;
 }
 
 .custom-btn:hover {
@@ -58,6 +66,10 @@
 .gifImg {
   position: relative;
   left: 50px;
+}
+
+.brInterruption {
+  color: #5f7385;
 }
 
 .wrapper {

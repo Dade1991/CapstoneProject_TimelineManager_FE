@@ -4,11 +4,15 @@ import Form from "react-bootstrap/Form"
 import Nav from "react-bootstrap/Nav"
 import Navbar from "react-bootstrap/Navbar"
 import { Link, useNavigate } from "react-router-dom"
+import { useContext } from "react"
+import { AuthContext } from "../../AuthContext"
 import "./HomeNavbar.css"
 
-function NavScrollExample() {
+function HomeNavbar() {
+  const { token, logout } = useContext(AuthContext)
   const navigatePJT = useNavigate()
   const navigateHome = useNavigate()
+  const isAuthenticated = Boolean(token)
 
   return (
     <Navbar
@@ -48,9 +52,21 @@ function NavScrollExample() {
             </div>
             <div className="d-flex flex-row align-items-center my-2">
               <i className="linkIconSymbol bi bi-box-arrow-in-right"></i>
-              <Link className="loginLink nav-link" to="/LoginForm">
-                Login
-              </Link>
+              {isAuthenticated ? (
+                <Button
+                  className="loginLink nav-link"
+                  onClick={() => {
+                    logout()
+                    navigateHome("/LoginForm")
+                  }}
+                >
+                  Logout
+                </Button>
+              ) : (
+                <Link className="loginLink nav-link" to="/LoginForm">
+                  Login
+                </Link>
+              )}
             </div>
             <div className="d-flex flex-row align-items-center my-2">
               <i className="linkIconSymbol bi bi-person-circle"></i>
@@ -88,4 +104,4 @@ function NavScrollExample() {
   )
 }
 
-export default NavScrollExample
+export default HomeNavbar

@@ -4,6 +4,8 @@ import Button from "react-bootstrap/Button"
 import InputGroup from "react-bootstrap/InputGroup"
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
+import { AuthContext } from "../../AuthContext"
+import { useContext } from "react"
 import "./LoginForm.css"
 
 function LoginForm() {
@@ -12,33 +14,35 @@ function LoginForm() {
   const [password, setPassword] = useState("")
 
   const [error, setError] = useState("")
-  const [loading, setLoading] = useState(false)
+
+  const { setToken } = useContext(AuthContext)
 
   const handleSubmit = (e) => {
     e.preventDefault()
     setError("")
-    setLoading(true)
 
     fetch("http://localhost:3001/api/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     })
-      .then((res) => {
-        setLoading(false)
-        if (res.ok) {
-          return res.json()
-        } else {
-          throw new Error("Error has occurred during retrieving info")
+      .then(async (res) => {
+        const body = await res.json()
+        console.log("Risposta completa dal backend:", body)
+        if (!res.ok) {
+          throw new Error(body.message || "Errore login")
         }
+        return body
       })
       .then((data) => {
-        localStorage.setItem("token", data.token)
+        console.log(data.accessToken)
+        setToken(data.accessToken)
+        localStorage.setItem("token", data.accessToken)
         navigate("/home")
       })
       .catch((err) => {
-        setLoading(false)
-        setError(err.message || "Network error")
+        console.error("Login error:", err)
+        setError(err.message)
       })
   }
 
@@ -102,12 +106,7 @@ function LoginForm() {
                   ></Form.Control.Feedback>
                 </InputGroup>
                 <div className="d-flex justify-content-center align-items-center">
-                  <Button
-                    type="submit"
-                    size="lg"
-                    className="custom-btn mt-5"
-                    disabled={loading}
-                  >
+                  <Button type="submit" size="lg" className="custom-btn mt-5">
                     <p className="submitButton m-0">Submit</p>
                   </Button>
                 </div>

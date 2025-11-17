@@ -41,7 +41,7 @@ function SignUpForm() {
       .then((data) => {
         console.log(data)
         alert("Registration successful! You can now log in!")
-        navigate("/home")
+        navigate("/LoginForm")
       })
       .catch((err) => {
         setLoading(false)
