@@ -54,7 +54,7 @@ function HomeNavbar() {
               <i className="linkIconSymbol bi bi-box-arrow-in-right"></i>
               {isAuthenticated ? (
                 <Button
-                  className="loginLink nav-link"
+                  className="logoutLink nav-link"
                   onClick={() => {
                     logout()
                     navigateHome("/LoginForm")

@@ -1,15 +1,27 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { Modal, Button, Form } from "react-bootstrap"
 import "./ProjectModals.css"
 
 const ProjectModalUpdate = ({ show, handleClose, onSubmit, project }) => {
-  // Stato locale per input, inizializzato alla prima apertura
-  const [title, setTitle] = useState(project?.title || "")
-  const [description, setDescription] = useState(project?.description || "")
-
-  // calendario
-
+  const [title, setTitle] = useState("")
+  const [description, setDescription] = useState("")
   const [expiryDate, setExpiryDate] = useState("")
+
+  useEffect(() => {
+    let mounted = true
+
+    if (project && mounted) {
+      setTitle(project.projectName || "")
+      setDescription(project.projectDescription || "")
+      setExpiryDate(
+        project.expiryDate ? project.expiryDate.substring(0, 10) : ""
+      )
+    }
+
+    return () => {
+      mounted = false
+    }
+  }, [project])
 
   if (!project) {
     return (
@@ -33,7 +45,7 @@ const ProjectModalUpdate = ({ show, handleClose, onSubmit, project }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    onSubmit({ title, description })
+    onSubmit({ title, description, expiryDate })
   }
 
   return (
@@ -44,8 +56,8 @@ const ProjectModalUpdate = ({ show, handleClose, onSubmit, project }) => {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body className="modalColor">
-        <Form>
-          <Form.Group>
+        <Form onSubmit={handleSubmit}>
+          <Form.Group controlId="updateProjectTitle" className="mb-3">
             <Form.Label>Title</Form.Label>
             <Form.Control
               type="text"
@@ -54,32 +66,34 @@ const ProjectModalUpdate = ({ show, handleClose, onSubmit, project }) => {
               required
             />
           </Form.Group>
-          <Form.Group>
+          <Form.Group controlId="updateProjectDescription" className="mb-3">
             <Form.Label>Description</Form.Label>
             <Form.Control
               as="textarea"
+              rows={3}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
           </Form.Group>
-          <Form.Group>
+          <Form.Group controlId="updateExpiryDate" className="mb-3">
             <Form.Label>Expiry Date</Form.Label>
             <Form.Control
               type="date"
               value={expiryDate}
               onChange={(e) => setExpiryDate(e.target.value)}
+              required
             />
           </Form.Group>
+          <Modal.Footer className="modalColor">
+            <Button className="modalCloseButton" onClick={handleClose}>
+              Close
+            </Button>
+            <Button className="modalSaveButton" type="submit">
+              UPDATE
+            </Button>
+          </Modal.Footer>
         </Form>
       </Modal.Body>
-      <Modal.Footer className="modalColor">
-        <Button className="modalCloseButton" onClick={handleClose}>
-          Close
-        </Button>
-        <Button className="modalSaveButton" onClick={handleSubmit}>
-          UPDATE
-        </Button>
-      </Modal.Footer>
     </Modal>
   )
 }

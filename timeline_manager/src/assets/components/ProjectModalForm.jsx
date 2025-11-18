@@ -1,22 +1,17 @@
 import React, { useState } from "react"
 import { Modal, Button, Form } from "react-bootstrap"
-// import { useNavigate } from "react-router-dom"
 import "./ProjectModals.css"
 
 const ProjectModalForm = ({ show, handleClose, onSubmit }) => {
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
   const [expiryDate, setExpiryDate] = useState("")
-  // const navigateSinglePJT = useNavigate()
-
-  // collegamento con il modale che deve salvare e reindirizzare alla pagina "project"
 
   const handleSubmit = () => {
-    // invia i dati al parent o direttamente con fetch
-    onSubmit({ title, description })
-    // pulisci il form o chiudi modal
+    onSubmit({ title, description, expiryDate })
     setTitle("")
     setDescription("")
+    setExpiryDate("")
     handleClose()
   }
 
@@ -27,21 +22,24 @@ const ProjectModalForm = ({ show, handleClose, onSubmit }) => {
       </Modal.Header>
       <Modal.Body className="modalColor">
         <Form>
-          <Form.Group>
+          <Form.Group controlId="projectTitle">
             <Form.Label>Title</Form.Label>
             <Form.Control
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
+              placeholder="Enter project title"
               required
             />
           </Form.Group>
-          <Form.Group>
+          <Form.Group controlId="projectDescription">
             <Form.Label>Description</Form.Label>
             <Form.Control
               as="textarea"
+              rows={3}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
+              placeholder="Enter project description"
             />
           </Form.Group>
           <Form.Group controlId="expiryDate">
@@ -58,7 +56,11 @@ const ProjectModalForm = ({ show, handleClose, onSubmit }) => {
         <Button className="modalCloseButton" onClick={handleClose}>
           Close
         </Button>
-        <Button className="modalSaveButton" onClick={handleSubmit}>
+        <Button
+          className="modalSaveButton"
+          onClick={handleSubmit}
+          disabled={!title.trim()}
+        >
           SAVE
         </Button>
       </Modal.Footer>

@@ -27,9 +27,17 @@
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
 }
 
-.projectText {
+.projectSingleTitle {
   font-family: "Bruno Ace SC", sans-serif;
   font-size: 1em;
+  font-weight: 600;
+  color: #a82562;
+  text-shadow: 2px 2px 5px #a82562;
+}
+
+.projectText {
+  font-family: "Bruno Ace SC", sans-serif;
+  font-size: 2.4rem !important;
   font-weight: 600;
   color: #f2e0d0;
   text-shadow: 2px 2px 5px #a82562;
@@ -42,6 +50,10 @@
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
 }
 
+.singleProjectList {
+  font-size: 2.5rem !important;
+}
+
 .unorderListDiv {
   background-color: beige !important;
   border-radius: 15px;
@@ -51,27 +63,77 @@
   border: 1px solid rgba(255, 255, 255, 0.4) !important; /* bordo leggero */
 }
 
-.unorderList > li {
-  font-size: 1.7rem !important;
-}
-
-.highlightText {
+.memberTaskCounters {
   font-family: "Bruno Ace SC", sans-serif;
-  font-size: 1.1em;
+  font-size: 0.7em;
   font-weight: 600;
   color: #a82562;
-  text-shadow: 2px 2px 5px #f2e0d0;
-}
-
-.projectJoke {
-  font-size: 0.8em;
-  font-weight: 600;
-  color: #a82562;
-  text-shadow: 2px 2px 5px #f2e0d0;
+  text-shadow: 2px 2px 5px #a82562;
 }
 
 .brInterruption {
   color: #5f7385;
+}
+
+.divisionBar {
+  color: #a82562;
+  font-size: 5rem !important;
+  border: 7px solid #a82562 !important;
+  box-shadow: 2px 2px 8px #a82562 !important;
+  border-radius: 50px;
+}
+
+.creationExpiryDates {
+  font-family: "Bruno Ace SC", sans-serif;
+  font-size: 0.7em;
+  font-weight: 600;
+  color: #a82562;
+  text-shadow: 2px 2px 5px #a82562;
+}
+
+.unorderList > li {
+  font-size: 1.5rem !important;
+}
+
+.modalDeleteButton {
+  background-color: #d98299 !important;
+  font-size: 1.2rem !important;
+  font-weight: 700 !important;
+  border-color: #f2e0d0 !important;
+}
+
+.modalSaveButton {
+  background-color: #6aa4b7 !important;
+  font-size: 1.2rem !important;
+  font-weight: 700 !important;
+  border-color: #f2e0d0 !important;
+}
+
+.highlightText {
+  font-family: "Bruno Ace SC", sans-serif;
+  font-size: 1.2em;
+  font-weight: 600;
+  color: #a82562;
+  text-shadow: 2px 2px 5px #f2e0d0;
+}
+
+.bulletPoint {
+  font-size: 1rem;
+}
+
+.projectLi {
+  white-space: pre-wrap; /* mantiene i ritorni a capo */
+  word-wrap: break-word; /* rompe parole lunghe se necessario */
+  max-width: 100%; /* si adatta al contenitore */
+  max-height: 500px; /* o un valore adatto per altezza max */
+  overflow: auto;
+}
+
+.projectJoke {
+  font-size: 1.3em;
+  font-weight: 600;
+  color: #a82562;
+  text-shadow: 2px 2px 5px #f2e0d0;
 }
 
 .wrapper {

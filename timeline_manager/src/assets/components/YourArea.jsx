@@ -1,4 +1,4 @@
-import Col from "react-bootstrap/Col"
+import { Row, Col } from "react-bootstrap"
 import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
 import InputGroup from "react-bootstrap/InputGroup"
@@ -53,9 +53,6 @@ function YourArea() {
       return
     }
 
-    // setLoading(true)
-    // setError(null)
-
     fetch(`http://localhost:3001/api/users/profile`, {
       headers: { Authorization: `Bearer ${token}` },
     })
@@ -101,6 +98,8 @@ function YourArea() {
       email,
     }
 
+    // UPDATE USER
+
     fetch(`http://localhost:3001/api/users/${userId}`, {
       method: "PUT",
       headers: {
@@ -143,6 +142,8 @@ function YourArea() {
 
     setLoading(true)
 
+    // UPDATE USER PASSWORD
+
     fetch(`http://localhost:3001/api/users/${userId}/password`, {
       method: "PUT",
       headers: {
@@ -177,24 +178,26 @@ function YourArea() {
     <>
       <div
         onSubmit={handleSubmit}
-        className="updateForm wrapper frosted-glass px-5 py-3 d-flex justify-content-center"
+        className="updateForm wrapper frosted-glass p-4 d-flex justify-content-center"
       >
-        <div className="updateFormDiv d-flex flex-column">
+        <div className="updateFormDiv d-flex flex-column flex-grow-1">
           <div className="updateFormWelcomeText align-content-center">
             <h3 className="text-center m-0">
               Here you can <strong className="boldText">UPDATE</strong> your{" "}
               personal information!
             </h3>
           </div>
-          <div className="updateFormAuth d-flex flex-row">
-            <div className="updateStatus d-flex flex-column justify-content-center">
-              <div className="">
+          <Row className="p-2">
+            <Col md={6} className="">
+              <h4 className="yourAreaTitle">Change Infos</h4>
+              <Form>
                 <Form.Group controlId="formName">
-                  <Form.Label column sm="3">
+                  <Form.Label className="yourAreaDescribe" sm="3">
                     Name:
                   </Form.Label>
                   <Col sm="12">
                     <Form.Control
+                      className="w-100"
                       type="text"
                       placeholder="Insert your Name here..."
                       value={name}
@@ -203,8 +206,9 @@ function YourArea() {
                     />
                   </Col>
                 </Form.Group>
+
                 <Form.Group controlId="formSurname">
-                  <Form.Label column sm="3">
+                  <Form.Label className="yourAreaDescribe" sm="3">
                     Surname:
                   </Form.Label>
                   <Col sm="12">
@@ -219,7 +223,7 @@ function YourArea() {
                 </Form.Group>
 
                 <Form.Group controlId="formNickname">
-                  <Form.Label column sm="3">
+                  <Form.Label className="yourAreaDescribe" sm="3">
                     Nickname:
                   </Form.Label>
                   <Col sm="12">
@@ -234,7 +238,7 @@ function YourArea() {
                 </Form.Group>
 
                 {/* <Form.Group controlId="formAvatar">
-                  <Form.Label column sm="3">
+                  <Form.Label sm="3">
                     AVATAR:
                   </Form.Label>
                   <Col sm="12">
@@ -247,8 +251,9 @@ function YourArea() {
                     />
                   </Col>
                 </Form.Group> */}
+
                 <Form.Group controlId="formEmail">
-                  <Form.Label column sm="3">
+                  <Form.Label className="yourAreaDescribe" sm="3">
                     E-mail:
                   </Form.Label>
                   <Col sm="12">
@@ -273,7 +278,7 @@ function YourArea() {
                   <Button
                     type="submit"
                     size="lg"
-                    className="custom-btn mt-2"
+                    className="custom-btn mt-4"
                     disabled={loading}
                   >
                     <p className="signUpButton m-0">
@@ -281,12 +286,17 @@ function YourArea() {
                     </p>
                   </Button>
                 </div>
-              </div>
-              <hr className="brInterruption my-2" />
+              </Form>
+            </Col>
+            {/* <hr className="brInterruption my-2" /> */}
+
+            <Col md={6}>
+              <h4 className="yourAreaTitle">Change Password</h4>
               <Form onSubmit={handleChangePassword} className="">
-                <h4 className="">Change Password</h4>
-                <Form.Group className="mb-2" controlId="formOldPassword">
-                  <Form.Label sm="3">Old Password:</Form.Label>
+                <Form.Group className="" controlId="formOldPassword">
+                  <Form.Label className="yourAreaDescribe" sm="3">
+                    Old Password:
+                  </Form.Label>
                   <Form.Control
                     type="password"
                     placeholder="Old password"
@@ -296,8 +306,11 @@ function YourArea() {
                     required
                   />
                 </Form.Group>
-                <Form.Group className="mb-2" controlId="formNewPassword">
-                  <Form.Label sm="3">New Password:</Form.Label>
+
+                <Form.Group className="" controlId="formNewPassword">
+                  <Form.Label className="yourAreaDescribe" sm="3">
+                    New Password:
+                  </Form.Label>
                   <Form.Control
                     type="password"
                     placeholder="New password"
@@ -316,8 +329,11 @@ function YourArea() {
                     required
                   />
                 </Form.Group>
-                <Form.Group className="mb-2" controlId="formConfirmPassword">
-                  <Form.Label sm="3">Confirm Password:</Form.Label>
+
+                <Form.Group className="mb-4" controlId="formConfirmPassword">
+                  <Form.Label className="yourAreaDescribe" sm="3">
+                    Confirm Password:
+                  </Form.Label>
                   <Form.Control
                     type="password"
                     placeholder="Confirm new password"
@@ -343,14 +359,10 @@ function YourArea() {
                   </Button>
                 </div>
               </Form>
-            </div>
-            <div className="gifDiv d-flex justify-content-center align-items-center">
-              <img
-                className="gifImg"
-                src="/gif/Typing_Animation.gif"
-                alt="typingGif"
-              />
-            </div>
+            </Col>
+          </Row>
+          <div className="text-center py-4">
+            <img className="" src="/gif/Typing_Animation.gif" alt="typingGif" />
           </div>
         </div>
       </div>

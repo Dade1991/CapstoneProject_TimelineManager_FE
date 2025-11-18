@@ -9,7 +9,7 @@
   background-size: cover;
   background-position: center center;
   background-attachment: fixed;
-  height: 100vh;
+  min-height: 100vh;
   margin: 0;
   font-family: "Genos", sans-serif;
   font-size: 2em;

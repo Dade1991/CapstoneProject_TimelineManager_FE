@@ -57,19 +57,19 @@
   border-color: #8b1a52 !important;
 }
 
-.gifDiv {
-  width: 100%;
-  height: auto;
-  font-size: 1rem;
-}
-
-.gifImg {
-  position: relative;
-  left: 50px;
-}
-
 .brInterruption {
   color: #5f7385;
+}
+
+.yourAreaTitle {
+  color: #8b1a52 !important;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+  font-weight: 600 !important;
+}
+
+.yourAreaDescribe {
+  font-weight: 550 !important;
+  font-size: 1.2rem;
 }
 
 .wrapper {

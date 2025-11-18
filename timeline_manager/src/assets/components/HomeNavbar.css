@@ -44,9 +44,23 @@
 .loginLink {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   transition: color 0.4s ease, text-shadow 0.4s ease;
+  background-color: inherit !important;
 }
 
 .loginLink:hover {
+  color: #f23d7f !important;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+.logoutLink {
+  text-shadow: 2px 2px 4px #f23d7f;
+  transition: color 0.4s ease, text-shadow 0.4s ease;
+  background-color: inherit !important;
+  color: #f23d7f !important;
+  font-weight: 500 !important;
+}
+
+.logoutLink:hover {
   color: #f23d7f !important;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
 }

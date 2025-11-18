@@ -2,28 +2,175 @@ import { Container, Row, Col } from "react-bootstrap"
 import Button from "react-bootstrap/Button"
 import Form from "react-bootstrap/Form"
 import Navbar from "react-bootstrap/Navbar"
-import MainBoard from "./MainBoard"
 import { useNavigate } from "react-router-dom"
-import React, { useState } from "react"
+import React, { useState, useEffect, useContext } from "react"
+import { AuthContext } from "../../AuthContext"
 import ProjectModalForm from "./ProjectModalForm"
+import ProjectModalUpdate from "./ProjectModalUpdate"
 import "./Projects.css"
 
 function Projects() {
   const navigateHome = useNavigate()
 
-  // Project
+  const { token } = useContext(AuthContext)
+  const [projects, setProjects] = useState([])
+  const [error, setError] = useState(null)
 
   const [showProjectModal, setShowProjectModal] = useState(false)
+
+  const [selectedProject, setSelectedProject] = useState(null)
+  const [showUpdateModal, setShowUpdateModal] = useState(false)
 
   const handleShowProject = () => setShowProjectModal(true)
   const handleCloseProject = () => setShowProjectModal(false)
 
-  const handleProjectSubmit = (projectData) => {
-    // Logica per inviare dati al backend o Redux
-    console.log("Dati progetto da inviare:", projectData)
-    // Chiudere modale dopo submit
-    handleCloseProject()
+  const handleShowUpdate = (proj) => {
+    setSelectedProject(proj)
+    setShowUpdateModal(true)
   }
+  const handleCloseUpdate = () => {
+    setSelectedProject(null)
+    setShowUpdateModal(false)
+  }
+
+  function parseJwt(token) {
+    try {
+      const base64Url = token.split(".")[1]
+      const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/")
+      return JSON.parse(atob(base64))
+    } catch {
+      return null
+    }
+  }
+
+  const payload = token ? parseJwt(token) : null
+  const userId = payload?.sub
+
+  // PRIMO MONTAGGIO
+
+  useEffect(() => {
+    if (!token || !userId) return
+
+    fetch(`http://localhost:3001/api/users/${userId}/projects`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then(async (res) => {
+        if (!res.ok) {
+          const err = await res.text()
+          throw new Error(err || "Failed to fetch projects")
+        }
+        return res.json()
+      })
+      .then((data) => {
+        console.log(data)
+
+        setProjects(data)
+        setError(null)
+      })
+      .catch((err) => setError(err.message))
+  }, [token, userId])
+
+  // SAVE PROJECT
+
+  const handleProjectSubmit = (projectData) => {
+    fetch("http://localhost:3001/api/projects", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        projectName: projectData.title,
+        projectDescription: projectData.description,
+        expiryDate: projectData.expiryDate || null,
+      }),
+    })
+      .then(async (res) => {
+        if (!res.ok) {
+          const errorText = await res.text()
+          throw new Error(errorText || "Failed to create project")
+        }
+        return res.json()
+      })
+      .then((newProject) => {
+        console.log(newProject)
+
+        setProjects((prev) => [newProject, ...prev])
+        handleCloseProject()
+      })
+      .catch((err) => {
+        alert("Error during project initializing: " + err.message)
+      })
+  }
+
+  // UPDATE PROJECT
+
+  const handleProjectUpdate = (updatedData) => {
+    if (!selectedProject) return
+
+    const bodyPayload = {
+      projectName: updatedData.title,
+      projectDescription: updatedData.description,
+      expiryDate: updatedData.expiryDate || null,
+    }
+
+    fetch(`http://localhost:3001/api/projects/${selectedProject.projectId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(bodyPayload),
+    })
+      .then(async (res) => {
+        if (!res.ok) {
+          const err = await res.text()
+          throw new Error(err || "Failed to update project")
+        }
+        return res.json()
+      })
+      .then((updatedProject) => {
+        setProjects((prevProjects) =>
+          prevProjects.map((proj) =>
+            proj.projectId === updatedProject.projectId ? updatedProject : proj
+          )
+        )
+
+        handleCloseUpdate()
+      })
+      .catch((err) => {
+        alert("Error updating project: " + err.message)
+      })
+  }
+
+  // DELETE PROJECT
+
+  const handleProjectDelete = (projectId) => {
+    if (!window.confirm("Are you sure you want to delete this project?")) {
+      return
+    }
+
+    fetch(`http://localhost:3001/api/projects/${projectId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Failed to delete project")
+        }
+        setProjects((prev) =>
+          prev.filter((proj) => proj.projectId !== projectId)
+        )
+      })
+      .catch((err) => {
+        alert("Error deleting project: " + err.message)
+      })
+  }
+
+  // COMPONENT
 
   return (
     <>
@@ -44,7 +191,7 @@ function Projects() {
         </Container>
       </Navbar>
 
-      <Container fluid wrapper className="mt-4">
+      <Container fluid className="wrapper mt-4">
         <div className="me-4 ms-4 mb-4 m-0">
           <h3 className="projectText m-0 text-center">
             In this area <br />
@@ -61,12 +208,65 @@ function Projects() {
           <Col className="" lg={8}>
             <h3 className="projectListTextTitle">Your Projects:</h3>
             <div className="unorderListDiv p-2">
-              <ul className="unorderList">
-                <li className="singleProjectList py-1">Progetto1</li>
-                <li className="singleProjectList py-1">Progetto2</li>
-                <li className="singleProjectList py-1">Progetto3</li>
-                <li className="singleProjectList py-1">Progetto4</li>
-                <li className="singleProjectList py-1">Progetto5</li>
+              {error && <p className="text-danger">{error}</p>}
+              <ul className="unorderList ps-4 mt-3">
+                {projects.length === 0 && !error && (
+                  <li className="singleProjectList p-1">
+                    No projects found. :(
+                  </li>
+                )}
+                {projects.map((proj) => (
+                  <li
+                    key={proj.projectId}
+                    className="singleProjectList py-1 d-flex flex-row align-items-center mb-5 p-1"
+                  >
+                    <div className="flex-grow-1 projectLi">
+                      <div className="d-flex flex-column">
+                        <strong className="d-flex align-items-center projectSingleTitle">
+                          <i className="bulletPoint bi bi-asterisk me-2"></i>{" "}
+                          {proj.projectName}{" "}
+                          {proj.isOverdue && (
+                            <span style={{ color: "red" }}> [OVERDUE]</span>
+                          )}
+                        </strong>
+                        <div>{proj.projectDescription} </div>
+                      </div>
+                      <hr className="brInterruption" />
+                      <div>
+                        <strong className="memberTaskCounters">Members:</strong>{" "}
+                        {proj.memberCount} |{" "}
+                        <strong className="memberTaskCounters">Tasks: </strong>
+                        {proj.taskCount}
+                        <hr className="brInterruption" />
+                        <div className="d-flex flex-column">
+                          <strong className="creationExpiryDates">
+                            Creation Date:
+                          </strong>{" "}
+                          {proj.creationDate}
+                          <strong className="creationExpiryDates">
+                            Expiry Date
+                          </strong>{" "}
+                          {proj.expiryDate}
+                        </div>
+                      </div>
+                      <hr className="divisionBar" />
+                    </div>
+                    <div className="d-flex flex-row px-4">
+                      <Button
+                        className="modalSaveButton me-2"
+                        onClick={() => handleShowUpdate(proj)}
+                      >
+                        Update
+                      </Button>
+                      <Button
+                        className="modalDeleteButton me-2"
+                        onClick={() => handleProjectDelete(proj.projectId)}
+                      >
+                        Delete
+                      </Button>
+                    </div>
+                  </li>
+                ))}
               </ul>
             </div>
           </Col>
@@ -105,6 +305,14 @@ function Projects() {
                 handleClose={handleCloseProject}
                 onSubmit={handleProjectSubmit}
               />
+              {showUpdateModal && (
+                <ProjectModalUpdate
+                  show={showUpdateModal}
+                  handleClose={handleCloseUpdate}
+                  onSubmit={handleProjectUpdate}
+                  project={selectedProject}
+                />
+              )}
             </div>
           </Col>
         </Row>
