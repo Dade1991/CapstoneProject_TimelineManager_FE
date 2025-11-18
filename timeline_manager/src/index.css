@@ -4,15 +4,46 @@
 @import url("https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&display=swap");
 
 #root {
+  position: relative;
   background-image: url("./public/images/App_background.jpg") !important;
   background-repeat: no-repeat !important;
   background-size: cover !important;
   background-position: center center !important;
   background-attachment: fixed !important;
   min-height: 100vh !important;
+  min-height: 100vh !important;
   margin: 0 !important;
   font-family: "Genos", sans-serif !important;
   font-size: 2em !important;
   color: #30373d !important;
   padding: 0px !important;
+  /* z-index: -1; */
+  overflow: hidden;
+}
+
+@keyframes rotate360 {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+#root::before {
+  content: "";
+  position: absolute;
+  top: -330px;
+  right: -280px;
+  width: 1400px;
+  height: 1400px;
+  background-image: url("./public/images/BackgroundPNG.png") !important;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.8;
+  pointer-events: none;
+  z-index: 0;
+  transform-origin: 52% 51%;
+  animation: rotate360 40s linear infinite;
 }
