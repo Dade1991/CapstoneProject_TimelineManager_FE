@@ -11,6 +11,7 @@ import "./Projects.css"
 
 function Projects() {
   const navigateHome = useNavigate()
+  const navigateProject = useNavigate()
 
   const { token } = useContext(AuthContext)
   const [projects, setProjects] = useState([])
@@ -170,6 +171,11 @@ function Projects() {
       })
   }
 
+  // OPEN PROJECT
+
+  const handleOpenProject = (projectId) => {
+    navigateProject(`/project/${projectId}`)
+  }
   // COMPONENT
 
   return (
@@ -204,9 +210,9 @@ function Projects() {
           </p>
         </div>
         <hr className="brInterruption my-5" />
+        <h3 className="projectListTextTitle ps-3">Your Projects:</h3>
         <Row className="flex-grow-1 p-3">
           <Col className="" lg={8}>
-            <h3 className="projectListTextTitle">Your Projects:</h3>
             <div className="unorderListDiv p-2">
               {error && <p className="text-danger">{error}</p>}
               <ul className="unorderList ps-4 mt-3">
@@ -222,8 +228,11 @@ function Projects() {
                   >
                     <div className="flex-grow-1 projectLi">
                       <div className="d-flex flex-column">
-                        <strong className="d-flex align-items-center projectSingleTitle">
-                          <i className="bulletPoint bi bi-asterisk me-2"></i>{" "}
+                        <strong
+                          className="d-flex align-items-center projectSingleTitle"
+                          onClick={() => handleOpenProject(proj.projectId)}
+                        >
+                          <i className="bulletPoint bi bi-folder2-open me-3"></i>{" "}
                           {proj.projectName}{" "}
                           {proj.isOverdue && (
                             <span style={{ color: "red" }}> [OVERDUE]</span>
@@ -271,7 +280,7 @@ function Projects() {
             </div>
           </Col>
           <Col
-            className="d-flex flex-column justify-content-center align-items-center"
+            className="sticky-sideBar d-flex flex-column justify-content-start"
             lg={4}
           >
             <div className="searchBox frosted-glass py-5 px-5 text-center">

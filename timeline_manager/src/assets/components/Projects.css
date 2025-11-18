@@ -33,6 +33,7 @@
   font-weight: 600;
   color: #a82562;
   text-shadow: 2px 2px 5px #a82562;
+  cursor: pointer;
 }
 
 .projectText {
@@ -118,7 +119,7 @@
 }
 
 .bulletPoint {
-  font-size: 1rem;
+  font-size: 1.7rem;
 }
 
 .projectLi {
@@ -134,6 +135,13 @@
   font-weight: 600;
   color: #a82562;
   text-shadow: 2px 2px 5px #f2e0d0;
+}
+
+.sticky-sideBar {
+  position: sticky;
+  top: 10px; /* distanza dal top della viewport */
+  align-self: flex-start; /* per evitare che la sticky collassi in flexbox */
+  height: fit-content; /* mantieni altezza del contenuto */
 }
 
 .wrapper {

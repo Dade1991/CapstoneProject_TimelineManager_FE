@@ -59,9 +59,7 @@ function TaskCard() {
                 value=""
                 id="flexCheckDisabled"
               />
-              <label className="form-check-label" for="flexCheckDisabled">
-                Complete
-              </label>
+              <label className="form-check-label">Complete</label>
             </div>
             <Button className="taskCardDeleteButton me-1" variant="primary">
               Delete Task
