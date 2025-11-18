@@ -1,9 +1,9 @@
 .mainBoard {
   background-color: beige !important;
-  overflow-x: auto; /* scroll orizzontale */
-  overflow-y: auto; /* scroll verticale */
-  max-height: 500px; /* o altezza desiderata */
-  max-width: 100%; /* o larghezza fissa */
+  overflow-x: auto;
+  overflow-y: auto;
+  /* max-height: 500px; */
+  max-width: 100%;
   border-radius: 10px;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
   border-right: 2px ridge rgb(0, 0, 0);

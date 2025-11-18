@@ -3,6 +3,7 @@ import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
 import InputGroup from "react-bootstrap/InputGroup"
 import { useContext, useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 import "./YourArea.css"
 import { AuthContext } from "../../AuthContext"
 
@@ -24,6 +25,7 @@ function parseJwt(token) {
 }
 
 function YourArea() {
+  const navigatePersonalPJT = useNavigate()
   const [name, setName] = useState("")
   const [surname, setSurname] = useState("")
   const [nickname, setNickname] = useState("")
@@ -182,12 +184,26 @@ function YourArea() {
       >
         <div className="updateFormDiv d-flex flex-column flex-grow-1">
           <div className="updateFormWelcomeText align-content-center">
-            <h3 className="text-center m-0">
-              Here you can <strong className="boldText">UPDATE</strong> your{" "}
-              personal information!
+            <h3 className="text-center mb-3">
+              <strong>This is your personal area!</strong> <br />
+              Here you can go to your{" "}
+              <strong className="boldText">PROJECTS</strong> & you can{" "}
+              <strong className="boldText">UPDATE</strong> your personal
+              information!
             </h3>
           </div>
-          <Row className="p-2">
+          <hr className="m-1 mt-3" />
+          <div className="d-flex flex-row align-items-center p-2">
+            <p className="yourAreaDescribe m-0">GO to your projects</p>
+            <Button
+              className="custom-btn-password ms-2"
+              onClick={() => navigatePersonalPJT("/projects")}
+            >
+              HERE
+            </Button>
+          </div>
+          <hr className="m-1" />
+          <Row className="p-2 flex-grow-1">
             <Col md={6} className="">
               <h4 className="yourAreaTitle">Change Infos</h4>
               <Form>
@@ -282,13 +298,12 @@ function YourArea() {
                     disabled={loading}
                   >
                     <p className="signUpButton m-0">
-                      {loading ? "Updating..." : "Update"}
+                      {loading ? "Updating..." : "Update Infos"}
                     </p>
                   </Button>
                 </div>
               </Form>
             </Col>
-            {/* <hr className="brInterruption my-2" /> */}
 
             <Col md={6}>
               <h4 className="yourAreaTitle">Change Password</h4>
@@ -361,7 +376,8 @@ function YourArea() {
               </Form>
             </Col>
           </Row>
-          <div className="text-center py-4">
+
+          <div className="text-center pt-2">
             <img className="" src="/gif/Typing_Animation.gif" alt="typingGif" />
           </div>
         </div>

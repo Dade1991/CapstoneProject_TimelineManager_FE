@@ -67,7 +67,7 @@ function LoginForm() {
           </div>
           <div className="loginFormAuth d-flex flex-column justify-content-center">
             <Form.Group className="" controlId="formPlaintextEmail">
-              <Form.Label column sm="3">
+              <Form.Label className="yourAreaDescribe" sm="3">
                 E-mail:
               </Form.Label>
               <Col sm="12">
@@ -88,7 +88,7 @@ function LoginForm() {
               </Col>
             </Form.Group>
             <Form.Group className="mb-3" controlId="formPlaintextPassword">
-              <Form.Label column sm="3">
+              <Form.Label className="yourAreaDescribe" sm="3">
                 Password:
               </Form.Label>
               <Col sm="12">
@@ -107,7 +107,7 @@ function LoginForm() {
                 </InputGroup>
                 <div className="d-flex justify-content-center align-items-center">
                   <Button type="submit" size="lg" className="custom-btn mt-5">
-                    <p className="submitButton m-0">Submit</p>
+                    <p className="submitButton m-0">Login!</p>
                   </Button>
                 </div>
               </Col>

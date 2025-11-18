@@ -61,6 +61,11 @@
   height: auto;
 }
 
+.yourAreaDescribe {
+  font-weight: 550 !important;
+  font-size: 1.2rem;
+}
+
 .wrapper {
   width: 100%;
   height: auto;

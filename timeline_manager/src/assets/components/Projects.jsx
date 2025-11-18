@@ -213,21 +213,18 @@ function Projects() {
         <h3 className="projectListTextTitle ps-3">Your Projects:</h3>
         <Row className="flex-grow-1 p-3">
           <Col className="" lg={8}>
-            <div className="unorderListDiv p-2">
+            <div className="unorderListDiv">
               {error && <p className="text-danger">{error}</p>}
-              <ul className="unorderList ps-4 mt-3">
+              <ul className="unorderList mt-3 p-4">
                 {projects.length === 0 && !error && (
                   <li className="singleProjectList p-1">
                     No projects found. :(
                   </li>
                 )}
                 {projects.map((proj) => (
-                  <li
-                    key={proj.projectId}
-                    className="singleProjectList py-1 d-flex flex-row align-items-center mb-5 p-1"
-                  >
-                    <div className="flex-grow-1 projectLi">
-                      <div className="d-flex flex-column">
+                  <li key={proj.projectId} className="singleProjectList">
+                    <div className="singleProjectList d-flex flex-row align-items-center">
+                      <div className="w-100 projectLi">
                         <strong
                           className="d-flex align-items-center projectSingleTitle"
                           onClick={() => handleOpenProject(proj.projectId)}
@@ -238,42 +235,63 @@ function Projects() {
                             <span style={{ color: "red" }}> [OVERDUE]</span>
                           )}
                         </strong>
-                        <div>{proj.projectDescription} </div>
-                      </div>
-                      <hr className="brInterruption" />
-                      <div>
-                        <strong className="memberTaskCounters">Members:</strong>{" "}
-                        {proj.memberCount} |{" "}
-                        <strong className="memberTaskCounters">Tasks: </strong>
-                        {proj.taskCount}
-                        <hr className="brInterruption" />
-                        <div className="d-flex flex-column">
-                          <strong className="creationExpiryDates">
-                            Creation Date:
-                          </strong>{" "}
-                          {proj.creationDate}
-                          <strong className="creationExpiryDates">
-                            Expiry Date
-                          </strong>{" "}
-                          {proj.expiryDate}
+                        <p className="descriptionTitle mt-2 m-0">
+                          Description:
+                        </p>
+                        <div className="descriptionText p-1 mb-3">
+                          {proj.projectDescription}{" "}
+                        </div>
+
+                        <div>
+                          <Row className="justify-content-between align-items-center">
+                            <Col className="inputDateData">
+                              <strong className="memberTaskCounters">
+                                Members:
+                              </strong>{" "}
+                              {proj.memberCount}
+                            </Col>
+                            <Col className="inputDateData">
+                              <strong className="memberTaskCounters">
+                                Tasks:{" "}
+                              </strong>
+                              {proj.taskCount}
+                            </Col>
+                          </Row>
+
+                          <Row className="d-flex justify-content-between align-items-center">
+                            <Col className="inputDateData">
+                              <strong className="creationExpiryDates">
+                                Creation Date:
+                              </strong>{" "}
+                              <br />
+                              {proj.creationDate}
+                            </Col>
+                            <Col className="inputDateData">
+                              <strong className="creationExpiryDates">
+                                Expiry Date:
+                              </strong>{" "}
+                              <br />
+                              {proj.expiryDate}
+                            </Col>
+                          </Row>
                         </div>
                       </div>
-                      <hr className="divisionBar" />
+                      <div className="d-flex flex-row px-4">
+                        <Button
+                          className="modalSaveButton me-2"
+                          onClick={() => handleShowUpdate(proj)}
+                        >
+                          Update
+                        </Button>
+                        <Button
+                          className="modalDeleteButton me-2"
+                          onClick={() => handleProjectDelete(proj.projectId)}
+                        >
+                          Delete
+                        </Button>
+                      </div>
                     </div>
-                    <div className="d-flex flex-row px-4">
-                      <Button
-                        className="modalSaveButton me-2"
-                        onClick={() => handleShowUpdate(proj)}
-                      >
-                        Update
-                      </Button>
-                      <Button
-                        className="modalDeleteButton me-2"
-                        onClick={() => handleProjectDelete(proj.projectId)}
-                      >
-                        Delete
-                      </Button>
-                    </div>
+                    <hr className="divisionBar my-5" />
                   </li>
                 ))}
               </ul>
@@ -331,8 +349,3 @@ function Projects() {
 }
 
 export default Projects
-
-// <Nav.Link className="newProjectLink" onClick={handleShowProject}>
-//   New Project
-// </Nav.Link>
-//

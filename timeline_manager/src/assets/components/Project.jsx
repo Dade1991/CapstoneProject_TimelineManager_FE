@@ -25,18 +25,6 @@ function Project() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-  // Task
-
-  // const [showTaskModal, setShowTaskModal] = useState(false)
-
-  // const handleShowTask = () => setShowTaskModal(true)
-  // const handleCloseTask = () => setShowTaskModal(false)
-
-  // const handleTaskSubmit = (taskData) => {
-  //   console.log("Dati task da inviare:", taskData)
-  //   handleCloseTask()
-  // }
-
   // Add Member
 
   // const [showAddMemberModal, setShowAddMemberModal] = useState(false)

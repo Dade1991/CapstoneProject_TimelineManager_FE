@@ -67,7 +67,7 @@ function SignUpForm() {
           <div className="signUpFormAuth d-flex flex-row">
             <div className="signUpStatus d-flex flex-column justify-content-center">
               <Form.Group controlId="formName">
-                <Form.Label column sm="3">
+                <Form.Label className="yourAreaDescribe" sm="3">
                   Name:
                 </Form.Label>
                 <Col sm="12">
@@ -81,7 +81,7 @@ function SignUpForm() {
                 </Col>
               </Form.Group>
               <Form.Group controlId="formSurname">
-                <Form.Label column sm="3">
+                <Form.Label className="yourAreaDescribe" sm="3">
                   Surname:
                 </Form.Label>
                 <Col sm="12">
@@ -95,7 +95,7 @@ function SignUpForm() {
                 </Col>
               </Form.Group>
               <Form.Group controlId="formNickname">
-                <Form.Label column sm="3">
+                <Form.Label className="yourAreaDescribe" sm="3">
                   Nickame:
                 </Form.Label>
                 <Col sm="12">
@@ -109,7 +109,7 @@ function SignUpForm() {
                 </Col>
               </Form.Group>
               <Form.Group controlId="formAvatar">
-                <Form.Label column sm="3">
+                <Form.Label className="yourAreaDescribe" sm="3">
                   AVATAR:
                 </Form.Label>
                 <Col sm="12">
@@ -122,7 +122,7 @@ function SignUpForm() {
                 </Col>
               </Form.Group>
               <Form.Group controlId="formEmail">
-                <Form.Label column sm="3">
+                <Form.Label className="yourAreaDescribe" sm="3">
                   E-mail:
                 </Form.Label>
                 <Col sm="12">
@@ -138,7 +138,7 @@ function SignUpForm() {
                 </Col>
               </Form.Group>
               <Form.Group className="mb-3" controlId="formPassword">
-                <Form.Label column sm="3">
+                <Form.Label className="yourAreaDescribe" sm="3">
                   Password:
                 </Form.Label>
                 <Col sm="12">

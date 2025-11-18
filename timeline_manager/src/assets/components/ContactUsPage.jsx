@@ -25,8 +25,8 @@ function ContactUsPage() {
           </div>
           <div className="contactUsFormAuth d-flex flex-row">
             <div className="d-flex flex-column justify-content-center flex-grow-1">
-              <Form.Group className="" controlId="formPlaintextEmail">
-                <Form.Label column sm="3">
+              <Form.Group className="">
+                <Form.Label className="yourAreaDescribe" sm="3">
                   Name:
                 </Form.Label>
                 <Col sm="12">
@@ -35,7 +35,7 @@ function ContactUsPage() {
                     placeholder="Insert your Name here..."
                   />
                 </Col>
-                <Form.Label column sm="3">
+                <Form.Label className="yourAreaDescribe" sm="3">
                   Surname:
                 </Form.Label>
                 <Col sm="12">
@@ -44,7 +44,7 @@ function ContactUsPage() {
                     placeholder="Insert your Surname here..."
                   />
                 </Col>
-                <Form.Label column sm="3">
+                <Form.Label className="yourAreaDescribe" sm="3">
                   E-mail:
                 </Form.Label>
                 <Col sm="12">
@@ -55,15 +55,11 @@ function ContactUsPage() {
                       placeholder="Insert here your @email..."
                       name="email"
                     />
-                    <Form.Control.Feedback
-                      type="invalid"
-                      tooltip
-                    ></Form.Control.Feedback>
                   </InputGroup>
                 </Col>
-                <Col className="mt-5" sm="12">
-                  <Form.Group className="" controlId="">
-                    <Form.Label column sm="3">
+                <Col className="" sm="12">
+                  <Form.Group className="">
+                    <Form.Label className="yourAreaDescribe" sm="3">
                       Text:
                     </Form.Label>
                     <Form.Control
@@ -76,11 +72,11 @@ function ContactUsPage() {
                 </Col>
               </Form.Group>
             </div>
-            <div className="flex-grow-1 d-flex justify-content-center align-items-center">
+            <div className="d-flex justify-content-center align-items-center">
               <Container className="px-5">
                 <div className="mb-4">
                   <div>
-                    <h4 className="m-0">Contact</h4>
+                    <h4 className="m-0 yourAreaTitle">Contact</h4>
                   </div>
                   <div>
                     <p>info.timeline@clada.com</p>
@@ -88,7 +84,7 @@ function ContactUsPage() {
                 </div>
                 <div className="mb-4">
                   <div>
-                    <h4 className="m-0">Based in</h4>
+                    <h4 className="m-0 yourAreaTitle">Based at</h4>
                   </div>
                   <div>
                     <p>
@@ -99,7 +95,9 @@ function ContactUsPage() {
                 </div>
                 <div className="mb-4">
                   <div>
-                    <h4 className="mb-3">Find us on Socials too!</h4>
+                    <h4 className="mb-3 yourAreaTitle">
+                      Find us on Socials too!
+                    </h4>
                   </div>
                   <div className="d-flex justify-content-between">
                     <a href="*" className="socialIcon m-0 p-0">

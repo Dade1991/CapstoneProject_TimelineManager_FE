@@ -29,11 +29,19 @@
 
 .projectSingleTitle {
   font-family: "Bruno Ace SC", sans-serif;
-  font-size: 1em;
-  font-weight: 600;
+  font-size: 1.9rem;
+  font-weight: 600 !important;
   color: #a82562;
-  text-shadow: 2px 2px 5px #a82562;
   cursor: pointer;
+  text-decoration: underline;
+  transition: transform 0.3s ease, text-shadow 0.3s ease, color 0.3s ease;
+}
+
+.projectSingleTitle:hover {
+  transform: translateY(-10px);
+  transition: transform 0.3s ease;
+  text-shadow: 2px 2px 4px rgba(168, 37, 98, 0.7);
+  color: #a00b50;
 }
 
 .projectText {
@@ -55,6 +63,10 @@
   font-size: 2.5rem !important;
 }
 
+.unorderList {
+  list-style-type: none;
+}
+
 .unorderListDiv {
   background-color: beige !important;
   border-radius: 15px;
@@ -66,10 +78,9 @@
 
 .memberTaskCounters {
   font-family: "Bruno Ace SC", sans-serif;
-  font-size: 0.7em;
+  font-size: 1.3rem;
   font-weight: 600;
   color: #a82562;
-  text-shadow: 2px 2px 5px #a82562;
 }
 
 .brInterruption {
@@ -79,17 +90,21 @@
 .divisionBar {
   color: #a82562;
   font-size: 5rem !important;
-  border: 7px solid #a82562 !important;
-  box-shadow: 2px 2px 8px #a82562 !important;
+  border: 10px solid #a82562 !important;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7) !important;
   border-radius: 50px;
 }
 
 .creationExpiryDates {
   font-family: "Bruno Ace SC", sans-serif;
-  font-size: 0.7em;
+  font-size: 1.3rem;
   font-weight: 600;
   color: #a82562;
-  text-shadow: 2px 2px 5px #a82562;
+}
+
+.inputDateData {
+  font-size: 1.7rem;
+  font-weight: 500;
 }
 
 .unorderList > li {
@@ -119,15 +134,27 @@
 }
 
 .bulletPoint {
-  font-size: 1.7rem;
+  font-size: 1.9rem;
+}
+
+.descriptionTitle {
+  font-weight: 550 !important;
+  font-size: 1.5rem;
+}
+
+.descriptionText {
+  font-size: 1.2rem;
+  border: 1px solid #d9829983 !important;
+  border-radius: 8px;
 }
 
 .projectLi {
-  white-space: pre-wrap; /* mantiene i ritorni a capo */
-  word-wrap: break-word; /* rompe parole lunghe se necessario */
-  max-width: 100%; /* si adatta al contenitore */
-  max-height: 500px; /* o un valore adatto per altezza max */
-  overflow: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  max-width: 100%;
+  max-height: 500px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .projectJoke {
