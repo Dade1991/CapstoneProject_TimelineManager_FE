@@ -1,7 +1,10 @@
-import { Container, Row, Col, Button, Form, Modal } from "react-bootstrap"
+import { Container, Button, Form, Modal, Row, Col } from "react-bootstrap"
 import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../../AuthContext"
 import TaskCard from "./TaskCard"
+import TaskModalForm from "./TaskModalForm"
+import AddCategoryModal from "./AddCategoryModal"
+import CategoryModalUpdate from "./CategoryModalUpdate"
 import "./MainBoard.css"
 
 function MainBoard({ project }) {
@@ -10,14 +13,17 @@ function MainBoard({ project }) {
   const [categories, setCategories] = useState([])
   const [tasks, setTasks] = useState([])
 
-  const [showTaskModal, setShowTaskModal] = useState(false)
+  const [showTaskCreateModal, setShowTaskCreateModal] = useState(false)
+  // const [showTaskUpdateModal, setShowTaskUpdateModal] = useState(false)
+  // const [selectedTask, setSelectedTask] = useState(null)
   const [taskCategoryId, setTaskCategoryId] = useState(null)
-  const [newTaskTitle, setNewTaskTitle] = useState("")
-  const [newTaskDescription, setNewTaskDescription] = useState("")
-
+  const [showCategoryUpdateModal, setShowCategoryUpdateModal] = useState(false)
+  const [categoryToEdit, setCategoryToEdit] = useState(null)
   const [showCategoryModal, setShowCategoryModal] = useState(false)
-  const [newCategoryName, setNewCategoryName] = useState("")
-  const [newCategoryColor, setNewCategoryColor] = useState("#ff0000ff")
+  // const [newCategoryName, setNewCategoryName] = useState("")
+  // const [newCategoryColor, setNewCategoryColor] = useState("#000000")
+
+  // Carica categorie e task
 
   useEffect(() => {
     if (!token || !project) return
@@ -55,29 +61,33 @@ function MainBoard({ project }) {
         if (!res.ok) throw new Error("Error during Task loading.")
         return res.json()
       })
-      .then((data) => setTasks(data))
+      .then(setTasks)
       .catch(console.error)
   }, [token, project])
 
-  // Apertura modale task
+  // Apri modale creazione task e assegna categoria target
 
-  function openTaskModal(categoryId) {
+  function openTaskCreateModal(categoryId) {
     setTaskCategoryId(categoryId)
-    setNewTaskTitle("")
-    setNewTaskDescription("")
-    setShowTaskModal(true)
+    setShowTaskCreateModal(true)
+  }
+
+  function closeTaskCreateModal() {
+    setShowTaskCreateModal(false)
+    setTaskCategoryId(null)
   }
 
   // Salvataggio nuova task
 
-  function saveTask() {
-    if (!newTaskTitle.trim()) {
-      alert("Il titolo è obbligatorio")
+  function saveTask({ title, description, dueDate }) {
+    if (!title.trim()) {
+      alert("Task title is mandatory.")
       return
     }
     const payload = {
-      taskTitle: newTaskTitle,
-      taskDescription: newTaskDescription,
+      taskTitle: title,
+      taskDescription: description,
+      dueDate,
       categories: [{ categoryId: taskCategoryId }],
       projectId: project.projectId,
     }
@@ -95,81 +105,167 @@ function MainBoard({ project }) {
       })
       .then((newTask) => {
         setTasks((old) => [...old, newTask])
-        setShowTaskModal(false)
+        closeTaskCreateModal()
       })
       .catch((e) => alert(e.message))
   }
 
-  // Apertura modale categoria
+  // Apri modale categoria
 
   function openCategoryModal() {
-    setNewCategoryName("")
-    setNewCategoryColor("#CCCCCC")
     setShowCategoryModal(true)
+  }
+
+  function closeCategoryModal() {
+    setShowCategoryModal(false)
   }
 
   // Salvataggio nuova categoria
 
-  function saveCategory() {
-    if (!newCategoryName.trim()) {
-      alert("Category name is mandatory!")
+  async function saveCategory({ categoryName, categoryColor }) {
+    if (!categoryName.trim()) {
+      alert("Category name is mandatory.")
+      return
+    }
+
+    const payload = {
+      categoryName,
+      categoryColor,
+      projectId: project.projectId,
+    }
+
+    try {
+      const res = await fetch("http://localhost:3001/api/categories", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(payload),
+      })
+      if (!res.ok) throw new Error("Error during Category save.")
+      const newCat = await res.json()
+      setCategories((old) => [...old, newCat])
+      closeCategoryModal()
+    } catch (e) {
+      alert(e.message)
+    }
+  }
+
+  // Delete della categoria
+
+  async function deleteCategory(categoryId) {
+    if (!window.confirm("Are you sure you want to delete this category?"))
+      return
+
+    try {
+      const res = await fetch(
+        `http://localhost:3001/api/categories/${categoryId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      if (!res.ok) throw new Error("Error during Category delete.")
+      // Rimuovi categoria dallo stato
+      setCategories((old) => old.filter((cat) => cat.categoryId !== categoryId))
+    } catch (e) {
+      alert(e.message)
+    }
+  }
+
+  // Apri modale update categoria
+
+  function openCategoryUpdateModal(category) {
+    setCategoryToEdit(category)
+    setShowCategoryUpdateModal(true)
+  }
+
+  function closeCategoryUpdateModal() {
+    setShowCategoryUpdateModal(false)
+    setCategoryToEdit(null)
+  }
+
+  // Salvataggio update categoria
+
+  async function updateCategory({ categoryId, categoryName, categoryColor }) {
+    if (!categoryName.trim()) {
+      alert("Category name is mandatory.")
       return
     }
     const payload = {
-      categoryName: newCategoryName,
-      categoryColor: newCategoryColor,
+      categoryName,
+      categoryColor,
       projectId: project.projectId,
     }
-    fetch("http://localhost:3001/api/categories", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(payload),
-    })
-      .then((res) => {
-        if (!res.ok) throw new Error("Error during Category save.")
-        return res.json()
-      })
-      .then((newCat) => {
-        setCategories((old) => [...old, newCat])
-        setShowCategoryModal(false)
-      })
-      .catch((e) => alert(e.message))
+    try {
+      const res = await fetch(
+        `http://localhost:3001/api/categories/${categoryId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(payload),
+        }
+      )
+      if (!res.ok) throw new Error("Error during Category update.")
+      const updatedCat = await res.json()
+      setCategories((old) =>
+        old.map((cat) => (cat.categoryId === categoryId ? updatedCat : cat))
+      )
+      closeCategoryUpdateModal()
+    } catch (e) {
+      alert(e.message)
+    }
   }
 
   return (
     <>
-      <Container
-        fluid
-        className="mainBoard m-2 d-flex flex-row"
-        style={{ overflowX: "auto", height: "85vh" }}
-      >
+      <Container fluid className="mainBoard m-2 d-flex flex-row p-1">
         {categories.map((category) => (
-          <div
-            key={category.categoryId}
-            className="category-column"
-            style={{
-              margin: "0",
-              minWidth: "250px",
-              color: category.categoryColor || "#efefef",
-              backgroundColor: "blue",
-              borderRadius: "8px",
-              padding: "10px",
-              height: "100%",
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            <h5
-              style={{
-                color: category.categoryColor || "#000",
-                textAlign: "center",
-              }}
-            >
-              {category.categoryName}
-            </h5>
+          <div key={category.categoryId} className="category-column">
+            <div className="d-flex flex-row justify-content-between align-items-center">
+              <h4
+                className="categoryTitle pe-4 m-0"
+                style={{
+                  color: category.categoryColor || "#0084ffff",
+                }}
+              >
+                {category.categoryName}
+              </h4>
+              <div className="d-flex flex-column">
+                <div className="d-flex flex-row align-items-center justify-content-between mb-1">
+                  <p className="categoryButtonDescription m-0 me-2">Edit</p>
+                  <Button
+                    onClick={() => openCategoryUpdateModal(category)}
+                    className="categoryEditButton"
+                  >
+                    <i className="categoryIcon bi bi-pencil-square"></i>
+                  </Button>
+                  <CategoryModalUpdate
+                    show={showCategoryUpdateModal}
+                    handleClose={closeCategoryUpdateModal}
+                    category={categoryToEdit}
+                    onSubmit={updateCategory}
+                  />
+                </div>
+                <div className="d-flex flex-row align-items-center justify-content-between">
+                  <p className="categoryButtonDescription m-0 me-2">Delete</p>
+                  <Button
+                    onClick={() => deleteCategory(category.categoryId)}
+                    className="categoryDeleteButton"
+                  >
+                    <i className="categoryIcon bi bi-trash2-fill"></i>
+                  </Button>
+                </div>
+              </div>
+            </div>
+
+            <hr />
 
             {tasks
               .filter((task) =>
@@ -182,95 +278,34 @@ function MainBoard({ project }) {
               ))}
 
             <Button
-              variant="outline-primary"
-              onClick={() => openTaskModal(category.categoryId)}
-              className="mt-2"
+              className="addTaskButton mt-2"
+              onClick={() => openTaskCreateModal(category.categoryId)}
             >
               + Add Task
             </Button>
           </div>
         ))}
-        <div style={{ alignSelf: "start", margin: "0 10px" }}>
-          <Button variant="success" onClick={openCategoryModal}>
+
+        <div className="addCategoryButtonDiv d-flex">
+          <Button className="addCategoryButton" onClick={openCategoryModal}>
             + Add Category
           </Button>
         </div>
       </Container>
+      <TaskModalForm
+        show={showTaskCreateModal}
+        handleClose={closeTaskCreateModal}
+        onSubmit={saveTask}
+      />
 
-      {/* Modal nuova Task */}
-      <Modal show={showTaskModal} onHide={() => setShowTaskModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Add New Task</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form.Group>
-            <Form.Label>Title</Form.Label>
-            <Form.Control
-              type="text"
-              value={newTaskTitle}
-              onChange={(e) => setNewTaskTitle(e.target.value)}
-              placeholder="Enter task title"
-            />
-          </Form.Group>
-          <Form.Group className="mt-2">
-            <Form.Label>Description</Form.Label>
-            <Form.Control
-              as="textarea"
-              rows={3}
-              value={newTaskDescription}
-              onChange={(e) => setNewTaskDescription(e.target.value)}
-              placeholder="Enter task description"
-            />
-          </Form.Group>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowTaskModal(false)}>
-            Cancel
-          </Button>
-          <Button variant="primary" onClick={saveTask}>
-            Save Task
-          </Button>
-        </Modal.Footer>
-      </Modal>
-
-      <Modal
+      {/* Modale nuova Categoria */}
+      <AddCategoryModal
         show={showCategoryModal}
-        onHide={() => setShowCategoryModal(false)}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Add New Category</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form.Group>
-            <Form.Label>Category Name</Form.Label>
-            <Form.Control
-              type="text"
-              value={newCategoryName}
-              onChange={(e) => setNewCategoryName(e.target.value)}
-              placeholder="Enter category name"
-            />
-          </Form.Group>
-          <Form.Group className="mt-2">
-            <Form.Label>Category Color</Form.Label>
-            <Form.Control
-              type="color"
-              value={newCategoryColor}
-              onChange={(e) => setNewCategoryColor(e.target.value)}
-            />
-          </Form.Group>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
-            variant="secondary"
-            onClick={() => setShowCategoryModal(false)}
-          >
-            Cancel
-          </Button>
-          <Button variant="primary" onClick={saveCategory}>
-            Save Category
-          </Button>
-        </Modal.Footer>
-      </Modal>
+        handleClose={closeCategoryModal}
+        onSubmit={({ categoryName, categoryColor }) => {
+          saveCategory({ categoryName, categoryColor })
+        }}
+      />
     </>
   )
 }

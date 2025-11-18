@@ -2,14 +2,70 @@
   background-color: beige !important;
   overflow-x: auto;
   overflow-y: auto;
-  /* max-height: 500px; */
+  height: 85vh;
   max-width: 100%;
   border-radius: 10px;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
   border-right: 2px ridge rgb(0, 0, 0);
 }
 
-.mainBaordRows {
+.category-column {
+  margin: 0 10px;
   min-width: 400px;
-  max-width: 500px;
+  max-width: 400px;
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: rgba(165, 42, 42, 0.205);
+}
+
+.addCategoryButtonDiv {
+  align-self: flex-start;
+}
+
+.addCategoryButton {
+  border-radius: 8px !important;
+  background-color: #6aa4b7 !important;
+  font-weight: 700 !important;
+  border-color: #f2e0d0 !important;
+  font-size: 1.2rem !important;
+}
+
+.categoryTitle {
+  font-family: "Bruno Ace SC", sans-serif;
+  font-weight: 700 !important;
+  font-size: 1.8rem;
+}
+
+.categoryButtonDescription {
+  font-weight: 500 !important;
+  font-size: 1.2rem;
+}
+
+.categoryEditButton {
+  border-radius: 8px !important;
+  background-color: #6aa4b7 !important;
+  font-weight: 700 !important;
+  border-color: #f2e0d0 !important;
+}
+
+.categoryDeleteButton {
+  border-radius: 8px !important;
+  background-color: #d98299 !important;
+  font-weight: 700 !important;
+  border-color: #f2e0d0 !important;
+}
+
+.categoryIcon {
+  font-size: 0.9rem;
+}
+
+.addTaskButton {
+  background-color: #6aa4b7 !important;
+  font-size: 1.2rem !important;
+  font-weight: 700 !important;
+  border-color: #f2e0d0 !important;
+  font-size: 1.2rem !important;
 }
