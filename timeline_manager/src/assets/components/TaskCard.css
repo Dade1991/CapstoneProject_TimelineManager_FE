@@ -26,6 +26,12 @@
   color: #a82562 !important;
 }
 
+.dropdownStatusChange {
+  background-color: beige;
+  border: 1px solid #d9829983 !important;
+  border-radius: 6px;
+}
+
 .taskCardTextDescriptionSPECIAL {
   font-weight: 500;
   font-size: 1rem;

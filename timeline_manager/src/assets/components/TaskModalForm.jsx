@@ -2,18 +2,10 @@ import React, { useState } from "react"
 import { Modal, Button, Form } from "react-bootstrap"
 import "./ProjectModals.css"
 
-const priorityStyles = {
-  VERY_LOW: { backgroundColor: "#d3f9d8", color: "#27632a" },
-  LOW: { backgroundColor: "#e5f4ff", color: "#2a4d76" },
-  MEDIUM: { backgroundColor: "#fff3cd", color: "#856404" },
-  HIGH: { backgroundColor: "#f8d7da", color: "#721c24" },
-  CRITICAL: { backgroundColor: "#c82333", color: "white" },
-}
-
 const TaskModalForm = ({ show, handleClose, onSubmit }) => {
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
-  const [dueDate, setDueDate] = useState("")
+  const [taskExpiryDate, setTaskExpiryDate] = useState("")
   const [priority, setPriority] = useState("VERY_LOW")
 
   const handleSubmit = (e) => {
@@ -22,16 +14,18 @@ const TaskModalForm = ({ show, handleClose, onSubmit }) => {
     const taskData = {
       title,
       description,
-      dueDate,
+      taskExpiryDate: taskExpiryDate || null,
       priority,
     }
 
     onSubmit(taskData)
 
+    console.log("SONO UN LOG SFIGATO:", taskExpiryDate)
+
     // Pulire o reset form se vuoi
     setTitle("")
     setDescription("")
-    setDueDate("")
+    setTaskExpiryDate("")
     setPriority("VERY_LOW")
   }
 
@@ -75,12 +69,12 @@ const TaskModalForm = ({ show, handleClose, onSubmit }) => {
             </Form.Select>
           </Form.Group>
 
-          <Form.Group controlId="taskDueDate">
+          <Form.Group controlId="taskExpiryDate">
             <Form.Label>Task Expiry Date</Form.Label>
             <Form.Control
               type="date"
-              value={dueDate}
-              onChange={(e) => setDueDate(e.target.value)}
+              value={taskExpiryDate}
+              onChange={(e) => setTaskExpiryDate(e.target.value)}
             />
           </Form.Group>
         </Form>

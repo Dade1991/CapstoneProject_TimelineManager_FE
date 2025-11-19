@@ -2,17 +2,10 @@ import { Container, Row, Col } from "react-bootstrap"
 import { useParams } from "react-router-dom"
 import React, { useState, useEffect, useContext } from "react"
 import Button from "react-bootstrap/Button"
-import Form from "react-bootstrap/Form"
-import Nav from "react-bootstrap/Nav"
 import Navbar from "react-bootstrap/Navbar"
-import NavDropdown from "react-bootstrap/NavDropdown"
 import MainBoard from "./MainBoard"
 import { AuthContext } from "../../AuthContext"
 import "./Project.css"
-import TaskModalForm from "./TaskModalForm"
-
-import TaskModalUpdate from "./TaskModalUpdate"
-import AddMemberModal from "./AddMemberModal"
 import { useNavigate } from "react-router-dom"
 
 function Project() {
@@ -69,8 +62,12 @@ function Project() {
   return (
     <>
       <Navbar expand="lg" className="projectNavbar frosted-glass-project">
+        {projectData && (
+          <Navbar.Brand className="projectNavbarTitle mx-3">
+            {projectData.projectName}
+          </Navbar.Brand>
+        )}
         <Container fluid className="d-flex justify-content-end">
-          {/* <Navbar.Brand href="#">Logo</Navbar.Brand> */}
           <Button
             className="homepageLink nav-link"
             onClick={() => {

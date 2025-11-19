@@ -9,14 +9,12 @@
   top: 2px;
 }
 
-.newProjectLink {
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-  transition: color 0.4s ease, text-shadow 0.4s ease;
-}
-
-.newProjectLink:hover {
-  color: #f23d7f !important;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+.projectNavbarTitle {
+  font-family: "Bruno Ace SC", sans-serif;
+  color: #a82562 !important;
+  font-size: 2.1rem !important;
+  font-weight: 600 !important;
+  text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
 }
 
 .projectSettingsLink {
@@ -25,26 +23,6 @@
 }
 
 .projectSettingsLink:hover {
-  color: #f23d7f !important;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-}
-
-.addTaskLink {
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-  transition: color 0.4s ease, text-shadow 0.4s ease;
-}
-
-.addTaskLink:hover {
-  color: #f23d7f !important;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-}
-
-.taskSettingsLink {
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-  transition: color 0.4s ease, text-shadow 0.4s ease;
-}
-
-.taskSettingsLink:hover {
   color: #f23d7f !important;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
 }

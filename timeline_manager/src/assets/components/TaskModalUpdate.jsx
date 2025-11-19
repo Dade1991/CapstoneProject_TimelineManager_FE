@@ -21,15 +21,17 @@ const TaskModalUpdate = ({ show, handleClose, onSubmit, task }) => {
     e.preventDefault()
 
     const taskData = {
+      taskTitle: title,
+      taskDescription: description,
+      taskPriority: priority,
       taskId: task.taskId,
-      title,
-      description,
-      dueDate,
-      priority,
-      categories: task.categories,
+      taskExpiryDate: dueDate,
+      categoryIds: task.categories
+        ? task.categories.map((cat) => cat.categoryId)
+        : [],
     }
-
     onSubmit(taskData)
+    console.log("TASK UPDATE: " + JSON.stringify(taskData, null, 2))
 
     setTitle("")
     setDescription("")
@@ -50,7 +52,6 @@ const TaskModalUpdate = ({ show, handleClose, onSubmit, task }) => {
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              required
             />
           </Form.Group>
 
@@ -69,6 +70,7 @@ const TaskModalUpdate = ({ show, handleClose, onSubmit, task }) => {
               value={priority}
               onChange={(e) => setPriority(e.target.value)}
             >
+              <option value="VERY_LOW">LOW</option>
               <option value="LOW">LOW</option>
               <option value="MEDIUM">MEDIUM</option>
               <option value="HIGH">HIGH</option>

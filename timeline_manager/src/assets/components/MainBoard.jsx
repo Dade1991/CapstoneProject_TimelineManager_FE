@@ -43,14 +43,13 @@ function MainBoard({ project }) {
   const [tasks, setTasks] = useState([])
 
   const [showTaskCreateModal, setShowTaskCreateModal] = useState(false)
+  const [showCategoryModal, setShowCategoryModal] = useState(false)
+  const [showTaskEditModal, setShowTaskEditModal] = useState(false)
   const [taskCategoryId, setTaskCategoryId] = useState(null)
 
-  const [showCategoryUpdateModal, setShowCategoryUpdateModal] = useState(false)
   const [categoryToEdit, setCategoryToEdit] = useState(null)
-  const [showCategoryModal, setShowCategoryModal] = useState(false)
-
-  const [showTaskEditModal, setShowTaskEditModal] = useState(false)
   const [taskToEdit, setTaskToEdit] = useState(null)
+  const [showCategoryUpdateModal, setShowCategoryUpdateModal] = useState(false)
 
   // Carica categorie e task
 
@@ -129,7 +128,7 @@ function MainBoard({ project }) {
 
   // Salvataggio nuova task
 
-  function saveTask({ title, description, dueDate, priority }) {
+  function saveTask({ title, description, taskExpiryDate, priority }) {
     console.log("Task Category ID:", taskCategoryId)
     console.log("Categories array:", [taskCategoryId])
 
@@ -146,12 +145,9 @@ function MainBoard({ project }) {
       taskDescription: description,
       taskPriority: priority,
       projectId: project.projectId,
-      statusId: 1,
-      taskExpiryDate: dueDate,
+      taskExpiryDate: taskExpiryDate || null,
       categoryIds: [taskCategoryId],
     }
-
-    console.log("Payload inviato:", JSON.stringify(payload, null, 2))
 
     fetch("http://localhost:3001/api/tasks", {
       method: "POST",
@@ -174,26 +170,10 @@ function MainBoard({ project }) {
 
   // Modifica task esistente
 
-  async function updateTask({
-    taskId,
-    title,
-    description,
-    dueDate,
-    priority,
-    categories,
-  }) {
-    if (!title.trim()) {
-      alert("Task title is mandatory.")
-      return
-    }
-    const payload = {
-      taskTitle: title,
-      taskDescription: description,
-      dueDate,
-      priority,
-      categories,
-      projectId: project.projectId,
-    }
+  async function updateTask(taskData) {
+    console.log("Updating task:", taskData)
+
+    const taskId = taskData.taskId
     try {
       const res = await fetch(`http://localhost:3001/api/tasks/${taskId}`, {
         method: "PUT",
@@ -201,7 +181,7 @@ function MainBoard({ project }) {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(payload),
+        body: JSON.stringify(taskData),
       })
       if (!res.ok) throw new Error("Error during Task update.")
       const updatedTask = await res.json()
@@ -223,33 +203,6 @@ function MainBoard({ project }) {
       })
       if (!res.ok) throw new Error("Error deleting task.")
       setTasks((old) => old.filter((t) => t.taskId !== taskId))
-    } catch (e) {
-      alert(e.message)
-    }
-  }
-
-  // Toggle completamento task
-
-  async function toggleCompleteTask(task) {
-    const updatedTask = {
-      ...task,
-      completed: !task.completed,
-    }
-    try {
-      const res = await fetch(
-        `http://localhost:3001/api/tasks/${task.taskId}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(updatedTask),
-        }
-      )
-      if (!res.ok) throw new Error("Error updating task completion.")
-      const data = await res.json()
-      setTasks((old) => old.map((t) => (t.taskId === task.taskId ? data : t)))
     } catch (e) {
       alert(e.message)
     }
@@ -369,6 +322,24 @@ function MainBoard({ project }) {
     }
   }
 
+  // ---------- STATUS ----------
+
+  const handleStatusChange = async (taskId, newStatusId) => {
+    await fetch(`http://localhost:3001/api/tasks/${taskId}/status`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ statusId: newStatusId }),
+    })
+    setTasks((oldTasks) =>
+      oldTasks.map((t) =>
+        t.taskId === taskId ? { ...t, statusId: newStatusId } : t
+      )
+    )
+  }
+
   return (
     <>
       <Container fluid className="mainBoard m-2 d-flex flex-row py-4">
@@ -420,8 +391,8 @@ function MainBoard({ project }) {
                   task={task}
                   onDelete={() => deleteTask(task.taskId)}
                   onUpdate={() => openTaskEditModal(task)}
-                  onToggleComplete={() => toggleCompleteTask(task)}
                   priorityStyles={priorityStyles}
+                  onStatusChange={handleStatusChange}
                 />
               ))}
 
@@ -444,18 +415,17 @@ function MainBoard({ project }) {
         </div>
       </Container>
 
+      <AddCategoryModal
+        show={showCategoryModal}
+        handleClose={closeCategoryModal}
+        onSubmit={saveCategory}
+      />
+
       <CategoryModalUpdate
         show={showCategoryUpdateModal}
         handleClose={closeCategoryUpdateModal}
         category={categoryToEdit}
         onSubmit={updateCategory}
-      />
-
-      <TaskModalUpdate
-        show={showTaskEditModal}
-        handleClose={closeTaskEditModal}
-        task={taskToEdit}
-        onSubmit={updateTask}
       />
 
       <TaskModalForm
@@ -464,10 +434,11 @@ function MainBoard({ project }) {
         onSubmit={saveTask}
       />
 
-      <AddCategoryModal
-        show={showCategoryModal}
-        handleClose={closeCategoryModal}
-        onSubmit={saveCategory}
+      <TaskModalUpdate
+        show={showTaskEditModal}
+        handleClose={closeTaskEditModal}
+        task={taskToEdit}
+        onSubmit={updateTask}
       />
     </>
   )

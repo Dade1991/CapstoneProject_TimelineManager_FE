@@ -3,16 +3,30 @@ import Button from "react-bootstrap/Button"
 import Card from "react-bootstrap/Card"
 import "./TaskCard.css"
 
+const statusOptions = [
+  { label: "TO-DO", value: 1 },
+  { label: "IN_PROGRESS", value: 2 },
+  { label: "IN_REVIEW", value: 3 },
+  { label: "UNDER_TESTING", value: 4 },
+  { label: "PAUSED", value: 5 },
+  { label: "WAITING_FEEDBACK", value: 6 },
+  { label: "BLOCKED", value: 7 },
+  { label: "COMPLETED", value: 8 },
+  { label: "CANCELLED", value: 9 },
+]
+
 function TaskCard({
   task,
   onDelete,
   onUpdate,
-  onToggleComplete,
   priorityStyles,
+  onStatusChange,
 }) {
-  console.log(task)
-
   const priorityStyle = priorityStyles[task.taskPriority] || {}
+
+  const handleStatusChange = (e) => {
+    onStatusChange(task.taskId, Number(e.target.value))
+  }
 
   return (
     <>
@@ -39,12 +53,28 @@ function TaskCard({
               Task Expiry Date:
             </Card.Text>
             <div className="taskCardTextDescription m-0">
-              {task.dueDate ? task.dueDate.substring(0, 10) : "N/A"}
+              {task.taskExpiryDate ? task.taskExpiryDate : "N/A"}
             </div>
           </div>
           <div className="d-flex flex-row justify-content-between align-items-center">
             <Card.Text className="taskCardText m-0">Status</Card.Text>
-            <div className="taskCardTextDescription m-0">{task.taskStatus}</div>
+            <div className="taskCardTextDescription m-0">
+              <select
+                className="dropdownStatusChange px-1"
+                value={task.statusId}
+                onChange={handleStatusChange}
+              >
+                {statusOptions.map((status) => (
+                  <option
+                    className="dropdownStatusChangeMENU"
+                    key={status.value}
+                    value={status.value}
+                  >
+                    {status.label.replace(/_/g, " ")}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
           <hr className="brInterruption my-2" />
           <Card.Text className="taskCardText m-0">Task Description:</Card.Text>
@@ -65,9 +95,9 @@ function TaskCard({
             <div className="taskCardTextDescription">{task.updatedAt}</div>
           </div>
           <hr className="brInterruption my-2" />
-          <div className="d-flex flex-row justify-content-end align-items-center">
+          <div className="d-flex flex-row justify-content-between align-items-center">
             <div className="form-check me-3">
-              <input
+              {/* <input
                 className="form-check-input"
                 type="checkbox"
                 checked={task.isCompleted}
@@ -79,14 +109,16 @@ function TaskCard({
                 htmlFor={`check-${task.taskId}`}
               >
                 Complete
-              </label>
+              </label> */}
             </div>
-            <Button onClick={onDelete} className="taskCardDeleteButton me-1">
-              Delete Task
-            </Button>
-            <Button onClick={onUpdate} className="taskCardButton">
-              Edit Task infos
-            </Button>
+            <div className="d-flex flex-row align-items-center">
+              <Button onClick={onDelete} className="taskCardDeleteButton me-1">
+                Delete
+              </Button>
+              <Button onClick={onUpdate} className="taskCardButton">
+                Edit
+              </Button>
+            </div>
           </div>
         </Card.Body>
       </Card>
