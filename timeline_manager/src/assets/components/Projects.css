@@ -68,7 +68,7 @@
 }
 
 .unorderListDiv {
-  background-color: beige !important;
+  background-color: #f2e0d0 !important;
   border-radius: 15px;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7) !important;
   backdrop-filter: blur(10px) !important; /* effetto sfocatura */
@@ -88,11 +88,14 @@
 }
 
 .divisionBar {
-  color: #a82562;
-  font-size: 5rem !important;
-  border: 10px solid #a82562 !important;
+  border: none;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7) !important;
   border-radius: 50px;
+  height: 20px;
+  background-image: url("/images/DiagonalStripes.png");
+  background-color: #5f7385;
+  /* background-repeat: repeat-x; */
+  /* background-size: contain; */
 }
 
 .creationExpiryDates {
@@ -145,7 +148,8 @@
 .descriptionText {
   font-size: 1.2rem;
   border: 1px solid #d9829983 !important;
-  border-radius: 8px;
+  border-radius: 6px;
+  background-color: beige;
 }
 
 .projectLi {

@@ -2,19 +2,28 @@ import React, { useState } from "react"
 import { Modal, Button, Form } from "react-bootstrap"
 import "./ProjectModals.css"
 
+const priorityStyles = {
+  VERY_LOW: { backgroundColor: "#d3f9d8", color: "#27632a" },
+  LOW: { backgroundColor: "#e5f4ff", color: "#2a4d76" },
+  MEDIUM: { backgroundColor: "#fff3cd", color: "#856404" },
+  HIGH: { backgroundColor: "#f8d7da", color: "#721c24" },
+  CRITICAL: { backgroundColor: "#c82333", color: "white" },
+}
+
 const TaskModalForm = ({ show, handleClose, onSubmit }) => {
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
   const [dueDate, setDueDate] = useState("")
-  const [priority, setPriority] = useState("")
+  const [priority, setPriority] = useState("VERY_LOW")
 
   const handleSubmit = (e) => {
     e.preventDefault()
 
     const taskData = {
-      title, // stringa, titolo della task
-      description, // stringa, descrizione della task
-      dueDate, // stringa in formato data ISO o simile
+      title,
+      description,
+      dueDate,
+      priority,
     }
 
     onSubmit(taskData)
@@ -23,6 +32,7 @@ const TaskModalForm = ({ show, handleClose, onSubmit }) => {
     setTitle("")
     setDescription("")
     setDueDate("")
+    setPriority("VERY_LOW")
   }
 
   return (
@@ -57,11 +67,11 @@ const TaskModalForm = ({ show, handleClose, onSubmit }) => {
               value={priority}
               onChange={(e) => setPriority(e.target.value)}
             >
-              <option value="">Select a Priority</option>
-              <option value="sviluppatore">Sviluppatore</option>
-              <option value="project_manager">Project Manager</option>
-              <option value="designer">Designer</option>
-              <option value="tester">Tester</option>
+              <option value="VERY_LOW">VERY LOW</option>
+              <option value="LOW">LOW</option>
+              <option value="MEDIUM">MEDIUM</option>
+              <option value="HIGH">HIGH</option>
+              <option value="CRITICAL">CRITICAL</option>
             </Form.Select>
           </Form.Group>
 

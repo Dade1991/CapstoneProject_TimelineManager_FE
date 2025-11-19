@@ -33,3 +33,23 @@
   font-weight: 350 !important;
   font-style: italic;
 }
+
+.very_Low_BUTTON {
+  font-weight: 700 !important;
+}
+
+.low_BUTTON {
+  font-weight: 700 !important;
+}
+
+.medium_BUTTON {
+  font-weight: 700 !important;
+}
+
+.high_BUTTON {
+  font-weight: 700 !important;
+}
+
+.critical_BUTTON {
+  font-weight: 700 !important;
+}

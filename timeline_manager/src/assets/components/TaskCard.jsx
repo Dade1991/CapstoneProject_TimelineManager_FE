@@ -1,71 +1,91 @@
 import { Container, Row, Col } from "react-bootstrap"
 import Button from "react-bootstrap/Button"
 import Card from "react-bootstrap/Card"
-
 import "./TaskCard.css"
 
-function TaskCard() {
+function TaskCard({
+  task,
+  onDelete,
+  onUpdate,
+  onToggleComplete,
+  priorityStyles,
+}) {
+  console.log(task)
+
+  const priorityStyle = priorityStyles[task.taskPriority] || {}
+
   return (
     <>
-      <Card>
+      <Card className="cardMainContainer mb-4">
         <Card.Body className="taskCard">
           {" "}
-          <Card.Text className="taskCardText m-0">Category:</Card.Text>
-          <Card.Title className="taskCardTextTitle m-0">ONGOING</Card.Title>
-          <hr className="brInterruption my-2" />
           <Card.Text className="taskCardText m-0">Task: </Card.Text>
-          <Card.Title className="taskCardTextTitle m-0">CACCA</Card.Title>
+          <Card.Title className="taskCardTextTitle m-0">
+            {task.taskTitle}
+          </Card.Title>
           <hr className="brInterruption my-2" />
-          <Card.Text className="taskCardText m-0">Project Name: </Card.Text>
-          <Card.Title className="taskCardTextTitle m-0">CAPSTONE </Card.Title>
+          <div className="d-flex flex-row justify-content-between align-items-center">
+            <Card.Text className="taskCardText m-0">Task Priority:</Card.Text>
+            <div
+              className="taskCardTextDescriptionPRIORITY m-0 p-2"
+              style={priorityStyle}
+            >
+              {task.taskPriority}
+            </div>
+          </div>
           <hr className="brInterruption my-2" />
-          <Row className="mb-2">
-            <Col>
-              <Card.Text className="taskCardTextTimeInfo m-0">
-                Task Priority:{" "}
-              </Card.Text>
-            </Col>
-            <Col>
-              <Card.Text className="taskCardTextTimeInfo m-0 ">
-                Task Expiry Date:{" "}
-              </Card.Text>
-            </Col>
-          </Row>
-          <Card.Text className="taskCardTextTimeInfo text-center">
-            Status
-          </Card.Text>
+          <div className="d-flex flex-row justify-content-between align-items-center">
+            <Card.Text className="taskCardText m-0 ">
+              Task Expiry Date:
+            </Card.Text>
+            <div className="taskCardTextDescription m-0">
+              {task.dueDate ? task.dueDate.substring(0, 10) : "N/A"}
+            </div>
+          </div>
+          <div className="d-flex flex-row justify-content-between align-items-center">
+            <Card.Text className="taskCardText m-0">Status</Card.Text>
+            <div className="taskCardTextDescription m-0">{task.taskStatus}</div>
+          </div>
           <hr className="brInterruption my-2" />
           <Card.Text className="taskCardText m-0">Task Description:</Card.Text>
-          <Card.Text className="taskCardTextDescription m-0">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illum
-            laboriosam repellat quaerat commodi temporibus fugiat cupiditate
-            magni reprehenderit dolore at. Quo autem voluptas reprehenderit
-            dolorem consequuntur in quae suscipit nulla! Lorem ipsum dolor sit,
-            amet consectetur adipisicing elit. Quam veniam quae delectus ab
-            ullam error, beatae, possimus velit officiis in cumque? Nihil earum
-            maxime iure adipisci fuga distinctio ipsum veritatis.
+          <Card.Text className="taskCardTextDescriptionSPECIAL p-2 m-0">
+            {task.taskDescription}
           </Card.Text>
           <hr className="brInterruption my-2" />
-          <Card.Text className="taskCardText m-0">Task's Creator: </Card.Text>
-          <Card.Text className="taskCardTextTimeInfo">
-            Task last update by: - at:
-          </Card.Text>
+          <div className="d-flex flex-row justify-content-between align-items-center">
+            <Card.Text className="taskCardText m-0">Task's Creator:</Card.Text>
+            <div className="taskCardTextDescription m-0">
+              {task.creatorName}
+            </div>
+          </div>
+          <div className="d-flex flex-row justify-content-between align-items-center">
+            <Card.Text className="taskCardText m-0">
+              Task last update at:
+            </Card.Text>
+            <div className="taskCardTextDescription">{task.updatedAt}</div>
+          </div>
           <hr className="brInterruption my-2" />
           <div className="d-flex flex-row justify-content-end align-items-center">
             <div className="form-check me-3">
               <input
                 className="form-check-input"
                 type="checkbox"
-                value=""
-                id="flexCheckDisabled"
+                checked={task.isCompleted}
+                onChange={onToggleComplete}
+                id={`check-${task.taskId}`}
               />
-              <label className="form-check-label">Complete</label>
+              <label
+                className="form-check-label"
+                htmlFor={`check-${task.taskId}`}
+              >
+                Complete
+              </label>
             </div>
-            <Button className="taskCardDeleteButton me-1" variant="primary">
+            <Button onClick={onDelete} className="taskCardDeleteButton me-1">
               Delete Task
             </Button>
-            <Button className="taskCardButton" variant="primary">
-              Update Task infos
+            <Button onClick={onUpdate} className="taskCardButton">
+              Edit Task infos
             </Button>
           </div>
         </Card.Body>

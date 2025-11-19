@@ -1,3 +1,7 @@
+.cardMainContainer {
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+}
+
 .taskCard {
   font-weight: 600;
   font-size: 1.1em !important;
@@ -6,7 +10,7 @@
 }
 
 .taskCardText {
-  font-size: 0.6em;
+  font-size: 0.5em;
 }
 
 .taskCardTextTitle {
@@ -17,8 +21,24 @@
 }
 
 .taskCardTextDescription {
-  font-weight: 400;
+  font-weight: 500;
+  font-size: 1.2rem;
+  color: #a82562 !important;
+}
+
+.taskCardTextDescriptionSPECIAL {
+  font-weight: 500;
+  font-size: 1rem;
+  color: #a82562 !important;
+  border: 1px solid #d9829983 !important;
+  border-radius: 6px;
+  background-color: beige;
+}
+
+.taskCardTextDescriptionPRIORITY {
+  font-weight: 800;
   font-size: 0.5em;
+  border-radius: 50px;
 }
 
 .taskCardTextTimeInfo {

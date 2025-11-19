@@ -238,7 +238,7 @@ function Projects() {
                         <p className="descriptionTitle mt-2 m-0">
                           Description:
                         </p>
-                        <div className="descriptionText p-1 mb-3">
+                        <div className="descriptionText p-2 mb-3">
                           {proj.projectDescription}{" "}
                         </div>
 
@@ -281,7 +281,7 @@ function Projects() {
                           className="modalSaveButton me-2"
                           onClick={() => handleShowUpdate(proj)}
                         >
-                          Update
+                          Edit
                         </Button>
                         <Button
                           className="modalDeleteButton me-2"

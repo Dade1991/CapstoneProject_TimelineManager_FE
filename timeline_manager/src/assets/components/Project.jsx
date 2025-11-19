@@ -91,10 +91,7 @@ function Project() {
         </Container>
       </Navbar>
 
-      <Container
-        fluid
-        className="d-flex justify-content-center bg-info mt-4 z-0"
-      >
+      <Container fluid className="d-flex justify-content-center mt-4">
         <MainBoard project={projectData} />
       </Container>
     </>

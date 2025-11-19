@@ -96,6 +96,7 @@ function SidebarBanner() {
   ]
 
   // Duplicazione delle icone per loop continuo
+
   const doubledIcons = [...icons, ...icons]
   return (
     <>

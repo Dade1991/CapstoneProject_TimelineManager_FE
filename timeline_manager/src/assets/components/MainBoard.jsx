@@ -5,7 +5,36 @@ import TaskCard from "./TaskCard"
 import TaskModalForm from "./TaskModalForm"
 import AddCategoryModal from "./AddCategoryModal"
 import CategoryModalUpdate from "./CategoryModalUpdate"
+import TaskModalUpdate from "./TaskModalUpdate"
 import "./MainBoard.css"
+
+const priorityStyles = {
+  VERY_LOW: {
+    backgroundColor: "#d3f9d8",
+    color: "#27632a",
+    border: "2px solid #27632a",
+  },
+  LOW: {
+    backgroundColor: "#e5f4ff",
+    color: "#2a4d76",
+    border: "2px solid #2a4d76",
+  },
+  MEDIUM: {
+    backgroundColor: "#fff3cd",
+    color: "#856404",
+    border: "2px solid #856404",
+  },
+  HIGH: {
+    backgroundColor: "#f8d7da",
+    color: "#721c24",
+    border: "2px solid #721c24",
+  },
+  CRITICAL: {
+    backgroundColor: "#c82333",
+    color: "white",
+    border: "2px solid white",
+  },
+}
 
 function MainBoard({ project }) {
   const { token } = useContext(AuthContext)
@@ -14,16 +43,22 @@ function MainBoard({ project }) {
   const [tasks, setTasks] = useState([])
 
   const [showTaskCreateModal, setShowTaskCreateModal] = useState(false)
-  // const [showTaskUpdateModal, setShowTaskUpdateModal] = useState(false)
-  // const [selectedTask, setSelectedTask] = useState(null)
   const [taskCategoryId, setTaskCategoryId] = useState(null)
+
   const [showCategoryUpdateModal, setShowCategoryUpdateModal] = useState(false)
   const [categoryToEdit, setCategoryToEdit] = useState(null)
   const [showCategoryModal, setShowCategoryModal] = useState(false)
-  // const [newCategoryName, setNewCategoryName] = useState("")
-  // const [newCategoryColor, setNewCategoryColor] = useState("#000000")
+
+  const [showTaskEditModal, setShowTaskEditModal] = useState(false)
+  const [taskToEdit, setTaskToEdit] = useState(null)
 
   // Carica categorie e task
+
+  useEffect(() => {
+    console.log("Categories:", categories)
+    console.log("Tasks:", tasks)
+    console.log("Tasks details:", JSON.stringify(tasks, null, 2))
+  }, [categories, tasks])
 
   useEffect(() => {
     if (!token || !project) return
@@ -40,17 +75,20 @@ function MainBoard({ project }) {
       })
       .then((data) => {
         if (data.length === 0) {
-          const defaultCategory = {
-            categoryId: -1,
-            categoryName: "Default",
-            categoryColor: "#CCCCCC",
-          }
-          setCategories([defaultCategory])
+          setCategories([
+            {
+              categoryId: -1,
+              categoryName: "Default",
+              categoryColor: "#CCCCCC",
+            },
+          ])
         } else {
           setCategories(data)
         }
       })
       .catch(console.error)
+
+    // ---------- TASK ----------
 
     // Fetch task del progetto
 
@@ -65,7 +103,7 @@ function MainBoard({ project }) {
       .catch(console.error)
   }, [token, project])
 
-  // Apri modale creazione task e assegna categoria target
+  // Gestione modale creazione task
 
   function openTaskCreateModal(categoryId) {
     setTaskCategoryId(categoryId)
@@ -77,9 +115,28 @@ function MainBoard({ project }) {
     setTaskCategoryId(null)
   }
 
+  // Gestione modale edit task
+
+  function openTaskEditModal(task) {
+    setTaskToEdit(task)
+    setShowTaskEditModal(true)
+  }
+
+  function closeTaskEditModal() {
+    setShowTaskEditModal(false)
+    setTaskToEdit(null)
+  }
+
   // Salvataggio nuova task
 
-  function saveTask({ title, description, dueDate }) {
+  function saveTask({ title, description, dueDate, priority }) {
+    console.log("Task Category ID:", taskCategoryId)
+    console.log("Categories array:", [taskCategoryId])
+
+    if (!priority) {
+      alert("Task priority is mandatory.")
+      return
+    }
     if (!title.trim()) {
       alert("Task title is mandatory.")
       return
@@ -87,10 +144,15 @@ function MainBoard({ project }) {
     const payload = {
       taskTitle: title,
       taskDescription: description,
-      dueDate,
-      categories: [{ categoryId: taskCategoryId }],
+      taskPriority: priority,
       projectId: project.projectId,
+      statusId: 1,
+      taskExpiryDate: dueDate,
+      categoryIds: [taskCategoryId],
     }
+
+    console.log("Payload inviato:", JSON.stringify(payload, null, 2))
+
     fetch("http://localhost:3001/api/tasks", {
       method: "POST",
       headers: {
@@ -110,7 +172,92 @@ function MainBoard({ project }) {
       .catch((e) => alert(e.message))
   }
 
-  // Apri modale categoria
+  // Modifica task esistente
+
+  async function updateTask({
+    taskId,
+    title,
+    description,
+    dueDate,
+    priority,
+    categories,
+  }) {
+    if (!title.trim()) {
+      alert("Task title is mandatory.")
+      return
+    }
+    const payload = {
+      taskTitle: title,
+      taskDescription: description,
+      dueDate,
+      priority,
+      categories,
+      projectId: project.projectId,
+    }
+    try {
+      const res = await fetch(`http://localhost:3001/api/tasks/${taskId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(payload),
+      })
+      if (!res.ok) throw new Error("Error during Task update.")
+      const updatedTask = await res.json()
+      setTasks((old) => old.map((t) => (t.taskId === taskId ? updatedTask : t)))
+      closeTaskEditModal()
+    } catch (e) {
+      alert(e.message)
+    }
+  }
+
+  // Delete task
+
+  async function deleteTask(taskId) {
+    if (!window.confirm("Are you sure you want to delete this task?")) return
+    try {
+      const res = await fetch(`http://localhost:3001/api/tasks/${taskId}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      if (!res.ok) throw new Error("Error deleting task.")
+      setTasks((old) => old.filter((t) => t.taskId !== taskId))
+    } catch (e) {
+      alert(e.message)
+    }
+  }
+
+  // Toggle completamento task
+
+  async function toggleCompleteTask(task) {
+    const updatedTask = {
+      ...task,
+      completed: !task.completed,
+    }
+    try {
+      const res = await fetch(
+        `http://localhost:3001/api/tasks/${task.taskId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(updatedTask),
+        }
+      )
+      if (!res.ok) throw new Error("Error updating task completion.")
+      const data = await res.json()
+      setTasks((old) => old.map((t) => (t.taskId === task.taskId ? data : t)))
+    } catch (e) {
+      alert(e.message)
+    }
+  }
+
+  // ---------- CATEGORY ----------
+
+  // Apri modale nuova categoria
 
   function openCategoryModal() {
     setShowCategoryModal(true)
@@ -152,37 +299,12 @@ function MainBoard({ project }) {
     }
   }
 
-  // Delete della categoria
-
-  async function deleteCategory(categoryId) {
-    if (!window.confirm("Are you sure you want to delete this category?"))
-      return
-
-    try {
-      const res = await fetch(
-        `http://localhost:3001/api/categories/${categoryId}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      if (!res.ok) throw new Error("Error during Category delete.")
-      // Rimuovi categoria dallo stato
-      setCategories((old) => old.filter((cat) => cat.categoryId !== categoryId))
-    } catch (e) {
-      alert(e.message)
-    }
-  }
-
-  // Apri modale update categoria
+  // Apertura e chiusura modale update categoria
 
   function openCategoryUpdateModal(category) {
     setCategoryToEdit(category)
     setShowCategoryUpdateModal(true)
   }
-
   function closeCategoryUpdateModal() {
     setShowCategoryUpdateModal(false)
     setCategoryToEdit(null)
@@ -223,16 +345,41 @@ function MainBoard({ project }) {
     }
   }
 
+  // Delete della categoria
+
+  async function deleteCategory(categoryId) {
+    if (!window.confirm("Are you sure you want to delete this category?"))
+      return
+
+    try {
+      const res = await fetch(
+        `http://localhost:3001/api/categories/${categoryId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      if (!res.ok) throw new Error("Error during Category delete.")
+      // Rimuovi categoria dallo stato
+      setCategories((old) => old.filter((cat) => cat.categoryId !== categoryId))
+    } catch (e) {
+      alert(e.message)
+    }
+  }
+
   return (
     <>
-      <Container fluid className="mainBoard m-2 d-flex flex-row p-1">
+      <Container fluid className="mainBoard m-2 d-flex flex-row py-4">
         {categories.map((category) => (
           <div key={category.categoryId} className="category-column">
             <div className="d-flex flex-row justify-content-between align-items-center">
               <h4
                 className="categoryTitle pe-4 m-0"
                 style={{
-                  color: category.categoryColor || "#0084ffff",
+                  color: category.categoryColor || "#000000",
+                  textShadow: `2px 2px 6px ${category.categoryColor}90`,
                 }}
               >
                 {category.categoryName}
@@ -246,12 +393,6 @@ function MainBoard({ project }) {
                   >
                     <i className="categoryIcon bi bi-pencil-square"></i>
                   </Button>
-                  <CategoryModalUpdate
-                    show={showCategoryUpdateModal}
-                    handleClose={closeCategoryUpdateModal}
-                    category={categoryToEdit}
-                    onSubmit={updateCategory}
-                  />
                 </div>
                 <div className="d-flex flex-row align-items-center justify-content-between">
                   <p className="categoryButtonDescription m-0 me-2">Delete</p>
@@ -265,7 +406,7 @@ function MainBoard({ project }) {
               </div>
             </div>
 
-            <hr />
+            <hr className="brInterruption my-3" />
 
             {tasks
               .filter((task) =>
@@ -274,7 +415,14 @@ function MainBoard({ project }) {
                 )
               )
               .map((task) => (
-                <TaskCard key={task.taskId} task={task} />
+                <TaskCard
+                  key={task.taskId}
+                  task={task}
+                  onDelete={() => deleteTask(task.taskId)}
+                  onUpdate={() => openTaskEditModal(task)}
+                  onToggleComplete={() => toggleCompleteTask(task)}
+                  priorityStyles={priorityStyles}
+                />
               ))}
 
             <Button
@@ -287,24 +435,39 @@ function MainBoard({ project }) {
         ))}
 
         <div className="addCategoryButtonDiv d-flex">
-          <Button className="addCategoryButton" onClick={openCategoryModal}>
+          <Button
+            className="addCategoryButton ms-2 p-3"
+            onClick={openCategoryModal}
+          >
             + Add Category
           </Button>
         </div>
       </Container>
+
+      <CategoryModalUpdate
+        show={showCategoryUpdateModal}
+        handleClose={closeCategoryUpdateModal}
+        category={categoryToEdit}
+        onSubmit={updateCategory}
+      />
+
+      <TaskModalUpdate
+        show={showTaskEditModal}
+        handleClose={closeTaskEditModal}
+        task={taskToEdit}
+        onSubmit={updateTask}
+      />
+
       <TaskModalForm
         show={showTaskCreateModal}
         handleClose={closeTaskCreateModal}
         onSubmit={saveTask}
       />
 
-      {/* Modale nuova Categoria */}
       <AddCategoryModal
         show={showCategoryModal}
         handleClose={closeCategoryModal}
-        onSubmit={({ categoryName, categoryColor }) => {
-          saveCategory({ categoryName, categoryColor })
-        }}
+        onSubmit={saveCategory}
       />
     </>
   )

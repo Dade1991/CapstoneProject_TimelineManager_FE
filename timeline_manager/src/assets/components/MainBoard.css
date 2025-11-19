@@ -1,12 +1,15 @@
 .mainBoard {
-  background-color: beige !important;
   overflow-x: auto;
   overflow-y: auto;
-  height: 85vh;
+  /* height: 85vh; */
   max-width: 100%;
   border-radius: 10px;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
   border-right: 2px ridge rgb(0, 0, 0);
+  background-color: rgba(255, 255, 255, 0.3); /* sfondo semitrasparente */
+  backdrop-filter: blur(10px); /* effetto sfocatura */
+  -webkit-backdrop-filter: blur(10px); /* supporto Safari */
+  border: 1px solid rgba(255, 255, 255, 0.4); /* bordo leggero */
 }
 
 .category-column {
@@ -18,7 +21,7 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  background-color: rgba(165, 42, 42, 0.205);
+  background-color: rgba(89, 42, 165, 0.24);
 }
 
 .addCategoryButtonDiv {
@@ -30,18 +33,24 @@
   background-color: #6aa4b7 !important;
   font-weight: 700 !important;
   border-color: #f2e0d0 !important;
-  font-size: 1.2rem !important;
+  font-size: 1.7rem !important;
 }
 
 .categoryTitle {
   font-family: "Bruno Ace SC", sans-serif;
   font-weight: 700 !important;
   font-size: 1.8rem;
+  flex: 1;
+  min-width: 0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .categoryButtonDescription {
   font-weight: 500 !important;
   font-size: 1.2rem;
+  flex-shrink: 0;
 }
 
 .categoryEditButton {
@@ -58,6 +67,10 @@
   border-color: #f2e0d0 !important;
 }
 
+.brInterruption {
+  color: #5f7385;
+}
+
 .categoryIcon {
   font-size: 0.9rem;
 }
@@ -68,4 +81,11 @@
   font-weight: 700 !important;
   border-color: #f2e0d0 !important;
   font-size: 1.2rem !important;
+}
+
+.taskTitleH4 {
+  white-space: normal !important;
+}
+
+.frosted-glass {
 }
