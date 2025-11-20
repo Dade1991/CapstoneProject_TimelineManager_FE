@@ -1,7 +1,6 @@
 .mainBoard {
   overflow-x: auto;
   overflow-y: auto;
-  /* height: 85vh; */
   max-width: 100%;
   border-radius: 10px;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
