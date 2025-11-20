@@ -70,3 +70,13 @@
   color: #f2e0d0;
   font-size: 1.6rem !important;
 }
+
+.homepageText {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.homepageReturnIcon {
+  font-size: 1.4rem;
+  font-weight: 700;
+}

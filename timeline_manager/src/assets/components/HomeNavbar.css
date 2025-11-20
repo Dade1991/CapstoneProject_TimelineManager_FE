@@ -1,6 +1,18 @@
+@keyframes pulseShadow {
+  0%,
+  100% {
+    box-shadow: 0 0 23px #f23d7f;
+  }
+  30% {
+    box-shadow: 0 0 15px rgb(0, 0, 0);
+  }
+}
+
+/* ____________________________ */
+
 .homeNavbar {
   border-radius: 40px;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+  animation: pulseShadow 3s infinite;
 }
 
 .linkIconSymbol {

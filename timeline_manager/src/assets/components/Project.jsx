@@ -75,8 +75,8 @@ function Project() {
             }}
           >
             <div className="d-flex flex-row justify-content-center align-items-center me-4">
-              <p className="m-0 me-2">Hompage</p>
-              <i className="bi bi-arrow-return-left"></i>
+              <p className="homepageText m-0 me-2">Hompage</p>
+              <i className="homepageReturnIcon bi bi-arrow-return-left"></i>
             </div>
           </Button>
           {/* <Button className="saveProjectButton px-4 py-1">

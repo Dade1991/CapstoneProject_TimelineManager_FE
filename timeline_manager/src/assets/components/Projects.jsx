@@ -197,7 +197,7 @@ function Projects() {
         </Container>
       </Navbar>
 
-      <Container fluid className="wrapper mt-4">
+      <Container fluid className="wrapperMainBoard">
         <div className="me-4 ms-4 mb-4 m-0">
           <h3 className="projectsListTextTitle py-3 text-center">
             <strong className="highlightText">PROJECTs SECTION</strong>
@@ -207,15 +207,15 @@ function Projects() {
           </p>
         </div>
         <hr className="brInterruptionBIG my-4" />
-        <Row className="p-3">
-          <div className="">
-            <h4 className="descriptionSubtitle text-center fst-italic py-5 px-3">
-              In this section, you can easily access your projects,
-              <br />
-              get a quick info overview, create new projects, <br />
-              and manage them effortlessly by adding or removing partners!
-            </h4>
-          </div>
+        <div className="">
+          <h4 className="descriptionSubtitle text-center fst-italic py-5 px-3">
+            In this section, you can easily access your projects,
+            <br />
+            get a quick info overview, create new projects, <br />
+            and manage them effortlessly by adding or removing partners!
+          </h4>
+        </div>
+        <Row className="p-3 px-4">
           <Col className="unorderListDiv" lg={8}>
             {error && <p className="text-danger">{error}</p>}
             <ul className="unorderList p-0">
@@ -228,16 +228,20 @@ function Projects() {
                 <li key={proj.projectId} className="singleProjectList p-3 mb-4">
                   <Row className="d-flex flex-row">
                     <Col md={10} className="projectLi align-items-center">
-                      <strong
-                        className="d-flex align-items-center projectSingleTitle"
-                        onClick={() => handleOpenProject(proj.projectId)}
-                      >
-                        <i className="bulletPoint bi bi-folder2-open me-3"></i>{" "}
-                        {proj.projectName}{" "}
-                        {proj.isOverdue && (
-                          <span style={{ color: "red" }}> [OVERDUE]</span>
-                        )}
-                      </strong>
+                      <div className="w-100">
+                        <div
+                          className="d-flex align-items-center projectSingleTitle w-100"
+                          onClick={() => handleOpenProject(proj.projectId)}
+                        >
+                          <i className="bulletPoint bi bi-folder2-open me-3"></i>{" "}
+                          <div className="d-flex">
+                            {proj.projectName}{" "}
+                            {proj.isOverdue && (
+                              <span style={{ color: "red" }}> [OVERDUE]</span>
+                            )}
+                          </div>
+                        </div>
+                      </div>
                       <hr className="brInterruption my-4" />
                       <p className="descriptionTitle mt-2 m-0">
                         Project Description:
