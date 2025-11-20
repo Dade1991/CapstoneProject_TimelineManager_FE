@@ -54,7 +54,7 @@ function LoginForm() {
       >
         <div className="loginFormDiv d-flex flex-column">
           <div className="loginFormWelcomeText align-content-center">
-            <h3 className="text-center">
+            <h3 className="loginText text-center m-0">
               Welcome back, ready to timemanage your activities?
             </h3>
             <div className="gifDiv m-0 p-0">
@@ -106,27 +106,28 @@ function LoginForm() {
                   ></Form.Control.Feedback>
                 </InputGroup>
                 <div className="d-flex justify-content-center align-items-center">
-                  <Button type="submit" size="lg" className="custom-btn mt-5">
-                    <p className="submitButton m-0">Login!</p>
+                  <Button type="submit" size="lg" className="loginButton mt-5">
+                    LOGIN
                   </Button>
                 </div>
               </Col>
             </Form.Group>
             {error && <p className="text-danger text-center">{error}</p>}
           </div>
-          <div className="my-5 text-center">
+          <hr className="brInterruption my-4" />
+          <div className=" text-center">
             <h3 className="signUpAdds">
               If your not yet registered to our webiste, click the following
-              link: it's free!😉
+              link: it's free! <i className="bi bi-emoji-smile-upside-down"></i>
             </h3>
             <Button
               onClick={() => {
                 navigate("/SignUpForm")
               }}
               size="lg"
-              className="custom-btn mt-5"
+              className="signupButton mt-5"
             >
-              <p className="signUpButton m-0">Sign-up!</p>
+              SING-UP
             </Button>
           </div>
         </div>

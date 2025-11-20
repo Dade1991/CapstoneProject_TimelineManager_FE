@@ -14,6 +14,8 @@
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   transition: color 0.4s ease, text-shadow 0.4s ease;
   background-color: inherit !important;
+  font-size: 2.1rem !important;
+  font-weight: 500 !important;
 }
 
 .homeLink:hover {
@@ -24,6 +26,8 @@
 .howItWorksLink {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   transition: color 0.4s ease, text-shadow 0.4s ease;
+  font-size: 2.1rem !important;
+  font-weight: 500 !important;
 }
 
 .howItWorksLink:hover {
@@ -34,6 +38,8 @@
 .contact_usLink {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   transition: color 0.4s ease, text-shadow 0.4s ease;
+  font-size: 2.1rem !important;
+  font-weight: 500 !important;
 }
 
 .contact_usLink:hover {
@@ -45,6 +51,8 @@
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   transition: color 0.4s ease, text-shadow 0.4s ease;
   background-color: inherit !important;
+  font-size: 2.1rem !important;
+  font-weight: 500 !important;
 }
 
 .loginLink:hover {
@@ -68,6 +76,8 @@
 .yourAreaLink {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   transition: color 0.4s ease, text-shadow 0.4s ease;
+  font-size: 2.1rem !important;
+  font-weight: 500 !important;
 }
 
 .yourAreaLink:hover {
@@ -79,6 +89,8 @@
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   transition: color 0.4s ease, text-shadow 0.4s ease;
   background-color: inherit !important;
+  font-size: 2.1rem !important;
+  font-weight: 500 !important;
 }
 
 .projectsLink:hover {

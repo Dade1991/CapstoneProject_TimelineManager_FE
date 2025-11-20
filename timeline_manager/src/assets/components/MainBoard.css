@@ -6,10 +6,10 @@
   border-radius: 10px;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
   border-right: 2px ridge rgb(0, 0, 0);
-  background-color: rgba(255, 255, 255, 0.3); /* sfondo semitrasparente */
-  backdrop-filter: blur(10px); /* effetto sfocatura */
-  -webkit-backdrop-filter: blur(10px); /* supporto Safari */
-  border: 1px solid rgba(255, 255, 255, 0.4); /* bordo leggero */
+  background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
 .category-column {
@@ -28,13 +28,78 @@
   align-self: flex-start;
 }
 
+/* ----------------------------- */
+
 .addCategoryButton {
+  position: relative;
+  min-width: 250px;
+  max-width: 300px;
   border-radius: 8px !important;
   background-color: #6aa4b7 !important;
   font-weight: 700 !important;
   border-color: #f2e0d0 !important;
   font-size: 1.7rem !important;
+  overflow: hidden;
 }
+
+.addCategoryButton::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("/images/DiagonalStripes.png");
+  background-repeat: no-repeat;
+  background-size: 400px;
+  background-position: center center;
+  opacity: 0.2;
+  pointer-events: none;
+  border-radius: 8px;
+  z-index: 0;
+}
+
+.addCategoryButton > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ----------------------------- */
+
+.addTaskButton {
+  position: relative;
+  /* ____________ */
+  background-color: #6aa4b7 !important;
+  font-size: 1.5rem !important;
+  font-weight: 700 !important;
+  border-color: #f2e0d0 !important;
+  /* ____________ */
+  overflow: hidden;
+}
+
+.addTaskButton::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("/images/DiagonalStripes.png");
+  background-repeat: no-repeat;
+  background-size: 400px;
+  background-position: center center;
+  opacity: 0.2;
+  pointer-events: none;
+  border-radius: 8px;
+  z-index: 0;
+}
+
+.addTaskButton > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ----------------------------- */
 
 .categoryTitle {
   font-family: "Bruno Ace SC", sans-serif;
@@ -75,14 +140,16 @@
   font-size: 0.9rem;
 }
 
-.addTaskButton {
-  background-color: #6aa4b7 !important;
-  font-size: 1.2rem !important;
-  font-weight: 700 !important;
-  border-color: #f2e0d0 !important;
-  font-size: 1.2rem !important;
-}
-
 .taskTitleH4 {
   white-space: normal !important;
+}
+
+.plusButtonIconTask {
+  position: relative;
+  top: 2px;
+}
+
+.plusButtonIconCategory {
+  position: relative;
+  top: 4px;
 }

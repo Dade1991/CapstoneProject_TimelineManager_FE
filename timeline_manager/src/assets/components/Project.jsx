@@ -79,12 +79,12 @@ function Project() {
               <i className="bi bi-arrow-return-left"></i>
             </div>
           </Button>
-          <Button className="saveProjectButton px-4 py-1">
+          {/* <Button className="saveProjectButton px-4 py-1">
             <div className="d-flex flex-row">
               <i className="saveProjectButtonDetails bi bi-bookmark-check me-2"></i>
               <p className="saveProjectButtonDetails m-0">Save</p>
             </div>
-          </Button>
+          </Button> */}
         </Container>
       </Navbar>
 

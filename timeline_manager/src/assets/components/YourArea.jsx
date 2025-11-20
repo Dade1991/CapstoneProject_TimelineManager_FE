@@ -184,25 +184,30 @@ function YourArea() {
       >
         <div className="updateFormDiv d-flex flex-column flex-grow-1">
           <div className="updateFormWelcomeText align-content-center">
-            <h3 className="text-center mb-3">
-              <strong>This is your personal area!</strong> <br />
-              Here you can go to your{" "}
-              <strong className="boldText">PROJECTS</strong> & you can{" "}
-              <strong className="boldText">UPDATE</strong> your personal
-              information!
+            <h3 className="yourAreaWelcomeText text-center mb-3">
+              PERSONAL
+              <br />
+              <strong className="yourAreaWelcomeBoldText">AREA</strong>
             </h3>
           </div>
-          <hr className="m-1 mt-3" />
-          <div className="d-flex flex-row align-items-center p-2">
-            <p className="yourAreaDescribe m-0">GO to your projects</p>
+          <hr className="m-2 mt-3" />
+          <div className="d-flex flex-row justify-content-between align-items-center  p-2">
+            <div className="d-flex flex-row justify-content-between align-items-center">
+              <p className="yourAreaDescribe m-0">GO to your projects</p>
+              <div className="pt-1 d-flex flex-row">
+                <i className="boldText bi bi-caret-right-fill ms-3"></i>
+                <i className="boldText bi bi-caret-right ms-3"></i>
+                <i className="boldText bi bi-caret-right-fill ms-3"></i>
+              </div>
+            </div>
             <Button
-              className="custom-btn-password ms-2"
+              className="pathProjectButton ms-2"
               onClick={() => navigatePersonalPJT("/projects")}
             >
               HERE
             </Button>
           </div>
-          <hr className="m-1" />
+          <hr className="m-2" />
           <Row className="p-2 flex-grow-1">
             <Col md={6} className="">
               <h4 className="yourAreaTitle">Change Infos</h4>
@@ -294,12 +299,10 @@ function YourArea() {
                   <Button
                     type="submit"
                     size="lg"
-                    className="custom-btn mt-4"
+                    className="updateInfoButton mt-4"
                     disabled={loading}
                   >
-                    <p className="signUpButton m-0">
-                      {loading ? "Updating..." : "Update Infos"}
-                    </p>
+                    {loading ? "Updating..." : "EDIT INFO"}
                   </Button>
                 </div>
               </Form>
@@ -366,11 +369,11 @@ function YourArea() {
                 )}
                 <div className="d-flex justify-content-end align-items-center">
                   <Button
-                    className="custom-btn-password"
+                    className="changePasswordButton"
                     type="submit"
                     disabled={loading}
                   >
-                    {loading ? "Updating..." : "Change Password"}
+                    {loading ? "Updating..." : "CHANGE PASSWORD"}
                   </Button>
                 </div>
               </Form>

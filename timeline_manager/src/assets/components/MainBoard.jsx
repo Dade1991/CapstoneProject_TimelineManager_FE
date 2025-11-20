@@ -400,17 +400,23 @@ function MainBoard({ project }) {
               className="addTaskButton mt-2"
               onClick={() => openTaskCreateModal(category.categoryId)}
             >
-              + Add Task
+              <div className="d-flex flex-row justify-content-center align-items-center">
+                <i className="plusButtonIconTask bi bi-plus-circle"></i>
+                <p className="m-0 ms-2">Add Task</p>
+              </div>
             </Button>
           </div>
         ))}
 
-        <div className="addCategoryButtonDiv d-flex">
+        <div className="addCategoryButtonDiv">
           <Button
             className="addCategoryButton ms-2 p-3"
             onClick={openCategoryModal}
           >
-            + Add Category
+            <div className="d-flex flex-row justify-content-center align-items-center">
+              <i className="plusButtonIconCategory bi bi-plus-circle"></i>
+              <p className="m-0 ms-2">Add Category</p>
+            </div>
           </Button>
         </div>
       </Container>

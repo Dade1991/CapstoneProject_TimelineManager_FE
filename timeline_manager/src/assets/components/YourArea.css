@@ -84,3 +84,40 @@
   -webkit-backdrop-filter: blur(10px); /* supporto Safari */
   border: 1px solid rgba(255, 255, 255, 0.4); /* bordo leggero */
 }
+
+.yourAreaWelcomeText {
+  font-family: "Bruno Ace SC", sans-serif;
+  font-size: 2rem;
+  font-weight: 600;
+  text-shadow: 2px 2px 5px #f2e0d0;
+  color: #a82562;
+}
+
+.yourAreaWelcomeBoldText {
+  font-family: "Bruno Ace SC", sans-serif;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #f2e0d0;
+  text-shadow: 2px 2px 5px #a82562;
+}
+
+.pathProjectButton {
+  background-color: #0e93a1 !important;
+  font-size: 1.2rem !important;
+  font-weight: 700 !important;
+  border-color: #f2e0d0 !important;
+}
+
+.updateInfoButton {
+  background-color: #a82562 !important;
+  font-size: 1.2rem !important;
+  font-weight: 700 !important;
+  border-color: #f2e0d0 !important;
+}
+
+.changePasswordButton {
+  background-color: #0e93a1 !important;
+  font-size: 1.2rem !important;
+  font-weight: 700 !important;
+  border-color: #f2e0d0 !important;
+}

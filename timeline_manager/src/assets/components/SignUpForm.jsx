@@ -56,10 +56,12 @@ function SignUpForm() {
         className="signUpForm wrapper frosted-glass px-5 py-3 d-flex justify-content-center"
       >
         <div className="signUpFormDiv d-flex flex-column">
-          <div className="signUpFormWelcomeText align-content-center mb-3">
-            <h3 className="text-center">
+          <div className="signUpFormWelcomeText align-content-center">
+            <h3 className="signupWelcomeText text-center m-0">
               Get ready with{" "}
-              <strong className="boldText">Timeline Manager</strong>{" "}
+              <strong className="signupWelcomeBoldText">
+                Timeline Manager
+              </strong>{" "}
               functionalities <br />
               and organize at best you Projects!
             </h3>
@@ -177,12 +179,10 @@ function SignUpForm() {
               <Button
                 type="submit"
                 size="lg"
-                className="custom-btn ms-5 py-2"
+                className="signupButton ms-5 py-2"
                 disabled={loading}
               >
-                <p className="signUpButton m-0">
-                  {loading ? "Submitting..." : "SUBMIT"}
-                </p>
+                {loading ? "Submitting..." : "SUBMIT"}
               </Button>
             </div>
           </div>

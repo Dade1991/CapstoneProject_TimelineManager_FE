@@ -14,6 +14,8 @@
 
 .boldText {
   color: #f23d7f !important;
+  font-size: 1.7rem !important;
+  font-weight: 600 !important;
 }
 
 .signUpStatus {
@@ -26,17 +28,17 @@
 }
 
 .signUpAdds {
-  font-size: 0.8em;
-  font-weight: 300;
-  white-space: nowrap;
+  font-size: 1.2rem !important;
+  font-weight: 600 !important;
+  text-overflow: ellipsis;
+  margin-bottom: 0px;
 }
 
-.signUpButton {
-  font-size: 1.1em;
-  font-weight: 700;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.signupButton {
+  background-color: #a82562 !important;
+  font-size: 1.2rem !important;
+  font-weight: 700 !important;
+  border-color: #f2e0d0 !important;
 }
 
 .custom-btn {
@@ -76,4 +78,20 @@
   backdrop-filter: blur(10px); /* effetto sfocatura */
   -webkit-backdrop-filter: blur(10px); /* supporto Safari */
   border: 1px solid rgba(255, 255, 255, 0.4); /* bordo leggero */
+}
+
+.signupWelcomeText {
+  font-family: "Bruno Ace SC", sans-serif;
+  font-size: 2rem;
+  font-weight: 600;
+  text-shadow: 2px 2px 5px #f2e0d0;
+  color: #a82562;
+}
+
+.signupWelcomeBoldText {
+  font-family: "Bruno Ace SC", sans-serif;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #f2e0d0;
+  text-shadow: 2px 2px 5px #a82562;
 }

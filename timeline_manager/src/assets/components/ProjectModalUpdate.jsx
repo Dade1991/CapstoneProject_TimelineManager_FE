@@ -31,7 +31,6 @@ const ProjectModalUpdate = ({ show, handleClose, onSubmit, project }) => {
             NO PROJECT SELECTED!
           </Modal.Title>
         </Modal.Header>
-
         <Modal.Body className="modalColor">
           <p className="m-0">No valid Project found. =(</p>
         </Modal.Body>
@@ -51,13 +50,13 @@ const ProjectModalUpdate = ({ show, handleClose, onSubmit, project }) => {
 
   return (
     <Modal className="modalText" show={show} onHide={handleClose} centered>
-      <Form onSubmit={handleSubmit}>
-        <Modal.Header className="modalColor" closeButton>
-          <Modal.Title className="modalTextTitle">
-            UPDATE PROJECT INFO
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body className="modalColor">
+      <Modal.Header className="modalColor" closeButton>
+        <Modal.Title className="modalTextTitle">
+          UPDATE PROJECT INFO
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body className="modalColor">
+        <Form onSubmit={handleSubmit}>
           <Form.Group controlId="updateProjectTitle" className="mb-3">
             <Form.Label>Title</Form.Label>
             <Form.Control
@@ -85,16 +84,16 @@ const ProjectModalUpdate = ({ show, handleClose, onSubmit, project }) => {
               required
             />
           </Form.Group>
-        </Modal.Body>
-        <Modal.Footer className="modalColor">
-          <Button className="modalCloseButton" onClick={handleClose}>
-            Close
-          </Button>
-          <Button className="modalSaveButton" type="submit">
-            UPDATE
-          </Button>
-        </Modal.Footer>
-      </Form>
+          <Modal.Footer className="modalColor">
+            <Button className="modalCloseButton" onClick={handleClose}>
+              Close
+            </Button>
+            <Button className="modalSaveButton" type="submit">
+              UPDATE
+            </Button>
+          </Modal.Footer>
+        </Form>
+      </Modal.Body>
     </Modal>
   )
 }

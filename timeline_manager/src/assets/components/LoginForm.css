@@ -25,7 +25,8 @@
 
 .signUpAdds {
   font-size: 1.2rem !important;
-  font-weight: 500 !important;
+  font-weight: 550 !important;
+  margin-bottom: 0px;
 }
 
 .submitButton {
@@ -38,14 +39,18 @@
   font-weight: 700;
 }
 
-.custom-btn {
+.loginButton {
   background-color: #a82562 !important;
-  border-color: #a82562 !important;
+  font-size: 1.2rem !important;
+  font-weight: 700 !important;
+  border-color: #f2e0d0 !important;
 }
 
-.custom-btn:hover {
-  background-color: #8b1a52 !important;
-  border-color: #8b1a52 !important;
+.signupButton {
+  background-color: #a82562 !important;
+  font-size: 1.2rem !important;
+  font-weight: 700 !important;
+  border-color: #f2e0d0 !important;
 }
 
 .gifDiv {
@@ -56,14 +61,18 @@
 
 .checkGif {
   position: relative;
-  left: 470px;
-  bottom: 30px;
+  left: 0px;
+  bottom: 80px;
   height: auto;
 }
 
 .yourAreaDescribe {
   font-weight: 550 !important;
   font-size: 1.2rem;
+}
+
+.brInterruption {
+  color: #5f7385;
 }
 
 .wrapper {
@@ -77,4 +86,49 @@
   backdrop-filter: blur(10px); /* effetto sfocatura */
   -webkit-backdrop-filter: blur(10px); /* supporto Safari */
   border: 1px solid rgba(255, 255, 255, 0.4); /* bordo leggero */
+}
+
+.welcomeText {
+  font-family: "Bruno Ace SC", sans-serif;
+  font-size: 2rem;
+  font-weight: 600;
+  text-shadow: 2px 2px 5px #f2e0d0;
+  color: #a82562;
+}
+
+.welcomeBoldText {
+  font-family: "Bruno Ace SC", sans-serif;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #f2e0d0;
+  text-shadow: 2px 2px 5px #a82562;
+}
+
+.boldText {
+  color: #f23d7f !important;
+}
+
+.textDocumentationWelcomeText {
+  align-items: center;
+}
+
+.textDocumentationList {
+  font-size: 1.1rem;
+  font-weight: 550;
+  text-overflow: ellipsis;
+}
+
+.textDocumentation {
+  font-size: 1.1rem;
+  font-weight: 550;
+  text-overflow: ellipsis;
+  margin-bottom: 0px;
+}
+
+.loginText {
+  font-family: "Bruno Ace SC", sans-serif;
+  font-size: 2rem;
+  font-weight: 600;
+  text-shadow: 2px 2px 5px #f2e0d0;
+  color: #a82562;
 }

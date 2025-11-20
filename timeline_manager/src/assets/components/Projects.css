@@ -9,6 +9,16 @@
   background-color: inherit !important;
 }
 
+.homepageText {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.homepageReturnIcon {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
 .homepageLink:hover {
   color: #f23d7f !important;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
@@ -18,22 +28,12 @@
   border-radius: 15px;
 }
 
-.newProjectButton {
-  border-radius: 15px;
-  font-family: "Bruno Ace SC", sans-serif !important;
-  font-weight: 600 !important;
-  font-size: 1.2rem !important;
-  color: #f23d7f !important;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-}
-
 .projectSingleTitle {
   font-family: "Bruno Ace SC", sans-serif;
-  font-size: 1.9rem;
+  font-size: 2.2rem;
   font-weight: 600 !important;
   color: #a82562;
   cursor: pointer;
-  text-decoration: underline;
   transition: transform 0.3s ease, text-shadow 0.3s ease, color 0.3s ease;
 }
 
@@ -52,57 +52,54 @@
   text-shadow: 2px 2px 5px #a82562;
 }
 
-.projectListTextTitle {
-  color: #f2e0d0 !important;
+.projectsListTextTitle {
+  font-family: "Bruno Ace SC", sans-serif;
+  color: #a00b50;
   font-weight: 600;
-  font-size: 2.5rem !important;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+  font-size: 3rem !important;
+  text-shadow: 2px 2px 5px #f2e0d0;
+}
+
+.singleProjectListNotFound {
+  font-size: 1.5rem !important;
+  font-weight: 600;
+  background-color: #f2e0d0 !important;
+  border-radius: 15px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
 }
 
 .singleProjectList {
-  font-size: 2.5rem !important;
+  background-color: #f2e0d0 !important;
+  border-radius: 15px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
 }
 
 .unorderList {
   list-style-type: none;
 }
 
-.unorderListDiv {
-  background-color: #f2e0d0 !important;
-  border-radius: 15px;
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7) !important;
-  backdrop-filter: blur(10px) !important; /* effetto sfocatura */
-  -webkit-backdrop-filter: blur(10px) !important; /* supporto Safari */
-  border: 1px solid rgba(255, 255, 255, 0.4) !important; /* bordo leggero */
+.dxProjectCardDetails {
+  border-right: 1px solid #cdc5bd;
 }
 
 .memberTaskCounters {
-  font-family: "Bruno Ace SC", sans-serif;
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: #a82562;
+  font-size: 1.4rem;
+  font-weight: 700;
 }
 
 .brInterruption {
   color: #5f7385;
 }
 
-.divisionBar {
-  border: none;
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7) !important;
-  border-radius: 50px;
-  height: 20px;
-  background-image: url("/images/DiagonalStripes.png");
-  background-color: #5f7385;
-  /* background-repeat: repeat-x; */
-  /* background-size: contain; */
-}
-
 .creationExpiryDates {
-  font-family: "Bruno Ace SC", sans-serif;
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: #a82562;
+  font-size: 1.4rem;
+  font-weight: 700;
 }
 
 .inputDateData {
@@ -110,39 +107,73 @@
   font-weight: 500;
 }
 
-.unorderList > li {
-  font-size: 1.5rem !important;
-}
-
 .modalDeleteButton {
   background-color: #d98299 !important;
-  font-size: 1.2rem !important;
+  font-size: 1.4rem !important;
   font-weight: 700 !important;
   border-color: #f2e0d0 !important;
 }
 
 .modalSaveButton {
   background-color: #6aa4b7 !important;
-  font-size: 1.2rem !important;
+  font-size: 1.4rem !important;
   font-weight: 700 !important;
   border-color: #f2e0d0 !important;
 }
 
 .highlightText {
   font-family: "Bruno Ace SC", sans-serif;
-  font-size: 1.2em;
+  font-size: 1.4em;
   font-weight: 600;
   color: #a82562;
   text-shadow: 2px 2px 5px #f2e0d0;
 }
 
 .bulletPoint {
-  font-size: 1.9rem;
+  font-size: 2.3rem;
 }
 
+/* _________________ */
+
+.descriptionSubtitle {
+  font-size: 1.7em;
+  text-shadow: 2px 2px 5px #f2e0d0;
+  color: #a82562;
+  position: relative;
+  font-weight: 700;
+  position: relative;
+  border-top-left-radius: 18px;
+  border-top-right-radius: 18px;
+  box-sizing: border-box;
+  background: none;
+  z-index: 0;
+}
+
+.descriptionSubtitle::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 500px;
+  border-top-left-radius: 18px;
+  border-top-right-radius: 18px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background: linear-gradient(
+    to bottom,
+    rgba(89, 42, 165, 0.24) 10%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  z-index: -10;
+  pointer-events: none;
+}
+
+/* _________________ */
+
 .descriptionTitle {
-  font-weight: 550 !important;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
+  font-weight: 700;
 }
 
 .descriptionText {
@@ -159,20 +190,22 @@
   max-height: 500px;
   overflow-y: auto;
   overflow-x: hidden;
+  border-right: 1px solid #cdc5bd;
+  border-top-right-radius: 50px;
 }
 
 .projectJoke {
-  font-size: 1.3em;
+  font-size: 1.6em;
   font-weight: 600;
-  color: #a82562;
-  text-shadow: 2px 2px 5px #f2e0d0;
+  text-shadow: 5px 1px 10px #a82562;
+  color: #f2e0d0;
 }
 
 .sticky-sideBar {
   position: sticky;
-  top: 10px; /* distanza dal top della viewport */
-  align-self: flex-start; /* per evitare che la sticky collassi in flexbox */
-  height: fit-content; /* mantieni altezza del contenuto */
+  top: 10px;
+  align-self: flex-start;
+  height: fit-content;
 }
 
 .wrapper {
@@ -182,39 +215,51 @@
 }
 
 .frosted-glass-project {
-  background-color: rgba(
-    255,
-    255,
-    255,
-    0.664
-  ) !important; /* sfondo semitrasparente */
-  backdrop-filter: blur(10px); /* effetto sfocatura */
-  -webkit-backdrop-filter: blur(10px); /* supporto Safari */
-  border: 1px solid rgba(255, 255, 255, 0.4); /* bordo leggero */
+  background-color: rgba(255, 255, 255, 0.664) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
 .frosted-glass {
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7) !important;
-  background-color: rgba(
-    255,
-    255,
-    255,
-    0.3
-  ) !important; /* sfondo semitrasparente */
-  backdrop-filter: blur(10px) !important; /* effetto sfocatura */
-  -webkit-backdrop-filter: blur(10px) !important; /* supporto Safari */
-  border: 1px solid rgba(255, 255, 255, 0.4) !important; /* bordo leggero */
+  background-color: rgba(255, 255, 255, 0.3) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
 }
 
-.frosted-glass-newProject {
-  box-shadow: 2px 2px 8px#f23d7f !important;
-  background-color: rgba(
-    255,
-    255,
-    255,
-    0.3
-  ) !important; /* sfondo semitrasparente */
-  backdrop-filter: blur(10px) !important; /* effetto sfocatura */
-  -webkit-backdrop-filter: blur(10px) !important; /* supporto Safari */
-  border: 1px solid rgba(255, 255, 255, 0.4) !important; /* bordo leggero */
+.projectCardTextDescription {
+  font-weight: 500;
+  font-size: 1.4rem;
+  color: #a82562 !important;
+}
+
+.projectCardTextDescriptionSPECIAL {
+  font-weight: 500;
+  font-size: 1.4rem;
+  color: #a82562 !important;
+  border: 1px solid #d9829983 !important;
+  border-radius: 6px;
+  background-color: beige;
+}
+
+.brInterruptionBIG {
+  color: white;
+}
+
+.newProjectIcon {
+  font-size: 2.5rem;
+}
+
+.newProjectButton {
+  position: relative;
+  min-width: 250px;
+  max-width: 300px;
+  border-radius: 8px !important;
+  background-color: #6aa4b7 !important;
+  font-weight: 700 !important;
+  border-color: #f2e0d0 !important;
+  font-size: 1.7rem !important;
+  overflow: hidden;
 }

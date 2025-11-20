@@ -10,12 +10,12 @@ function ContactUsPage() {
     <>
       <Form className="contactUsForm wrapper frosted-glass d-flex px-5 py-3 justify-content-center">
         <div className="d-flex flex-column">
-          <div className="signUpFormWelcomeText align-content-center">
-            <h3 className="text-center mb-3">
+          <div className="align-content-center mt-4">
+            <h3 className="contactUsText text-center mb-3">
               Any questions or suggestions? <br />
-              <strong className="boldText">Contatct us!</strong>
+              <strong className="contactUsBoldText">Contatct us!</strong>
             </h3>
-            <p>
+            <p className="textDocumentation m-0">
               If you have any questions, feedback, or need assistance, feel free
               to reach out to us. We’re here to help and look forward to hearing
               from you. You can contact us via email, phone, or through our
@@ -23,7 +23,8 @@ function ContactUsPage() {
               respond promptly to all inquiries.
             </p>
           </div>
-          <div className="contactUsFormAuth d-flex flex-row">
+          <hr className="brInterruptionBIG my-4" />
+          <div className="contactUsFormAuth d-flex flex-row flex-grow-1">
             <div className="d-flex flex-column justify-content-center flex-grow-1">
               <Form.Group className="">
                 <Form.Label className="yourAreaDescribe" sm="3">
@@ -79,7 +80,9 @@ function ContactUsPage() {
                     <h4 className="m-0 yourAreaTitle">Contact</h4>
                   </div>
                   <div>
-                    <p>info.timeline@clada.com</p>
+                    <p className="textDocumentationInfo m-0">
+                      info.timeline@clada.com
+                    </p>
                   </div>
                 </div>
                 <div className="mb-4">
@@ -87,7 +90,7 @@ function ContactUsPage() {
                     <h4 className="m-0 yourAreaTitle">Based at</h4>
                   </div>
                   <div>
-                    <p>
+                    <p className="textDocumentationInfo m-0">
                       Piacenza, <br />
                       Italy
                     </p>
@@ -125,8 +128,8 @@ function ContactUsPage() {
           </div>
           <div className="my-2 text-center d-flex flex-row justify-content-end align-items-center flex-grow-1">
             <div className="">
-              <Button size="lg" className="custom-btn  ms-5 py-2">
-                <p className="contactUsButton m-0">Submit</p>
+              <Button size="lg" className="submitButton  ms-5 py-2">
+                SUBMIT
               </Button>
             </div>
           </div>
