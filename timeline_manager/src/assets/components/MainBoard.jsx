@@ -39,6 +39,7 @@ const priorityStyles = {
 function MainBoard({ project }) {
   const { token } = useContext(AuthContext)
 
+  const [selectedCategoryId, setSelectedCategoryId] = useState(null)
   const [categories, setCategories] = useState([])
   const [tasks, setTasks] = useState([])
 
@@ -73,34 +74,44 @@ function MainBoard({ project }) {
         return res.json()
       })
       .then((data) => {
+        console.log("CARICAMENTO", data)
+
         if (data.length === 0) {
-          setCategories([
-            {
-              categoryId: -1,
-              categoryName: "Default",
-              categoryColor: "#000000",
-            },
-          ])
+          const defaultCat = {
+            categoryId: -1,
+            categoryName: "Default",
+            categoryColor: "#000000",
+          }
+          setCategories([defaultCat])
+          setSelectedCategoryId(defaultCat.categoryId)
         } else {
           setCategories(data)
+          setSelectedCategoryId(data[0].categoryId)
         }
       })
       .catch(console.error)
+  }, [token, project])
 
-    // ---------- TASK ----------
+  // ---------- TASK ----------
 
-    // Fetch task del progetto
+  // Fetch task del progetto
 
-    fetch(`http://localhost:3001/api/projects/${project.projectId}/tasks`, {
-      headers: { Authorization: `Bearer ${token}` },
-    })
+  useEffect(() => {
+    if (!token || !project || selectedCategoryId === null) return
+
+    fetch(
+      `http://localhost:3001/api/projects/${project.projectId}/categories/${selectedCategoryId}/tasks`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    )
       .then((res) => {
         if (!res.ok) throw new Error("Error during Task loading.")
         return res.json()
       })
       .then(setTasks)
       .catch(console.error)
-  }, [token, project])
+  }, [token, project, selectedCategoryId])
 
   // Gestione modale creazione task
 
@@ -118,6 +129,8 @@ function MainBoard({ project }) {
 
   function openTaskEditModal(task) {
     setTaskToEdit(task)
+    const catId = task.categories?.length ? task.categories[0].categoryId : null
+    setTaskCategoryId(catId)
     setShowTaskEditModal(true)
   }
 
@@ -146,14 +159,17 @@ function MainBoard({ project }) {
       categoryIds: [taskCategoryId],
     }
 
-    fetch(`http://localhost:3001/api/projects/${project.projectId}/tasks`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(payload),
-    })
+    fetch(
+      `http://localhost:3001/api/projects/${project.projectId}/categories/${taskCategoryId}/tasks`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(payload),
+      }
+    )
       .then((res) => {
         if (!res.ok) throw new Error("Error during Task save.")
         return res.json()
@@ -169,10 +185,15 @@ function MainBoard({ project }) {
 
   async function updateTask(taskData) {
     const taskId = taskData.taskId
+    const categoryId = taskToEdit?.categories?.[0]?.categoryId
 
+    if (!categoryId) {
+      alert("Categoria non definita!")
+      return
+    }
     try {
       const res = await fetch(
-        `http://localhost:3001/api/projects/${project.projectId}/tasks/${taskId}`,
+        `http://localhost:3001/api/projects/${project.projectId}/categories/${taskCategoryId}/tasks/${taskId}`,
         {
           method: "PUT",
           headers: {
@@ -193,11 +214,16 @@ function MainBoard({ project }) {
 
   // Delete task
 
-  async function deleteTask(taskId) {
+  async function deleteTask(taskId, categoryId) {
     if (!window.confirm("Are you sure you want to delete this task?")) return
+
+    if (!categoryId) {
+      alert("Category ID undefined, cannot cancel task.")
+      return
+    }
     try {
       const res = await fetch(
-        `http://localhost:3001/api/projects/${project.projectId}/tasks/${taskId}`,
+        `http://localhost:3001/api/projects/${project.projectId}/categories/${categoryId}/tasks/${taskId}`,
         {
           method: "DELETE",
           headers: { Authorization: `Bearer ${token}` },
@@ -330,17 +356,23 @@ function MainBoard({ project }) {
   // ---------- STATUS ----------
 
   const handleStatusChange = async (taskId, newStatusId) => {
-    await fetch(`http://localhost:3001/api/tasks/${taskId}/status`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ statusId: newStatusId }),
-    })
+    if (!selectedCategoryId) {
+      return
+    }
+    await fetch(
+      `http://localhost:3001/api/projects/${project.projectId}/categories/${selectedCategoryId}/tasks/${taskId}/status/${newStatusId}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ statusId: newStatusId }),
+      }
+    )
     setTasks((oldTasks) =>
-      oldTasks.map((t) =>
-        t.taskId === taskId ? { ...t, statusId: newStatusId } : t
+      oldTasks.map((task) =>
+        task.taskId === taskId ? { ...task, statusId: newStatusId } : task
       )
     )
   }
@@ -394,7 +426,9 @@ function MainBoard({ project }) {
                 <TaskCard
                   key={task.taskId}
                   task={task}
-                  onDelete={() => deleteTask(task.taskId)}
+                  onDelete={() =>
+                    deleteTask(task.taskId, task.categories?.[0]?.categoryId)
+                  }
                   onUpdate={() => openTaskEditModal(task)}
                   priorityStyles={priorityStyles}
                   onStatusChange={handleStatusChange}

@@ -116,7 +116,7 @@ function TaskCard({
                 Delete
               </Button>
               <Button onClick={onUpdate} className="taskCardButton">
-                Edit
+                EDIT
               </Button>
             </div>
           </div>

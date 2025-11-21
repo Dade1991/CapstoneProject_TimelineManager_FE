@@ -96,7 +96,7 @@ function Projects() {
       .then((newProject) => {
         console.log(newProject)
 
-        setProjects((prev) => [newProject, ...prev])
+        setProjects((prev) => [...prev, newProject])
         handleCloseProject()
       })
       .catch((err) => {
