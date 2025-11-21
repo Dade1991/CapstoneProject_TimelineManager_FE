@@ -339,7 +339,7 @@
 .avatarBox {
   overflow: hidden;
   border: solid 1px black;
-  border-radius: 50px;
+  border-radius: 50%;
 }
 
 .avatarImg {
