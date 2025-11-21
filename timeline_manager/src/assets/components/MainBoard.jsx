@@ -51,7 +51,7 @@ function MainBoard({ project }) {
   const [taskToEdit, setTaskToEdit] = useState(null)
   const [showCategoryUpdateModal, setShowCategoryUpdateModal] = useState(false)
 
-  // Carica categorie e task
+  // Carica categorie e task per Id progetto
 
   useEffect(() => {
     console.log("Categories:", categories)
@@ -63,7 +63,7 @@ function MainBoard({ project }) {
     if (!token || !project) return
 
     fetch(
-      `http://localhost:3001/api/categories?projectId=${project.projectId}`,
+      `http://localhost:3001/api/projects/${project.projectId}/categories`,
       {
         headers: { Authorization: `Bearer ${token}` },
       }
@@ -78,7 +78,7 @@ function MainBoard({ project }) {
             {
               categoryId: -1,
               categoryName: "Default",
-              categoryColor: "#CCCCCC",
+              categoryColor: "#000000",
             },
           ])
         } else {
@@ -91,7 +91,7 @@ function MainBoard({ project }) {
 
     // Fetch task del progetto
 
-    fetch(`http://localhost:3001/api/tasks/project/${project.projectId}`, {
+    fetch(`http://localhost:3001/api/projects/${project.projectId}/tasks`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => {
@@ -129,9 +129,6 @@ function MainBoard({ project }) {
   // Salvataggio nuova task
 
   function saveTask({ title, description, taskExpiryDate, priority }) {
-    console.log("Task Category ID:", taskCategoryId)
-    console.log("Categories array:", [taskCategoryId])
-
     if (!priority) {
       alert("Task priority is mandatory.")
       return
@@ -149,7 +146,7 @@ function MainBoard({ project }) {
       categoryIds: [taskCategoryId],
     }
 
-    fetch("http://localhost:3001/api/tasks", {
+    fetch(`http://localhost:3001/api/projects/${project.projectId}/tasks`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -171,18 +168,20 @@ function MainBoard({ project }) {
   // Modifica task esistente
 
   async function updateTask(taskData) {
-    console.log("Updating task:", taskData)
-
     const taskId = taskData.taskId
+
     try {
-      const res = await fetch(`http://localhost:3001/api/tasks/${taskId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(taskData),
-      })
+      const res = await fetch(
+        `http://localhost:3001/api/projects/${project.projectId}/tasks/${taskId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(taskData),
+        }
+      )
       if (!res.ok) throw new Error("Error during Task update.")
       const updatedTask = await res.json()
       setTasks((old) => old.map((t) => (t.taskId === taskId ? updatedTask : t)))
@@ -197,10 +196,13 @@ function MainBoard({ project }) {
   async function deleteTask(taskId) {
     if (!window.confirm("Are you sure you want to delete this task?")) return
     try {
-      const res = await fetch(`http://localhost:3001/api/tasks/${taskId}`, {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${token}` },
-      })
+      const res = await fetch(
+        `http://localhost:3001/api/projects/${project.projectId}/tasks/${taskId}`,
+        {
+          method: "DELETE",
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
       if (!res.ok) throw new Error("Error deleting task.")
       setTasks((old) => old.filter((t) => t.taskId !== taskId))
     } catch (e) {
@@ -235,14 +237,17 @@ function MainBoard({ project }) {
     }
 
     try {
-      const res = await fetch("http://localhost:3001/api/categories", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(payload),
-      })
+      const res = await fetch(
+        `http://localhost:3001/api/projects/${project.projectId}/categories`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(payload),
+        }
+      )
       if (!res.ok) throw new Error("Error during Category save.")
       const newCat = await res.json()
       setCategories((old) => [...old, newCat])
@@ -277,7 +282,7 @@ function MainBoard({ project }) {
     }
     try {
       const res = await fetch(
-        `http://localhost:3001/api/categories/${categoryId}`,
+        `http://localhost:3001/api/projects/${project.projectId}/categories/${categoryId}`,
         {
           method: "PUT",
           headers: {
@@ -306,7 +311,7 @@ function MainBoard({ project }) {
 
     try {
       const res = await fetch(
-        `http://localhost:3001/api/categories/${categoryId}`,
+        `http://localhost:3001/api/projects/${project.projectId}/categories/${categoryId}`,
         {
           method: "DELETE",
           headers: {
