@@ -275,51 +275,57 @@ function Projects() {
                             <hr className="brInterruption my-4" />
                             <div className="">
                               <ul className="p-0">
-                                <li className="bg-warning d-flex flex-row">
-                                  <div className="flex-grow-1">
+                                <li className="d-flex flex-row">
+                                  <Col md={1.5} className="p-2">
+                                    <div className="avatarBox">
+                                      <img
+                                        className="avatarImg"
+                                        src="/images/User_TEST.jpg"
+                                        alt=""
+                                      />
+                                    </div>
+                                  </Col>
+                                  <Col md={9} className="ps-2">
                                     <div className="">
-                                      <div>Nickname</div>
-                                      <div>
-                                        Role{" "}
-                                        <strong className="m-0">CREATOR</strong>
+                                      <div className="nicknameText">
+                                        Nickname
+                                      </div>
+                                      <div className="projectInfosText">
+                                        Role_{" "}
+                                        <strong className="roleText m-0">
+                                          CREATOR
+                                        </strong>
                                       </div>
                                     </div>
-                                    <div className="">
-                                      Tasks Counter{" "}
-                                      <strong className="m-0">8</strong>
+                                    <div className="projectInfosText">
+                                      Tasks Counter_{" "}
+                                      <strong className="taskCounterText m-0">
+                                        8
+                                      </strong>
                                     </div>
-                                  </div>
-                                  <div>
-                                    <div className="bg-success d-flex flex-column">
-                                      <div className="d-flex flex-row align-items-center justify-content-between mb-1">
-                                        <p className="buttonDescription m-0 me-2">
-                                          EDIT
-                                        </p>
-                                        <Button
-                                          // onClick={}
-                                          className="memberEditButton"
-                                        >
-                                          <i className="memberIcon bi bi-pencil-square"></i>
-                                        </Button>
-                                      </div>
-                                      <div className="d-flex flex-row align-items-center justify-content-between">
-                                        <p className="buttonDescription m-0 me-2">
-                                          DELETE
-                                        </p>
-                                        <Button
-                                          // onClick={}
-                                          className="memberDeleteButton"
-                                        >
-                                          <i className="memberIcon bi bi-trash2-fill"></i>
-                                        </Button>
-                                      </div>
+                                  </Col>
+                                  <Col md={1.5}>
+                                    <div className="d-flex flex-column p-2">
+                                      <Button
+                                        // onClick={}
+                                        className="memberEditButton mb-1"
+                                      >
+                                        <i className="memberIcon bi bi-pencil-square"></i>
+                                      </Button>
+
+                                      <Button
+                                        // onClick={}
+                                        className="memberDeleteButton"
+                                      >
+                                        <i className="memberIcon bi bi-trash2-fill"></i>
+                                      </Button>
                                     </div>
-                                  </div>
+                                  </Col>
                                 </li>
                                 <div className="mt-3">
                                   <Button className="addMemberButton w-100">
                                     <div className="d-flex flex-row justify-content-center align-items-center">
-                                      <i className="plusButtonIconTask bi bi-plus-circle"></i>
+                                      <i className="plusButtonIconTask bi bi-person-add"></i>
                                       <p className="m-0 ms-2">Add Member</p>
                                     </div>
                                   </Button>
