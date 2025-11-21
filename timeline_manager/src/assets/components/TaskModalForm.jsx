@@ -81,7 +81,7 @@ const TaskModalForm = ({ show, handleClose, onSubmit }) => {
       </Modal.Body>
       <Modal.Footer className="modalColor">
         <Button className="modalCloseButton" onClick={handleClose}>
-          Close
+          CLOSE
         </Button>
         <Button className="modalSaveButton" onClick={handleSubmit}>
           SAVE

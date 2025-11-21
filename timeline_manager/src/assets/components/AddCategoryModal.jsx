@@ -65,7 +65,7 @@ function AddCategoryModal({ show, handleClose, onSubmit }) {
             onClick={handleClose}
             disabled={isSubmitting}
           >
-            Close
+            CLOSE
           </Button>
           <Button
             className="modalSaveButton"

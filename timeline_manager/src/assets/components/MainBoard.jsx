@@ -394,7 +394,7 @@ function MainBoard({ project }) {
               </h4>
               <div className="d-flex flex-column">
                 <div className="d-flex flex-row align-items-center justify-content-between mb-1">
-                  <p className="buttonDescription m-0 me-2">Edit</p>
+                  <p className="buttonDescription m-0 me-2">EDIT</p>
                   <Button
                     onClick={() => openCategoryUpdateModal(category)}
                     className="categoryEditButton"
@@ -403,7 +403,7 @@ function MainBoard({ project }) {
                   </Button>
                 </div>
                 <div className="d-flex flex-row align-items-center justify-content-between">
-                  <p className="buttonDescription m-0 me-2">Delete</p>
+                  <p className="buttonDescription m-0 me-2">DELETE</p>
                   <Button
                     onClick={() => deleteCategory(category.categoryId)}
                     className="categoryDeleteButton"

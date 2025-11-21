@@ -251,8 +251,19 @@ function Projects() {
                       </div>
                       <hr className="brInterruption my-4" />
                       <Row className="">
-                        <Col className="dxProjectCardDetails d-flex align-items-center">
+                        <Col
+                          md={7}
+                          className="dxProjectCardDetails d-flex align-items-center"
+                        >
                           <div className="d-flex flex-column flex-grow-1 pe-3">
+                            <div className="d-flex justify-content-between align-items-center inputDateData">
+                              <strong className="memberTaskCounters">
+                                TOTAL Tasks:
+                              </strong>
+                              <div className="projectCardTextDescription">
+                                {proj.taskCount}
+                              </div>
+                            </div>
                             <div className="d-flex justify-content-between align-items-center inputDateData">
                               <strong className="memberTaskCounters">
                                 Members:
@@ -261,17 +272,63 @@ function Projects() {
                                 {proj.memberCount}
                               </div>
                             </div>
-                            <div className="d-flex justify-content-between align-items-center inputDateData">
-                              <strong className="memberTaskCounters">
-                                Tasks:
-                              </strong>
-                              <div className="projectCardTextDescription">
-                                {proj.taskCount}
-                              </div>
+                            <hr className="brInterruption my-4" />
+                            <div className="">
+                              <ul className="p-0">
+                                <li className="bg-warning d-flex flex-row">
+                                  <div className="flex-grow-1">
+                                    <div className="">
+                                      <div>Nickname</div>
+                                      <div>
+                                        Role{" "}
+                                        <strong className="m-0">CREATOR</strong>
+                                      </div>
+                                    </div>
+                                    <div className="">
+                                      Tasks Counter{" "}
+                                      <strong className="m-0">8</strong>
+                                    </div>
+                                  </div>
+                                  <div>
+                                    <div className="bg-success d-flex flex-column">
+                                      <div className="d-flex flex-row align-items-center justify-content-between mb-1">
+                                        <p className="buttonDescription m-0 me-2">
+                                          EDIT
+                                        </p>
+                                        <Button
+                                          // onClick={}
+                                          className="memberEditButton"
+                                        >
+                                          <i className="memberIcon bi bi-pencil-square"></i>
+                                        </Button>
+                                      </div>
+                                      <div className="d-flex flex-row align-items-center justify-content-between">
+                                        <p className="buttonDescription m-0 me-2">
+                                          DELETE
+                                        </p>
+                                        <Button
+                                          // onClick={}
+                                          className="memberDeleteButton"
+                                        >
+                                          <i className="memberIcon bi bi-trash2-fill"></i>
+                                        </Button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </li>
+                                <div className="mt-3">
+                                  <Button className="addMemberButton w-100">
+                                    <div className="d-flex flex-row justify-content-center align-items-center">
+                                      <i className="plusButtonIconTask bi bi-plus-circle"></i>
+                                      <p className="m-0 ms-2">Add Member</p>
+                                    </div>
+                                  </Button>
+                                </div>
+                              </ul>
                             </div>
                           </div>
                         </Col>
-                        <Col className="">
+                        <Col md={5} className="">
                           <div className="inputDateData d-flex flex-column align-items-end">
                             <strong className="creationExpiryDates">
                               Creation Date:
@@ -293,20 +350,20 @@ function Projects() {
                     </Col>
                     <Col
                       md={2}
-                      className="d-flex justify-content-end align-items-start"
+                      className="d-flex justify-content-center align-items-start"
                     >
                       <div className="d-flex flex-column align-bottom">
                         <Button
                           className="modalSaveButton mb-2"
                           onClick={() => handleShowUpdate(proj)}
                         >
-                          Edit
+                          EDIT
                         </Button>
                         <Button
                           className="modalDeleteButton"
                           onClick={() => handleProjectDelete(proj.projectId)}
                         >
-                          Delete
+                          DELETE
                         </Button>
                       </div>
                     </Col>

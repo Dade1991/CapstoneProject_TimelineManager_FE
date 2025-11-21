@@ -270,3 +270,40 @@
   font-size: 1.7rem !important;
   overflow: hidden;
 }
+
+.memberEditButton {
+  border-radius: 8px !important;
+  background-color: #6aa4b7 !important;
+  font-weight: 700 !important;
+  border-color: #f2e0d0 !important;
+}
+
+.memberDeleteButton {
+  border-radius: 8px !important;
+  background-color: #d98299 !important;
+  font-weight: 700 !important;
+  border-color: #f2e0d0 !important;
+}
+
+.memberIcon {
+  font-size: 0.9rem;
+}
+
+.buttonDescription {
+  font-weight: 600 !important;
+  font-size: 1.3rem !important;
+}
+
+.addMemberButton {
+  position: relative;
+  background-color: #6aa4b7 !important;
+  font-size: 1.5rem !important;
+  font-weight: 700 !important;
+  border-color: #f2e0d0 !important;
+  overflow: hidden;
+}
+
+.plusButtonIconTask {
+  position: relative;
+  top: 2px;
+}

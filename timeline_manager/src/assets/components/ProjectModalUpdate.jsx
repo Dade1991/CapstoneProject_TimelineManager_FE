@@ -86,7 +86,7 @@ const ProjectModalUpdate = ({ show, handleClose, onSubmit, project }) => {
           </Form.Group>
           <Modal.Footer className="modalColor">
             <Button className="modalCloseButton" onClick={handleClose}>
-              Close
+              CLOSE
             </Button>
             <Button className="modalSaveButton" type="submit">
               UPDATE

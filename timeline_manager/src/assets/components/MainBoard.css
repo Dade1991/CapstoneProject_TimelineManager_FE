@@ -72,12 +72,10 @@
 
 .addTaskButton {
   position: relative;
-  /* ____________ */
   background-color: #6aa4b7 !important;
   font-size: 1.5rem !important;
   font-weight: 700 !important;
   border-color: #f2e0d0 !important;
-  /* ____________ */
   overflow: hidden;
 }
 
