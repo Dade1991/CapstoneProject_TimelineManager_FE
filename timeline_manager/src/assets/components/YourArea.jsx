@@ -31,6 +31,9 @@ function YourArea() {
   const [nickname, setNickname] = useState("")
   const [email, setEmail] = useState("")
   const [avatar, setAvatar] = useState("")
+  const [avatarFile, setAvatarFile] = useState(null)
+  const [avatarError, setAvatarError] = useState(null)
+  const [avatarSuccess, setAvatarSuccess] = useState(null)
 
   const [oldPassword, setOldPassword] = useState("")
   const [newPassword, setNewPassword] = useState("")
@@ -181,6 +184,43 @@ function YourArea() {
       .catch((err) => {
         setPasswordError(err.message)
       })
+      .finally(() => setLoading(false))
+  }
+
+  // UPLOAD USER PROFILE AVATAR
+
+  const handleAvatarUpload = () => {
+    if (!avatarFile || !token || !userId) {
+      setAvatarError("Do login then select a file to upload.")
+      return
+    }
+
+    setAvatarError(null)
+    setAvatarSuccess(null)
+    setLoading(true)
+
+    const formData = new FormData()
+    formData.append("file", avatarFile)
+
+    fetch(`http://localhost:3001/api/users/${userId}/avatar`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    })
+      .then(async (res) => {
+        if (!res.ok) {
+          const errorText = await res.text()
+          throw new Error("Failed to upload avatar: " + errorText)
+        }
+        return res.json()
+      })
+      .then((data) => {
+        setAvatar(data.avatarUrl)
+        setAvatarSuccess("Avatar successfully uploaded!")
+      })
+      .catch((err) => setAvatarError(err.message))
       .finally(() => setLoading(false))
   }
 
@@ -369,20 +409,42 @@ function YourArea() {
             </Col>
           </Row>
 
-          <Row className="">
+          <Row className="w-100">
             <Col md={8}>
               <Form.Group controlId="formAvatar">
                 <Form.Label sm="3">Profile Pic:</Form.Label>
                 <Form.Control
                   type="file"
-                  placeholder="No file selected."
-                  // value={}
-                  // onChange={(e) => setAvatar(e.target.value)}
+                  onChange={(e) => setAvatarFile(e.target.files[0])}
                   disabled={loading}
                 />
               </Form.Group>
             </Col>
-            <Col className="d-flex justify-content-end" md={4}>
+            <Col
+              className="d-flex justify-content-center align-items-center"
+              md={2}
+            >
+              {avatarError && <p className="text-danger">{avatarError}</p>}
+              {avatarSuccess && <p className="text-success">{avatarSuccess}</p>}
+              <div>
+                <Button
+                  className="uploadAvatarButton p-0"
+                  type="button"
+                  disabled={loading || !avatarFile}
+                  onClick={handleAvatarUpload}
+                >
+                  {loading ? (
+                    "Uploading..."
+                  ) : (
+                    <div className="uploadButtonBox d-flex flex-row">
+                      <i className="uploadButton1 bi bi-caret-right-fill ms-3"></i>
+                      <i className="uploadButton2 bi bi-caret-right ms-3"></i>
+                    </div>
+                  )}
+                </Button>
+              </div>
+            </Col>
+            <Col className="d-flex justify-content-end" md={2}>
               <div className="avatarBox me-2">
                 <img
                   className="avatarImg"

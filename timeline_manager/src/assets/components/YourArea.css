@@ -147,3 +147,38 @@
 .avatarBox:hover .avatarImg {
   transform: rotateY(360deg);
 }
+
+.uploadButtonBox {
+  width: 55px;
+}
+
+.uploadButton1 {
+  font-size: 3rem;
+  position: relative;
+  top: 3px;
+  right: 9px;
+  text-shadow: #8b1a52 !important;
+}
+
+.uploadButton2 {
+  font-size: 2rem;
+  position: relative;
+  top: 14px;
+  right: 52px;
+  color: #a82562;
+}
+
+.uploadAvatarButton {
+  background-color: inherit !important;
+  font-size: 1.2rem !important;
+  font-weight: 700 !important;
+  border: none !important;
+}
+
+.uploadVERTICAL {
+  position: relative;
+  transform: rotate(270deg);
+  font-size: 1em;
+  font-weight: 600;
+  width: 100vh;
+}
