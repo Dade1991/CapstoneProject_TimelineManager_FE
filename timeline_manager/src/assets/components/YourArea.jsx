@@ -410,7 +410,7 @@ function YourArea() {
           </Row>
 
           <Row className="w-100">
-            <Col md={8}>
+            <Col md={7}>
               <Form.Group controlId="formAvatar">
                 <Form.Label sm="3">Profile Pic:</Form.Label>
                 <Form.Control
@@ -421,12 +421,12 @@ function YourArea() {
               </Form.Group>
             </Col>
             <Col
-              className="d-flex justify-content-center align-items-center"
-              md={2}
+              className="d-flex justify-content-center align-items-center p-0"
+              md={3}
             >
               {avatarError && <p className="text-danger">{avatarError}</p>}
               {avatarSuccess && <p className="text-success">{avatarSuccess}</p>}
-              <div>
+              <div className="w-100">
                 <Button
                   className="uploadAvatarButton p-0"
                   type="button"
@@ -436,9 +436,9 @@ function YourArea() {
                   {loading ? (
                     "Uploading..."
                   ) : (
-                    <div className="uploadButtonBox d-flex flex-row">
+                    <div className="uploadButtonBox d-flex flex-row align-items-center">
+                      <p className="m-0">UPLOAD</p>
                       <i className="uploadButton1 bi bi-caret-right-fill ms-3"></i>
-                      <i className="uploadButton2 bi bi-caret-right ms-3"></i>
                     </div>
                   )}
                 </Button>

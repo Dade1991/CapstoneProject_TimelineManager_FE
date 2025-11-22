@@ -149,7 +149,8 @@
 }
 
 .uploadButtonBox {
-  width: 55px;
+  max-width: 150px;
+  min-width: 100px;
 }
 
 .uploadButton1 {
@@ -157,14 +158,6 @@
   position: relative;
   top: 3px;
   right: 9px;
-  text-shadow: #8b1a52 !important;
-}
-
-.uploadButton2 {
-  font-size: 2rem;
-  position: relative;
-  top: 14px;
-  right: 52px;
   color: #a82562;
 }
 
@@ -173,12 +166,4 @@
   font-size: 1.2rem !important;
   font-weight: 700 !important;
   border: none !important;
-}
-
-.uploadVERTICAL {
-  position: relative;
-  transform: rotate(270deg);
-  font-size: 1em;
-  font-weight: 600;
-  width: 100vh;
 }
