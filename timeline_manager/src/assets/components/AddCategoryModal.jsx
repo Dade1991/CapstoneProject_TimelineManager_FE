@@ -60,20 +60,22 @@ function AddCategoryModal({ show, handleClose, onSubmit }) {
           </Form.Group>
         </Modal.Body>
         <Modal.Footer className="modalColor">
-          <Button
-            className="modalCloseButton"
-            onClick={handleClose}
-            disabled={isSubmitting}
-          >
-            CLOSE
-          </Button>
-          <Button
-            className="modalSaveButton"
-            type="submit"
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? "Saving..." : "Save"}
-          </Button>
+          <div className="d-flex flex-row">
+            <Button
+              className="modalCloseButton me-2"
+              onClick={handleClose}
+              disabled={isSubmitting}
+            >
+              Close
+            </Button>
+            <Button
+              className="modalSaveButton"
+              type="submit"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Saving..." : "SAVE"}
+            </Button>
+          </div>
         </Modal.Footer>
       </Form>
     </Modal>

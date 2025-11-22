@@ -8,25 +8,23 @@
   z-index: 1030 !important;
 }
 
-.homepageLink {
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-  transition: color 0.4s ease, text-shadow 0.4s ease;
-  background-color: inherit !important;
+.returnHomeButton {
+  background-color: #0e93a1 !important;
+  font-size: 1.2rem !important;
+  font-weight: 700 !important;
+  border-color: white !important;
 }
 
-.homepageText {
-  font-size: 1.4rem;
-  font-weight: 700;
+.returnDetails {
+  font-size: 1.6rem !important;
 }
 
-.homepageReturnIcon {
-  font-size: 1.4rem;
-  font-weight: 700;
-}
+.returnIcon {
+  position: relative;
+  top: 3px;
 
-.homepageLink:hover {
-  color: #f23d7f !important;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+  font-size: 1.5rem;
+  font-weight: 900;
 }
 
 .searchBox {
@@ -276,6 +274,7 @@
   background-color: #6aa4b7 !important;
   font-weight: 700 !important;
   border-color: #f2e0d0 !important;
+  width: 50px;
 }
 
 .memberDeleteButton {
@@ -283,10 +282,11 @@
   background-color: #d98299 !important;
   font-weight: 700 !important;
   border-color: #f2e0d0 !important;
+  width: 50px;
 }
 
 .memberIcon {
-  font-size: 0.9rem;
+  font-size: 1.2rem;
 }
 
 .buttonDescription {
@@ -337,11 +337,27 @@
 }
 
 .avatarBox {
-  overflow: hidden;
-  border: solid 1px black;
+  width: 100%;
+  max-width: 100px;
+  min-width: 50px;
+  aspect-ratio: 1 / 1;
   border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 1000px;
 }
 
 .avatarImg {
   width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.avatarBox:hover .avatarImg {
+  transform: rotateY(360deg);
 }

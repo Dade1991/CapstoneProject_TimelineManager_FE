@@ -89,12 +89,14 @@ const TaskModalUpdate = ({ show, handleClose, onSubmit, task }) => {
         </Form>
       </Modal.Body>
       <Modal.Footer className="modalColor">
-        <Button className="modalCloseButton" onClick={handleClose}>
-          Close
-        </Button>
-        <Button className="modalSaveButton" onClick={handleSubmit}>
-          UPDATE
-        </Button>
+        <div className="d-flex flex-row">
+          <Button className="modalCloseButton me-2" onClick={handleClose}>
+            Close
+          </Button>
+          <Button className="modalSaveButton" onClick={handleSubmit}>
+            EDIT
+          </Button>
+        </div>
       </Modal.Footer>
     </Modal>
   )

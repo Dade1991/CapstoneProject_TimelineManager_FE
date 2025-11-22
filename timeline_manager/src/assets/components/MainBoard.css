@@ -28,8 +28,9 @@
 }
 
 .buttonDescription {
-  font-weight: 600 !important;
-  font-size: 1.3rem !important;
+  font-weight: 700 !important;
+  font-size: 1.2rem !important;
+  color: white;
 }
 
 /* ----------------------------- */
@@ -154,4 +155,9 @@
 .plusButtonIconCategory {
   position: relative;
   top: 4px;
+}
+
+.colorCODING {
+  height: 8px;
+  border-radius: 10px;
 }

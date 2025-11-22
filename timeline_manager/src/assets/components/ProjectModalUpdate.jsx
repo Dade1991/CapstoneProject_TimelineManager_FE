@@ -85,12 +85,14 @@ const ProjectModalUpdate = ({ show, handleClose, onSubmit, project }) => {
             />
           </Form.Group>
           <Modal.Footer className="modalColor">
-            <Button className="modalCloseButton" onClick={handleClose}>
-              CLOSE
-            </Button>
-            <Button className="modalSaveButton" type="submit">
-              UPDATE
-            </Button>
+            <div className="d-flex flex-row">
+              <Button className="modalCloseButton me-2" onClick={handleClose}>
+                CLOSE
+              </Button>
+              <Button className="modalSaveButton" type="submit">
+                UPDATE
+              </Button>
+            </div>
           </Modal.Footer>
         </Form>
       </Modal.Body>

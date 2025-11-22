@@ -11,7 +11,7 @@ function SignUpForm() {
   const [name, setName] = useState("")
   const [surname, setSurname] = useState("")
   const [nickname, setNickname] = useState("")
-  const [avatar, setAvatar] = useState("")
+  // const [avatar, setAvatar] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
@@ -23,7 +23,7 @@ function SignUpForm() {
     setError("")
     setLoading(true)
 
-    const payload = { name, surname, nickname, avatar, email, password }
+    const payload = { name, surname, nickname, email, password }
 
     fetch("http://localhost:3001/api/auth/signup", {
       method: "POST",
@@ -110,7 +110,7 @@ function SignUpForm() {
                   />
                 </Col>
               </Form.Group>
-              <Form.Group controlId="formAvatar">
+              {/* <Form.Group controlId="formAvatar">
                 <Form.Label className="yourAreaDescribe" sm="3">
                   AVATAR:
                 </Form.Label>
@@ -122,7 +122,7 @@ function SignUpForm() {
                     onChange={(e) => setAvatar(e.target.value)}
                   />
                 </Col>
-              </Form.Group>
+              </Form.Group> */}
               <Form.Group controlId="formEmail">
                 <Form.Label className="yourAreaDescribe" sm="3">
                   E-mail:
@@ -159,8 +159,8 @@ function SignUpForm() {
             <div className="gifDiv d-flex justify-content-center align-items-center">
               <img
                 className="gifImg"
-                src="/gif/Compiler.gif"
-                alt="compilerGif"
+                src="/gif/Typing_Animation.gif"
+                alt="Typing_Animation"
               />
             </div>
           </div>

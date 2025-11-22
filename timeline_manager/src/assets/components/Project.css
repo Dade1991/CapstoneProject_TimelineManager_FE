@@ -1,16 +1,15 @@
 .projectNavbar {
-  font-size: 1.3rem;
+  height: 66px !important;
+  font-size: 1.3rem !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 1030 !important;
 }
 
 .mainBoardDiv {
-  padding-top: 90px;
-}
-
-.linkIconSymbol {
-  color: #f23d7f !important;
-  position: relative;
-  right: 20px;
-  top: 2px;
+  padding-top: 120px;
 }
 
 .projectNavbarTitle {
@@ -21,66 +20,34 @@
   text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
 }
 
-.projectSettingsLink {
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-  transition: color 0.4s ease, text-shadow 0.4s ease;
+.returnProjectButton {
+  background-color: #0e93a1 !important;
+  font-size: 1.2rem !important;
+  font-weight: 700 !important;
+  border-color: white !important;
 }
 
-.projectSettingsLink:hover {
-  color: #f23d7f !important;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+.returnHomeButton {
+  background-color: #0e93a1 !important;
+  font-size: 1.2rem !important;
+  font-weight: 700 !important;
+  border-color: white !important;
 }
 
-.activityLogLink {
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-  transition: color 0.4s ease, text-shadow 0.4s ease;
-}
-
-.activityLogLink:hover {
-  color: #f23d7f !important;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-}
-
-.homepageLink {
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-  transition: color 0.4s ease, text-shadow 0.4s ease;
-  background-color: inherit !important;
-}
-
-.homepageLink:hover {
-  color: #f23d7f !important;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-}
-
-.frosted-glass-project {
-  background-color: rgba(
-    255,
-    255,
-    255,
-    0.664
-  ) !important; /* sfondo semitrasparente */
-  backdrop-filter: blur(10px); /* effetto sfocatura */
-  -webkit-backdrop-filter: blur(10px); /* supporto Safari */
-  border: 1px solid rgba(255, 255, 255, 0.4); /* bordo leggero */
-}
-
-.saveProjectButton {
-  background-color: #f23d7f !important;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-  border-color: #f23d7f !important ;
-}
-
-.saveProjectButtonDetails {
-  color: #f2e0d0;
+.returnDetails {
   font-size: 1.6rem !important;
 }
 
-.homepageText {
-  font-size: 1.4rem;
-  font-weight: 700;
+.returnIcon {
+  position: relative;
+  top: 3px;
+  font-size: 1.5rem;
+  font-weight: 900;
 }
 
-.homepageReturnIcon {
-  font-size: 1.4rem;
-  font-weight: 700;
+.frosted-glass-project {
+  background-color: rgba(255, 255, 255, 0.664) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
 }

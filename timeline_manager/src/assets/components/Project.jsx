@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom"
 
 function Project() {
   const navigateHome = useNavigate()
+  const navigatePersonalPJT = useNavigate()
   const { projectId } = useParams()
 
   const { token } = useContext(AuthContext)
@@ -68,30 +69,36 @@ function Project() {
           </Navbar.Brand>
         )}
         <Container fluid className="d-flex justify-content-end">
-          <Button
-            className="homepageLink nav-link"
-            onClick={() => {
-              navigateHome("/Home")
-            }}
-          >
-            <div className="d-flex flex-row justify-content-center align-items-center me-4">
-              <p className="homepageText m-0 me-2">Hompage</p>
-              <i className="homepageReturnIcon bi bi-arrow-return-left"></i>
-            </div>
-          </Button>
-          {/* <Button className="saveProjectButton px-4 py-1">
-            <div className="d-flex flex-row">
-              <i className="saveProjectButtonDetails bi bi-bookmark-check me-2"></i>
-              <p className="saveProjectButtonDetails m-0">Save</p>
-            </div>
-          </Button> */}
+          <div>
+            <Button
+              className="returnProjectButton me-2"
+              onClick={() => {
+                navigatePersonalPJT("/Projects")
+              }}
+            >
+              <div className="d-flex flex-row">
+                <p className="returnDetails m-0 me-2">Projects</p>
+                <i className="returnIcon bi bi-arrow-return-left"></i>
+              </div>
+            </Button>
+          </div>
+          <div>
+            <Button
+              className="returnHomeButton"
+              onClick={() => {
+                navigateHome("/Home")
+              }}
+            >
+              <div className="d-flex flex-row">
+                <p className="returnDetails m-0 me-2">Hompage</p>
+                <i className="returnIcon bi bi-arrow-return-left"></i>
+              </div>
+            </Button>
+          </div>
         </Container>
       </Navbar>
 
-      <Container
-        fluid
-        className="mainBoardDiv d-flex justify-content-center mt-4"
-      >
+      <Container fluid className="mainBoardDiv d-flex justify-content-center">
         <MainBoard project={projectData} />
       </Container>
     </>

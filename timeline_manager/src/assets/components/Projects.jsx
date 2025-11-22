@@ -178,20 +178,24 @@ function Projects() {
   }
   // COMPONENT
 
+  // returnHomeButton
+  // returnDetails
+  // returnIcon
+
   return (
     <>
       <Navbar expand="lg" className="projectNavbar frosted-glass-project">
         <Container fluid className="d-flex justify-content-end">
           {/* <Navbar.Brand href="#">Logo</Navbar.Brand> */}
           <Button
-            className="homepageLink nav-link"
+            className="returnHomeButton"
             onClick={() => {
               navigateHome("/Home")
             }}
           >
-            <div className="d-flex flex-row justify-content-center align-items-center me-4">
-              <p className="homepageText m-0 me-2">Hompage</p>
-              <i className="homepageReturnIcon bi bi-arrow-return-left"></i>
+            <div className="d-flex flex-row">
+              <p className="returnDetails m-0 me-2">Hompage</p>
+              <i className="returnIcon bi bi-arrow-return-left"></i>
             </div>
           </Button>
         </Container>
@@ -252,7 +256,7 @@ function Projects() {
                       <hr className="brInterruption my-4" />
                       <Row className="">
                         <Col
-                          md={7}
+                          md={9}
                           className="dxProjectCardDetails d-flex align-items-center"
                         >
                           <div className="d-flex flex-column flex-grow-1 pe-3">
@@ -276,16 +280,16 @@ function Projects() {
                             <div className="">
                               <ul className="p-0">
                                 <li className="d-flex flex-row">
-                                  <Col md={1.5} className="p-2">
+                                  <Col md={2} className="p-2">
                                     <div className="avatarBox">
                                       <img
                                         className="avatarImg"
-                                        src="/images/User_TEST.jpg"
+                                        src="/images/ProfilePic_Test.jpg"
                                         alt=""
                                       />
                                     </div>
                                   </Col>
-                                  <Col md={9} className="ps-2">
+                                  <Col md={8} className="ps-2">
                                     <div className="">
                                       <div className="nicknameText">
                                         Nickname
@@ -304,8 +308,8 @@ function Projects() {
                                       </strong>
                                     </div>
                                   </Col>
-                                  <Col md={1.5}>
-                                    <div className="d-flex flex-column p-2">
+                                  <Col md={2}>
+                                    <div className="d-flex flex-column p-2 align-items-end">
                                       <Button
                                         // onClick={}
                                         className="memberEditButton mb-1"
@@ -334,7 +338,7 @@ function Projects() {
                             </div>
                           </div>
                         </Col>
-                        <Col md={5} className="">
+                        <Col md={3} className="">
                           <div className="inputDateData d-flex flex-column align-items-end">
                             <strong className="creationExpiryDates">
                               Creation Date:

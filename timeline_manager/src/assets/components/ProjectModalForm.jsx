@@ -53,16 +53,18 @@ const ProjectModalForm = ({ show, handleClose, onSubmit }) => {
         </Form>
       </Modal.Body>
       <Modal.Footer className="modalColor">
-        <Button className="modalCloseButton" onClick={handleClose}>
-          CLOSE
-        </Button>
-        <Button
-          className="modalSaveButton"
-          onClick={handleSubmit}
-          disabled={!title.trim()}
-        >
-          SAVE
-        </Button>
+        <div className="d-flex flex-row">
+          <Button className="modalCloseButton me-2" onClick={handleClose}>
+            Close
+          </Button>
+          <Button
+            className="modalSaveButton"
+            onClick={handleSubmit}
+            disabled={!title.trim()}
+          >
+            SAVE
+          </Button>
+        </div>
       </Modal.Footer>
     </Modal>
   )

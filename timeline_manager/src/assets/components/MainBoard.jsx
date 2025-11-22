@@ -387,7 +387,7 @@ function MainBoard({ project }) {
                 className="categoryTitle pe-4 m-0"
                 style={{
                   color: category.categoryColor || "#000000",
-                  textShadow: `2px 2px 6px ${category.categoryColor}90`,
+                  textShadow: `2px 2px 6px #000000ab`,
                 }}
               >
                 {category.categoryName}
@@ -414,7 +414,15 @@ function MainBoard({ project }) {
               </div>
             </div>
 
-            <hr className="brInterruption my-3" />
+            <div
+              className="colorCODING my-4"
+              style={{
+                backgroundColor: category.categoryColor,
+                textShadow: `2px 2px 6px ${category.categoryColor}90`,
+              }}
+            ></div>
+
+            {/* <hr className="brInterruption my-3" /> */}
 
             {tasks
               .filter((task) =>

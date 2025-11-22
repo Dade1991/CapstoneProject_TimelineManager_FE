@@ -30,7 +30,7 @@ function YourArea() {
   const [surname, setSurname] = useState("")
   const [nickname, setNickname] = useState("")
   const [email, setEmail] = useState("")
-  // const [avatar, setAvatar] = useState("")
+  const [avatar, setAvatar] = useState("")
 
   const [oldPassword, setOldPassword] = useState("")
   const [newPassword, setNewPassword] = useState("")
@@ -46,6 +46,13 @@ function YourArea() {
   const { token } = useContext(AuthContext)
   const payload = token ? parseJwt(token) : null
   const userId = payload ? payload.sub : null
+
+  const defaultUiAvatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(
+    name
+  )}+${encodeURIComponent(
+    surname
+  )}&background=6aa4b7&color=8b1a52&rounded=true&size=128`
+
   console.log("userId exctract from token:", userId)
   console.log("Token:", token)
 
@@ -73,6 +80,7 @@ function YourArea() {
         setNickname(data.nickname || "")
         setEmail(data.email || "")
         setError(null)
+        setAvatar(data.avatarUrl)
       })
       .catch((err) => {
         console.error("Errore nel fetch profile:", err)
@@ -96,7 +104,7 @@ function YourArea() {
       name,
       surname,
       nickname,
-      /*avatarUrl: avatar,*/
+      avatarUrl: avatar,
       email,
     }
 
@@ -208,12 +216,12 @@ function YourArea() {
             </Button>
           </div>
           <hr className="m-2" />
-          <Row className="p-2 flex-grow-1">
+          <Row className="p-2">
             <Col md={6} className="">
               <h4 className="yourAreaTitle">Change Infos</h4>
               <Form>
                 <Form.Group controlId="formName">
-                  <Form.Label className="yourAreaDescribe" sm="3">
+                  <Form.Label className="yourAreaDescribe mb-2" sm="3">
                     Name:
                   </Form.Label>
                   <Col sm="12">
@@ -229,7 +237,7 @@ function YourArea() {
                 </Form.Group>
 
                 <Form.Group controlId="formSurname">
-                  <Form.Label className="yourAreaDescribe" sm="3">
+                  <Form.Label className="yourAreaDescribe mb-2" sm="3">
                     Surname:
                   </Form.Label>
                   <Col sm="12">
@@ -244,7 +252,7 @@ function YourArea() {
                 </Form.Group>
 
                 <Form.Group controlId="formNickname">
-                  <Form.Label className="yourAreaDescribe" sm="3">
+                  <Form.Label className="yourAreaDescribe mb-2" sm="3">
                     Nickname:
                   </Form.Label>
                   <Col sm="12">
@@ -257,54 +265,35 @@ function YourArea() {
                     />
                   </Col>
                 </Form.Group>
-
-                {/* <Form.Group controlId="formAvatar">
-                  <Form.Label sm="3">
-                    AVATAR:
-                  </Form.Label>
-                  <Col sm="12">
-                    <Form.Control
-                      type="text"
-                      placeholder="Insert your AVATAR here..."
-                      value={avatar}
-                      onChange={(e) => setAvatar(e.target.value)}
-                      disabled={loading}
-                    />
-                  </Col>
-                </Form.Group> */}
-
                 <Form.Group controlId="formEmail">
-                  <Form.Label className="yourAreaDescribe" sm="3">
+                  <Form.Label className="yourAreaDescribe mb-2" sm="3">
                     E-mail:
                   </Form.Label>
-                  <Col sm="12">
-                    <InputGroup hasValidation>
-                      <InputGroup.Text id="inputGroupPrepend">
-                        @
-                      </InputGroup.Text>
-                      <Form.Control
-                        type="text"
-                        placeholder="Insert here your @email..."
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        disabled={loading}
-                        autoComplete="new-email"
-                      />
-                    </InputGroup>
-                  </Col>
+
+                  <InputGroup hasValidation>
+                    <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
+                    <Form.Control
+                      type="text"
+                      placeholder="Insert here your @email..."
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      disabled={loading}
+                      autoComplete="new-email"
+                    />
+                  </InputGroup>
+
+                  {error && <p className="text-danger my-1">{error}</p>}
+                  {success && <p className="text-success my-1">{success}</p>}
+                  <div className=" text-center d-flex justify-content-end align-items-center">
+                    <Button
+                      type="submit"
+                      className="updateInfoButton mt-4"
+                      disabled={loading}
+                    >
+                      {loading ? "Updating..." : "EDIT INFO"}
+                    </Button>
+                  </div>
                 </Form.Group>
-                {error && <p className="text-danger mt-3">{error}</p>}
-                {success && <p className="text-success mt-3">{success}</p>}
-                <div className=" text-center d-flex justify-content-end align-items-center">
-                  <Button
-                    type="submit"
-                    size="lg"
-                    className="updateInfoButton mt-4"
-                    disabled={loading}
-                  >
-                    {loading ? "Updating..." : "EDIT INFO"}
-                  </Button>
-                </div>
               </Form>
             </Col>
 
@@ -312,7 +301,7 @@ function YourArea() {
               <h4 className="yourAreaTitle">Change Password</h4>
               <Form onSubmit={handleChangePassword} className="">
                 <Form.Group className="" controlId="formOldPassword">
-                  <Form.Label className="yourAreaDescribe" sm="3">
+                  <Form.Label className="yourAreaDescribe mb-2" sm="3">
                     Old Password:
                   </Form.Label>
                   <Form.Control
@@ -326,7 +315,7 @@ function YourArea() {
                 </Form.Group>
 
                 <Form.Group className="" controlId="formNewPassword">
-                  <Form.Label className="yourAreaDescribe" sm="3">
+                  <Form.Label className="yourAreaDescribe mb-2" sm="3">
                     New Password:
                   </Form.Label>
                   <Form.Control
@@ -349,7 +338,7 @@ function YourArea() {
                 </Form.Group>
 
                 <Form.Group className="mb-4" controlId="formConfirmPassword">
-                  <Form.Label className="yourAreaDescribe" sm="3">
+                  <Form.Label className="yourAreaDescribe mb-2" sm="3">
                     Confirm Password:
                   </Form.Label>
                   <Form.Control
@@ -380,9 +369,29 @@ function YourArea() {
             </Col>
           </Row>
 
-          <div className="text-center pt-2">
-            <img className="" src="/gif/Typing_Animation.gif" alt="typingGif" />
-          </div>
+          <Row className="">
+            <Col md={8}>
+              <Form.Group controlId="formAvatar">
+                <Form.Label sm="3">Profile Pic:</Form.Label>
+                <Form.Control
+                  type="file"
+                  placeholder="No file selected."
+                  // value={}
+                  // onChange={(e) => setAvatar(e.target.value)}
+                  disabled={loading}
+                />
+              </Form.Group>
+            </Col>
+            <Col className="d-flex justify-content-end" md={4}>
+              <div className="avatarBox me-2">
+                <img
+                  className="avatarImg"
+                  src={avatar || defaultUiAvatarUrl}
+                  alt="User Avatar"
+                />
+              </div>
+            </Col>
+          </Row>
         </div>
       </div>
     </>

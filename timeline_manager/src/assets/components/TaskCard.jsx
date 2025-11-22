@@ -41,7 +41,7 @@ function TaskCard({
           <div className="d-flex flex-row justify-content-between align-items-center">
             <Card.Text className="taskCardText m-0">Task Priority:</Card.Text>
             <div
-              className="taskCardTextDescriptionPRIORITY m-0 p-2"
+              className="taskCardTextDescriptionPRIORITY m-0 p-2 text-center"
               style={priorityStyle}
             >
               {task.taskPriority}

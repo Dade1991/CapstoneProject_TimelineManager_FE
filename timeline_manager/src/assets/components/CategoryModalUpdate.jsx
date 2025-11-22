@@ -71,20 +71,22 @@ function CategoryModalUpdate({ show, handleClose, category, onSubmit }) {
           </Form.Group>
         </Modal.Body>
         <Modal.Footer className="modalColor">
-          <Button
-            className="modalCloseButton"
-            onClick={handleClose}
-            disabled={isSubmitting}
-          >
-            Cancel
-          </Button>
-          <Button
-            className="modalSaveButton"
-            type="submit"
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? "Saving..." : "Save Changes"}
-          </Button>
+          <div className="d-flex flex-row">
+            <Button
+              className="modalCloseButton me-2"
+              onClick={handleClose}
+              disabled={isSubmitting}
+            >
+              Close
+            </Button>
+            <Button
+              className="modalSaveButton"
+              type="submit"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Saving..." : "EDIT"}
+            </Button>
+          </div>
         </Modal.Footer>
       </Form>
     </Modal>
