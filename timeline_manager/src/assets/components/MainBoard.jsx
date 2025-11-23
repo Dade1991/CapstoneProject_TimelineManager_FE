@@ -74,7 +74,7 @@ function MainBoard({ project }) {
         return res.json()
       })
       .then((data) => {
-        console.log("CARICAMENTO", data)
+        console.log("LOADING", data)
 
         if (data.length === 0) {
           const defaultCat = {
@@ -90,28 +90,21 @@ function MainBoard({ project }) {
         }
       })
       .catch(console.error)
-  }, [token, project])
 
-  // ---------- TASK ----------
+    // rederizza tasks preesistenti all'avvio del progetto
 
-  // Fetch task del progetto
-
-  useEffect(() => {
-    if (!token || !project || selectedCategoryId === null) return
-
-    fetch(
-      `http://localhost:3001/api/projects/${project.projectId}/categories/${selectedCategoryId}/tasks`,
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    )
+    fetch(`http://localhost:3001/api/projects/${project.projectId}/tasks`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
       .then((res) => {
         if (!res.ok) throw new Error("Error during Task loading.")
         return res.json()
       })
       .then(setTasks)
       .catch(console.error)
-  }, [token, project, selectedCategoryId])
+  }, [token, project])
+
+  // ---------- TASK ----------
 
   // Gestione modale creazione task
 
@@ -138,6 +131,25 @@ function MainBoard({ project }) {
     setShowTaskEditModal(false)
     setTaskToEdit(null)
   }
+
+  // Fetch task del progetto
+
+  // useEffect(() => {
+  //   if (!token || !project || selectedCategoryId === null) return
+
+  //   fetch(
+  //     `http://localhost:3001/api/projects/${project.projectId}/categories/${selectedCategoryId}/tasks`,
+  //     {
+  //       headers: { Authorization: `Bearer ${token}` },
+  //     }
+  //   )
+  //     .then((res) => {
+  //       if (!res.ok) throw new Error("Error during Task loading.")
+  //       return res.json()
+  //     })
+  //     .then(setTasks)
+  //     .catch(console.error)
+  // }, [token, project, selectedCategoryId])
 
   // Salvataggio nuova task
 
@@ -175,6 +187,8 @@ function MainBoard({ project }) {
         return res.json()
       })
       .then((newTask) => {
+        console.log("Setting task with data: ", newTask)
+
         setTasks((old) => [...old, newTask])
         closeTaskCreateModal()
       })
@@ -380,57 +394,74 @@ function MainBoard({ project }) {
   return (
     <>
       <Container fluid className="mainBoard m-2 d-flex flex-row py-4">
-        {categories.map((category) => (
-          <div key={category.categoryId} className="category-column">
-            <div className="d-flex flex-row justify-content-between align-items-center">
-              <h4
-                className="categoryTitle pe-4 m-0"
-                style={{
-                  color: category.categoryColor || "#000000",
-                  textShadow: `2px 2px 6px #000000ab`,
-                }}
-              >
-                {category.categoryName}
-              </h4>
-              <div className="d-flex flex-column">
-                <div className="d-flex flex-row align-items-center justify-content-between mb-1">
-                  <p className="buttonDescription m-0 me-2">EDIT</p>
-                  <Button
-                    onClick={() => openCategoryUpdateModal(category)}
-                    className="categoryEditButton"
-                  >
-                    <i className="categoryIcon bi bi-pencil-square"></i>
-                  </Button>
-                </div>
-                <div className="d-flex flex-row align-items-center justify-content-between">
-                  <p className="buttonDescription m-0 me-2">DELETE</p>
-                  <Button
-                    onClick={() => deleteCategory(category.categoryId)}
-                    className="categoryDeleteButton"
-                  >
-                    <i className="categoryIcon bi bi-trash2-fill"></i>
-                  </Button>
+        {categories.map((category) => {
+          // log per debug categoria e filtro task
+          console.log(
+            "Rendering category",
+            category.categoryName,
+            "with ID",
+            category.categoryId
+          )
+
+          // filtro task con gestione categoria default (-1) per task senza categoria
+          const filteredTasks = tasks.filter((task) => {
+            if (category.categoryId === -1) {
+              return !task.categories || task.categories.length === 0
+            } else {
+              return task.categories?.some(
+                (cat) => cat.categoryId === category.categoryId
+              )
+            }
+          })
+
+          // MODIFICA EVIDENZIATA: log del filtro task per categoria
+          console.log("Filtered tasks:", filteredTasks)
+
+          return (
+            <div key={category.categoryId} className="category-column">
+              <div className="d-flex flex-row justify-content-between align-items-center">
+                <h4
+                  className="categoryTitle pe-4 m-0"
+                  style={{
+                    color: category.categoryColor || "#000000",
+                    textShadow: `2px 2px 6px #000000`,
+                  }}
+                >
+                  {category.categoryName}
+                </h4>
+                <div className="d-flex flex-column">
+                  <div className="d-flex flex-row align-items-center justify-content-between mb-1">
+                    <p className="buttonDescription m-0 me-2">EDIT</p>
+                    <Button
+                      onClick={() => openCategoryUpdateModal(category)}
+                      className="categoryEditButton"
+                    >
+                      <i className="categoryIcon bi bi-pencil-square"></i>
+                    </Button>
+                  </div>
+                  <div className="d-flex flex-row align-items-center justify-content-between">
+                    <p className="buttonDescription m-0 me-2">DELETE</p>
+                    <Button
+                      onClick={() => deleteCategory(category.categoryId)}
+                      className="categoryDeleteButton"
+                    >
+                      <i className="categoryIcon bi bi-trash2-fill"></i>
+                    </Button>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div
-              className="colorCODING my-4"
-              style={{
-                backgroundColor: category.categoryColor,
-                textShadow: `2px 2px 6px ${category.categoryColor}90`,
-              }}
-            ></div>
+              <div
+                className="colorCODING my-4"
+                style={{
+                  backgroundColor: category.categoryColor,
+                  textShadow: `2px 2px 6px ${category.categoryColor}90`,
+                }}
+              ></div>
 
-            {/* <hr className="brInterruption my-3" /> */}
+              {/* <hr className="brInterruption my-3" /> */}
 
-            {tasks
-              .filter((task) =>
-                task.categories?.some(
-                  (cat) => cat.categoryId === category.categoryId
-                )
-              )
-              .map((task) => (
+              {filteredTasks.map((task) => (
                 <TaskCard
                   key={task.taskId}
                   task={task}
@@ -443,18 +474,18 @@ function MainBoard({ project }) {
                 />
               ))}
 
-            <Button
-              className="addTaskButton mt-2"
-              onClick={() => openTaskCreateModal(category.categoryId)}
-            >
-              <div className="d-flex flex-row justify-content-center align-items-center">
-                <i className="plusButtonIconTask bi bi-plus-circle"></i>
-                <p className="m-0 ms-2">Add Task</p>
-              </div>
-            </Button>
-          </div>
-        ))}
-
+              <Button
+                className="addTaskButton mt-2"
+                onClick={() => openTaskCreateModal(category.categoryId)}
+              >
+                <div className="d-flex flex-row justify-content-center align-items-center">
+                  <i className="plusButtonIconTask bi bi-plus-circle"></i>
+                  <p className="m-0 ms-2">Add Task</p>
+                </div>
+              </Button>
+            </div>
+          )
+        })}
         <div className="addCategoryButtonDiv">
           <Button
             className="addCategoryButton ms-2 p-3"
