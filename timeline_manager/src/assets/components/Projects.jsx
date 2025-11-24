@@ -14,6 +14,10 @@ function Projects() {
   const navigateProject = useNavigate()
 
   const { token } = useContext(AuthContext)
+
+  const [projectMembers, setProjectMembers] = useState({})
+  const [expandedProjects, setExpandedProjects] = useState({})
+
   const [projects, setProjects] = useState([])
   const [error, setError] = useState(null)
 
@@ -29,9 +33,14 @@ function Projects() {
     setSelectedProject(proj)
     setShowUpdateModal(true)
   }
+
   const handleCloseUpdate = () => {
     setSelectedProject(null)
     setShowUpdateModal(false)
+  }
+
+  const handleOpenProject = (projectId) => {
+    navigateProject(`/project/${projectId}`)
   }
 
   function parseJwt(token) {
@@ -169,11 +178,26 @@ function Projects() {
       })
   }
 
-  // OPEN PROJECT
+  // GET PROJECT MEMBERS
 
-  const handleOpenProject = (projectId) => {
-    navigateProject(`/project/${projectId}`)
+  const fetchProjectMembers = (projectId) => {
+    if (!token) return
+    fetch(`http://localhost:3001/api/projects/${projectId}/members`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Error fetching members")
+        return res.json()
+      })
+      .then((members) =>
+        setProjectMembers((prev) => ({
+          ...prev,
+          [projectId]: members,
+        }))
+      )
+      .catch(console.error)
   }
+
   // COMPONENT
 
   return (
@@ -213,8 +237,8 @@ function Projects() {
             and manage them effortlessly by adding or removing partners!
           </h4>
         </div>
-        <Row className="p-3 px-4">
-          <Col className="unorderListDiv" lg={8}>
+        <Row className="p-3 px-4 bg-success">
+          <Col className="unorderListDiv bg-info" lg={8}>
             {error && <p className="text-danger">{error}</p>}
             <ul className="unorderList p-0">
               {projects.length === 0 && !error && (
@@ -223,7 +247,11 @@ function Projects() {
                 </li>
               )}
               {projects.map((proj) => (
-                <li key={proj.projectId} className="singleProjectList p-3 mb-4">
+                // _____________________________________________________________________________________________________________________________________
+                <li
+                  key={proj.projectId}
+                  className="singleProjectList bg-warning p-3 mb-4"
+                >
                   <Row className="d-flex flex-row">
                     <Col md={10} className="projectLi align-items-center">
                       <div className="w-100">
@@ -248,91 +276,26 @@ function Projects() {
                         {proj.projectDescription}{" "}
                       </div>
                       <hr className="brInterruption my-4" />
-                      <Row className="">
-                        <Col
-                          md={9}
-                          className="dxProjectCardDetails d-flex align-items-center"
-                        >
-                          <div className="d-flex flex-column flex-grow-1 pe-3">
-                            <div className="d-flex justify-content-between align-items-center inputDateData">
-                              <strong className="memberTaskCounters">
-                                TOTAL Tasks:
-                              </strong>
-                              <div className="projectCardTextDescription">
-                                {proj.taskCount}
-                              </div>
+                      <Row>
+                        <Col md={8}>
+                          <div className="d-flex justify-content-between align-items-center inputDateData">
+                            <strong className="memberTaskCounters">
+                              TOTAL Tasks:
+                            </strong>
+                            <div className="projectCardTextDescription">
+                              {proj.taskCount}
                             </div>
-                            <div className="d-flex justify-content-between align-items-center inputDateData">
-                              <strong className="memberTaskCounters">
-                                Members:
-                              </strong>
-                              <div className="projectCardTextDescription">
-                                {proj.memberCount}
-                              </div>
-                            </div>
-                            <hr className="brInterruption my-4" />
-                            <div className="">
-                              <ul className="p-0">
-                                <li className="d-flex flex-row">
-                                  <Col md={2} className="p-2">
-                                    <div className="avatarBox">
-                                      <img
-                                        className="avatarImg"
-                                        // src={}
-                                        alt=""
-                                      />
-                                    </div>
-                                  </Col>
-                                  <Col md={8} className="ps-2">
-                                    <div className="">
-                                      <div className="nicknameText">
-                                        Nickname
-                                      </div>
-                                      <div className="projectInfosText">
-                                        Role_{" "}
-                                        <strong className="roleText m-0">
-                                          CREATOR
-                                        </strong>
-                                      </div>
-                                    </div>
-                                    <div className="projectInfosText">
-                                      Tasks Counter_{" "}
-                                      <strong className="taskCounterText m-0">
-                                        8
-                                      </strong>
-                                    </div>
-                                  </Col>
-                                  <Col md={2}>
-                                    <div className="d-flex flex-column p-2 align-items-end">
-                                      <Button
-                                        // onClick={}
-                                        className="memberEditButton mb-1"
-                                      >
-                                        <i className="memberIcon bi bi-pencil-square"></i>
-                                      </Button>
-
-                                      <Button
-                                        // onClick={}
-                                        className="memberDeleteButton"
-                                      >
-                                        <i className="memberIcon bi bi-trash2-fill"></i>
-                                      </Button>
-                                    </div>
-                                  </Col>
-                                </li>
-                                <div className="mt-3">
-                                  <Button className="addMemberButton w-100">
-                                    <div className="d-flex flex-row justify-content-center align-items-center">
-                                      <i className="plusButtonIconTask bi bi-person-add"></i>
-                                      <p className="m-0 ms-2">Add Member</p>
-                                    </div>
-                                  </Button>
-                                </div>
-                              </ul>
+                          </div>
+                          <div className="d-flex justify-content-between align-items-center inputDateData">
+                            <strong className="memberTaskCounters">
+                              Members:
+                            </strong>
+                            <div className="projectCardTextDescription">
+                              {proj.memberCount}
                             </div>
                           </div>
                         </Col>
-                        <Col md={3} className="">
+                        <Col md={4} className="">
                           <div className="inputDateData d-flex flex-column align-items-end">
                             <strong className="creationExpiryDates">
                               Creation Date:
@@ -351,6 +314,34 @@ function Projects() {
                           </div>
                         </Col>
                       </Row>
+                      <div className="bg-danger w-100">
+                        <Button
+                          className="showMembersButton my-2"
+                          size="sm"
+                          variant={
+                            expandedProjects[proj.projectId]
+                              ? "secondary"
+                              : "outline-primary"
+                          }
+                          onClick={() => {
+                            setExpandedProjects((prev) => ({
+                              ...prev,
+                              [proj.projectId]: !prev[proj.projectId],
+                            }))
+                            if (!projectMembers[proj.projectId]) {
+                              console.log(
+                                "FETCHING MEMBERS FOR",
+                                proj.projectId
+                              )
+                              fetchProjectMembers(proj.projectId)
+                            }
+                          }}
+                        >
+                          {expandedProjects[proj.projectId]
+                            ? "HIDE MEMBERS"
+                            : "SHOW MEMBERS"}
+                        </Button>
+                      </div>
                     </Col>
                     <Col
                       md={2}
@@ -371,9 +362,85 @@ function Projects() {
                         </Button>
                       </div>
                     </Col>
+                    <Col className="bg-danger" md={12}>
+                      {expandedProjects[proj.projectid] &&
+                        projectMembers[proj.projectId] && (
+                          <div className="dxProjectCardDetails d-flex align-items-center py-2">
+                            <div className="d-flex flex-column flex-grow-1">
+                              <ul className="p-0">
+                                {projectMembers[proj.projectId].map(
+                                  (member) => (
+                                    <li
+                                      key={member.userId}
+                                      className="d-flex flex-row"
+                                    >
+                                      <Col md={2} className="p-2">
+                                        <div className="avatarBox">
+                                          <img
+                                            className="avatarImg"
+                                            src={
+                                              member.avatarUrl || "/default.png"
+                                            }
+                                            alt={member.userFullName}
+                                          />
+                                        </div>
+                                      </Col>
+                                      <Col md={8} className="ps-2">
+                                        <div className="">
+                                          <div className="nicknameText">
+                                            Nickname
+                                          </div>
+                                          <div className="projectInfosText">
+                                            Role_{" "}
+                                            <strong className="roleText m-0">
+                                              CREATOR
+                                            </strong>
+                                          </div>
+                                        </div>
+                                        <div className="projectInfosText">
+                                          Tasks Counter_{" "}
+                                          <strong className="taskCounterText m-0">
+                                            8
+                                          </strong>
+                                        </div>
+                                      </Col>
+                                      <Col md={2}>
+                                        <div className="d-flex flex-column align-items-end">
+                                          <Button
+                                            // onClick={}
+                                            className="memberEditButton mb-1"
+                                          >
+                                            <i className="memberIcon bi bi-pencil-square"></i>
+                                          </Button>
+
+                                          <Button
+                                            // onClick={}
+                                            className="memberDeleteButton"
+                                          >
+                                            <i className="memberIcon bi bi-trash2-fill"></i>
+                                          </Button>
+                                        </div>
+                                      </Col>
+                                    </li>
+                                  )
+                                )}
+                                <div className="mt-3">
+                                  <Button className="addMemberButton w-100">
+                                    <div className="d-flex flex-row justify-content-center align-items-center">
+                                      <i className="plusButtonIconTask bi bi-person-add"></i>
+                                      <p className="m-0 ms-2">Add Member</p>
+                                    </div>
+                                  </Button>
+                                </div>
+                              </ul>
+                            </div>
+                          </div>
+                        )}
+                    </Col>
                   </Row>
                 </li>
               ))}
+              {/* _____________________________________________________________________________________________________________________________________ */}
             </ul>
           </Col>
           <Col
