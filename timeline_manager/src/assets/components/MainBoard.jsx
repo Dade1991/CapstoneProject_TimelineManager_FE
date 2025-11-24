@@ -36,12 +36,13 @@ const priorityStyles = {
   },
 }
 
-function MainBoard({ project }) {
+// tasks, setTasks
+
+function MainBoard({ project, categories, setCategories }) {
   const { token } = useContext(AuthContext)
 
+  const [categoryTasks, setCategoryTasks] = useState({})
   const [selectedCategoryId, setSelectedCategoryId] = useState(null)
-  const [categories, setCategories] = useState([])
-  const [tasks, setTasks] = useState([])
 
   const [showTaskCreateModal, setShowTaskCreateModal] = useState(false)
   const [showCategoryModal, setShowCategoryModal] = useState(false)
@@ -54,11 +55,11 @@ function MainBoard({ project }) {
 
   // Carica categorie e task per Id progetto
 
-  useEffect(() => {
-    console.log("Categories:", categories)
-    console.log("Tasks:", tasks)
-    console.log("Tasks details:", JSON.stringify(tasks, null, 2))
-  }, [categories, tasks])
+  // useEffect(() => {
+  //   console.log("Categories:", categories)
+  //   console.log("Tasks:", tasks)
+  //   console.log("Tasks details:", JSON.stringify(tasks, null, 2))
+  // }, [categories, tasks])
 
   useEffect(() => {
     if (!token || !project) return
@@ -87,22 +88,38 @@ function MainBoard({ project }) {
         } else {
           setCategories(data)
           setSelectedCategoryId(data[0].categoryId)
+
+          // rederizza tasks preesistenti all'avvio del progetto per categoria
+
+          data.forEach((cat) => {
+            fetch(
+              `http://localhost:3001/api/projects/${project.projectId}/categories/${cat.categoryId}/tasks`,
+              { headers: { Authorization: `Bearer ${token}` } }
+            )
+              .then((res) => res.json())
+              .then((tasks) =>
+                setCategoryTasks((prev) => ({
+                  ...prev,
+                  [cat.categoryId]: tasks,
+                }))
+              )
+              .catch(console.error)
+          })
         }
       })
       .catch(console.error)
+  }, [token, project, setCategories])
 
-    // rederizza tasks preesistenti all'avvio del progetto
-
-    fetch(`http://localhost:3001/api/projects/${project.projectId}/tasks`, {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-      .then((res) => {
-        if (!res.ok) throw new Error("Error during Task loading.")
-        return res.json()
-      })
-      .then(setTasks)
-      .catch(console.error)
-  }, [token, project])
+  //   fetch(`http://localhost:3001/api/projects/${project.projectId}/tasks`, {
+  //     headers: { Authorization: `Bearer ${token}` },
+  //   })
+  //     .then((res) => {
+  //       if (!res.ok) throw new Error("Error during Task loading.")
+  //       return res.json()
+  //     })
+  //     .then(task)
+  //     .catch(console.error)
+  // }, [token, project, setCategories, setTasks])
 
   // ---------- TASK ----------
 
@@ -151,13 +168,28 @@ function MainBoard({ project }) {
   //     .catch(console.error)
   // }, [token, project, selectedCategoryId])
 
+  // ========== HELPER ==========
+
+  // ricarica solo i tasks di una categoria (dopo update/creazione)
+
+  function reloadCategoryTasks(categoryId) {
+    fetch(
+      `http://localhost:3001/api/projects/${project.projectId}/categories/${categoryId}/tasks`,
+      { headers: { Authorization: `Bearer ${token}` } }
+    )
+      .then((res) => res.json())
+      .then((tasks) =>
+        setCategoryTasks((prev) => ({
+          ...prev,
+          [categoryId]: tasks,
+        }))
+      )
+      .catch(console.error)
+  }
+
   // Salvataggio nuova task
 
   function saveTask({ title, description, taskExpiryDate, priority }) {
-    if (!priority) {
-      alert("Task priority is mandatory.")
-      return
-    }
     if (!title.trim()) {
       alert("Task title is mandatory.")
       return
@@ -186,10 +218,8 @@ function MainBoard({ project }) {
         if (!res.ok) throw new Error("Error during Task save.")
         return res.json()
       })
-      .then((newTask) => {
-        console.log("Setting task with data: ", newTask)
-
-        setTasks((old) => [...old, newTask])
+      .then(() => {
+        reloadCategoryTasks(taskCategoryId)
         closeTaskCreateModal()
       })
       .catch((e) => alert(e.message))
@@ -202,7 +232,7 @@ function MainBoard({ project }) {
     const categoryId = taskToEdit?.categories?.[0]?.categoryId
 
     if (!categoryId) {
-      alert("Categoria non definita!")
+      alert("Category undefined!")
       return
     }
     try {
@@ -218,8 +248,8 @@ function MainBoard({ project }) {
         }
       )
       if (!res.ok) throw new Error("Error during Task update.")
-      const updatedTask = await res.json()
-      setTasks((old) => old.map((t) => (t.taskId === taskId ? updatedTask : t)))
+      await res.json()
+      reloadCategoryTasks(taskCategoryId)
       closeTaskEditModal()
     } catch (e) {
       alert(e.message)
@@ -244,7 +274,7 @@ function MainBoard({ project }) {
         }
       )
       if (!res.ok) throw new Error("Error deleting task.")
-      setTasks((old) => old.filter((t) => t.taskId !== taskId))
+      reloadCategoryTasks(categoryId)
     } catch (e) {
       alert(e.message)
     }
@@ -291,6 +321,7 @@ function MainBoard({ project }) {
       if (!res.ok) throw new Error("Error during Category save.")
       const newCat = await res.json()
       setCategories((old) => [...old, newCat])
+      reloadCategoryTasks(newCat.categoryId)
       closeCategoryModal()
     } catch (e) {
       alert(e.message)
@@ -384,38 +415,14 @@ function MainBoard({ project }) {
         body: JSON.stringify({ statusId: newStatusId }),
       }
     )
-    setTasks((oldTasks) =>
-      oldTasks.map((task) =>
-        task.taskId === taskId ? { ...task, statusId: newStatusId } : task
-      )
-    )
+    reloadCategoryTasks(selectedCategoryId)
   }
 
   return (
     <>
       <Container fluid className="mainBoard m-2 d-flex flex-row py-4">
         {categories.map((category) => {
-          // log per debug categoria e filtro task
-          console.log(
-            "Rendering category",
-            category.categoryName,
-            "with ID",
-            category.categoryId
-          )
-
-          // filtro task con gestione categoria default (-1) per task senza categoria
-          const filteredTasks = tasks.filter((task) => {
-            if (category.categoryId === -1) {
-              return !task.categories || task.categories.length === 0
-            } else {
-              return task.categories?.some(
-                (cat) => cat.categoryId === category.categoryId
-              )
-            }
-          })
-
-          // MODIFICA EVIDENZIATA: log del filtro task per categoria
-          console.log("Filtered tasks:", filteredTasks)
+          const tasks = categoryTasks[category.categoryId] || []
 
           return (
             <div key={category.categoryId} className="category-column">
@@ -461,7 +468,7 @@ function MainBoard({ project }) {
 
               {/* <hr className="brInterruption my-3" /> */}
 
-              {filteredTasks.map((task) => (
+              {tasks.map((task) => (
                 <TaskCard
                   key={task.taskId}
                   task={task}

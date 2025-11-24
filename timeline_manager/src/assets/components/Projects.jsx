@@ -63,8 +63,6 @@ function Projects() {
         return res.json()
       })
       .then((data) => {
-        console.log(data)
-
         setProjects(data)
         setError(null)
       })
@@ -178,10 +176,6 @@ function Projects() {
   }
   // COMPONENT
 
-  // returnHomeButton
-  // returnDetails
-  // returnIcon
-
   return (
     <>
       <Navbar expand="lg" className="projectNavbar frosted-glass-project">
@@ -284,7 +278,7 @@ function Projects() {
                                     <div className="avatarBox">
                                       <img
                                         className="avatarImg"
-                                        src="/images/ProfilePic_Test.jpg"
+                                        // src={}
                                         alt=""
                                       />
                                     </div>
