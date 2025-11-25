@@ -11,8 +11,6 @@ export function AuthProvider({ children }) {
   // nuovo stato per dati utente (nickname, avatarUrl, ecc)
 
   const [user, setUser] = useState(() => {
-    // puoi inizializzare da localStorage se li salvi lì, oppure null
-
     const savedUser = localStorage.getItem("user")
     return savedUser ? JSON.parse(savedUser) : null
   })

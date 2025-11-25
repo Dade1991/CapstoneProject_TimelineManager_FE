@@ -416,7 +416,7 @@ function Projects() {
               {projects.map((proj) => (
                 <li
                   key={proj.projectId}
-                  className="singleProjectList px-3 pb-2 mb-4"
+                  className="singleProjectList px-3 py-2 mb-4"
                 >
                   {proj.creatorId === user.userId && (
                     <div className="creatorSPECIALindicator m-0 d-inline p-2">
