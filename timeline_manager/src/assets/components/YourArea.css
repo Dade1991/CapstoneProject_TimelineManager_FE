@@ -72,6 +72,11 @@
   font-size: 1.2rem;
 }
 
+.profilePicDescribe {
+  font-weight: 550 !important;
+  font-size: 1.2rem;
+}
+
 .wrapper {
   width: 100%;
   height: auto;
@@ -153,7 +158,11 @@
   min-width: 100px;
 }
 
-.uploadButton1 {
+.uploadButtonText {
+  color: white !important;
+}
+
+.uploadButton {
   font-size: 3rem;
   position: relative;
   top: 3px;

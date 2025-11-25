@@ -99,6 +99,8 @@
 }
 
 .memberProjectCardDetails {
+  border-top: 1px solid #cdc5bd;
+  border-top-right-radius: 50px;
 }
 
 .memberTaskCounters {
@@ -120,6 +122,11 @@
   font-weight: 500;
 }
 
+.projectSettingText {
+  color: #f0aa9a !important;
+  font-weight: 700 !important;
+}
+
 .modalDeleteButton {
   background-color: #d98299 !important;
   font-size: 1.4rem !important;
@@ -128,6 +135,13 @@
 }
 
 .modalSaveButton {
+  background-color: #6aa4b7 !important;
+  font-size: 1.4rem !important;
+  font-weight: 700 !important;
+  border-color: #f2e0d0 !important;
+}
+
+.addMemberButton {
   background-color: #6aa4b7 !important;
   font-size: 1.4rem !important;
   font-weight: 700 !important;
@@ -251,6 +265,11 @@
   border: 1px solid #d9829983 !important;
   border-radius: 6px;
   background-color: beige;
+  display: -webkit-box;
+  /* -webkit-line-clamp: 3; */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .brInterruptionBIG {
@@ -273,11 +292,11 @@
 }
 
 .memberEditButton {
-  border-radius: 8px !important;
-  background-color: #6aa4b7 !important;
+  background-color: inherit !important;
   font-weight: 700 !important;
-  border-color: #f2e0d0 !important;
+  border: none !important;
   width: 50px;
+  color: #f0aa9a !important;
 }
 
 .memberDeleteButton {
@@ -288,6 +307,13 @@
   width: 50px;
 }
 
+.showMembersButton {
+  background-color: inherit !important;
+  border: 0px !important;
+  color: #f0aa9a !important;
+  font-weight: 700 !important;
+}
+
 .memberIcon {
   font-size: 1.2rem;
 }
@@ -295,17 +321,6 @@
 .buttonDescription {
   font-weight: 600 !important;
   font-size: 1.3rem !important;
-}
-
-.addMemberButton {
-  position: relative;
-  background-color: inherit !important;
-  font-size: 1.5rem !important;
-  font-weight: 700 !important;
-  border-color: #f0aa9a !important;
-  overflow: hidden;
-  color: #f0aa9a !important;
-  border-width: 3px !important;
 }
 
 .plusButtonIconTask {
@@ -363,4 +378,8 @@
 
 .avatarBox:hover .avatarImg {
   transform: rotateY(360deg);
+}
+
+.projectCounter {
+  border-right: 1px solid #cdc5bd;
 }

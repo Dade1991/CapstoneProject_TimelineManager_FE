@@ -122,12 +122,12 @@ function Project() {
         <Container fluid className="d-flex justify-content-end">
           <div>
             <Button
-              className="returnProjectButton me-2"
+              className="saveProjectButton me-2"
               onClick={() => handleSaveProject(categories, tasks)}
             >
               <div className="d-flex flex-row">
-                <p className="returnDetails m-0 me-2">SAVE</p>
-                <i className="returnIcon bi bi-arrow-return-left"></i>
+                <p className="saveDetails m-0 me-2">SAVE</p>
+                <i className="saveIcon bi bi-bookmark-check"></i>
               </div>
             </Button>
           </div>

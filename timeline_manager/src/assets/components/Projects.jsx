@@ -265,16 +265,16 @@ function Projects() {
                           </div>
                         </div>
                       </div>
-                      <hr className="brInterruption my-4" />
+                      <hr className="brInterruption my-2" />
                       <p className="descriptionTitle mt-2 m-0">
                         Project Description:
                       </p>
                       <div className="projectCardTextDescriptionSPECIAL p-2 mb-3">
                         {proj.projectDescription}{" "}
                       </div>
-                      <hr className="brInterruption my-4" />
+                      <hr className="brInterruption my-2" />
                       <Row>
-                        <Col md={8}>
+                        <Col className="projectCounter" md={6}>
                           <div className="d-flex justify-content-between align-items-center inputDateData">
                             <strong className="memberTaskCounters">
                               TOTAL Tasks:
@@ -292,13 +292,13 @@ function Projects() {
                             </div>
                           </div>
                         </Col>
-                        <Col md={4} className="">
+                        <Col md={6} className="">
                           <div className="inputDateData d-flex flex-column align-items-end">
                             <strong className="creationExpiryDates">
                               Creation Date:
                             </strong>
                             <div className="projectCardTextDescription">
-                              {proj.creationDate}
+                              {proj.creationDate.split("T")[0]}
                             </div>
                           </div>
                           <div className="inputDateData d-flex flex-column align-items-end">
@@ -306,19 +306,16 @@ function Projects() {
                               Expiry Date:
                             </strong>
                             <div className="projectCardTextDescription">
-                              {proj.expiryDate}
+                              {proj.expiryDate
+                                ? proj.expiryDate.split("T")[0]
+                                : ""}
                             </div>
                           </div>
                         </Col>
                       </Row>
                       <div className="">
                         <Button
-                          className="showMembersButton my-2"
-                          variant={
-                            expandedProjects[proj.projectId]
-                              ? "secondary"
-                              : "outline-primary"
-                          }
+                          className="showMembersButton p-0"
                           onClick={() => {
                             setExpandedProjects((prev) => ({
                               ...prev,
@@ -335,20 +332,27 @@ function Projects() {
                         >
                           {expandedProjects[proj.projectId]
                             ? "HIDE MEMBERS"
-                            : "SHOW MEMBERS"}
+                            : "SHOW MEMBERS"}{" "}
+                          <i class="bi bi-caret-down-fill"></i>
                         </Button>
                       </div>
                     </Col>
                     <Col
                       md={2}
-                      className="d-flex justify-content-center align-items-start"
+                      className="d-flex flex-column align-items-center"
                     >
+                      <p className="projectSettingText mb-2">
+                        PROJECT SETTINGS
+                      </p>
                       <div className="d-flex flex-column align-bottom">
                         <Button
                           className="modalSaveButton mb-2"
                           onClick={() => handleShowUpdate(proj)}
                         >
                           EDIT
+                        </Button>
+                        <Button className="addMemberButton mb-2">
+                          MEMBERS
                         </Button>
                         <Button
                           className="modalDeleteButton"
@@ -362,7 +366,7 @@ function Projects() {
 
                   {expandedProjects[proj.projectId] &&
                     projectMembers[proj.projectId] && (
-                      <div className="memberProjectCardDetails d-flex align-items-center p-2">
+                      <div className="memberProjectCardDetails d-flex align-items-center p-2 mt-2">
                         <div className="d-flex flex-column flex-grow-1">
                           <ul className="p-0">
                             {projectMembers[proj.projectId].map((member) => (
@@ -389,24 +393,26 @@ function Projects() {
                                       <strong className="roleText m-0">
                                         {member.role}
                                       </strong>
+                                      <Button
+                                        // onClick={}
+                                        className="memberEditButton"
+                                      >
+                                        <i className="memberIcon bi bi-pencil-square"></i>
+                                      </Button>
                                     </div>
                                   </div>
-                                  <div className="projectInfosText">
+                                  {/* <div className="projectInfosText">
                                     Tasks Counter_{" "}
                                     <strong className="taskCounterText m-0">
                                       {member.taskCount}
                                     </strong>
-                                  </div>
+                                  </div> */}
                                 </Col>
-                                <Col md={2}>
-                                  <div className="d-flex flex-column align-items-end">
-                                    <Button
-                                      // onClick={}
-                                      className="memberEditButton mb-1"
-                                    >
-                                      <i className="memberIcon bi bi-pencil-square"></i>
-                                    </Button>
-
+                                <Col
+                                  className="d-flex justify-content-end align-items-center"
+                                  md={2}
+                                >
+                                  <div className="">
                                     <Button
                                       // onClick={}
                                       className="memberDeleteButton"
@@ -417,14 +423,6 @@ function Projects() {
                                 </Col>
                               </li>
                             ))}
-                            <div className="mt-3">
-                              <Button className="addMemberButton w-100">
-                                <div className="d-flex flex-row justify-content-center align-items-center">
-                                  <i className="plusButtonIconTask bi bi-person-add"></i>
-                                  <p className="m-0 ms-2">Add Member</p>
-                                </div>
-                              </Button>
-                            </div>
                           </ul>
                         </div>
                       </div>

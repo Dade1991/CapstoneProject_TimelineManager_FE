@@ -39,6 +39,16 @@
   border: 1px solid #d9829983 !important;
   border-radius: 6px;
   background-color: beige;
+  display: -webkit-box;
+  /* -webkit-line-clamp: 3; */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.taskCardTextDescriptionSPECIAL.expanded {
+  max-height: none;
+  overflow: visible;
 }
 
 .taskCardTextDescriptionPRIORITY {

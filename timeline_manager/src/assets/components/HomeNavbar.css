@@ -11,7 +11,7 @@
 /* ____________________________ */
 
 .homeNavbar {
-  border-radius: 40px;
+  border-radius: 20px;
   animation: pulseShadow 3s infinite;
 }
 
@@ -27,36 +27,48 @@
   transition: color 0.4s ease, text-shadow 0.4s ease;
   background-color: inherit !important;
   font-size: 2.1rem !important;
-  font-weight: 500 !important;
+  font-weight: 600 !important;
+  cursor: pointer;
+  transition: transform 0.3s ease, text-shadow 0.3s ease, color 0.3s ease;
 }
 
 .homeLink:hover {
   color: #f23d7f !important;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+  transform: translateX(10px);
+  transition: transform 0.3s ease;
 }
 
 .howItWorksLink {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   transition: color 0.4s ease, text-shadow 0.4s ease;
   font-size: 2.1rem !important;
-  font-weight: 500 !important;
+  font-weight: 600 !important;
+  cursor: pointer;
+  transition: transform 0.3s ease, text-shadow 0.3s ease, color 0.3s ease;
 }
 
 .howItWorksLink:hover {
   color: #f23d7f !important;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+  transform: translateX(10px);
+  transition: transform 0.3s ease;
 }
 
 .contact_usLink {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   transition: color 0.4s ease, text-shadow 0.4s ease;
   font-size: 2.1rem !important;
-  font-weight: 500 !important;
+  font-weight: 600 !important;
+  cursor: pointer;
+  transition: transform 0.3s ease, text-shadow 0.3s ease, color 0.3s ease;
 }
 
 .contact_usLink:hover {
   color: #f23d7f !important;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+  transform: translateX(10px);
+  transition: transform 0.3s ease;
 }
 
 .loginLink {
@@ -64,12 +76,16 @@
   transition: color 0.4s ease, text-shadow 0.4s ease;
   background-color: inherit !important;
   font-size: 2.1rem !important;
-  font-weight: 500 !important;
+  font-weight: 600 !important;
+  cursor: pointer;
+  transition: transform 0.3s ease, text-shadow 0.3s ease, color 0.3s ease;
 }
 
 .loginLink:hover {
   color: #f23d7f !important;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+  transform: translateX(10px);
+  transition: transform 0.3s ease;
 }
 
 .logoutLink {
@@ -77,24 +93,32 @@
   transition: color 0.4s ease, text-shadow 0.4s ease;
   background-color: inherit !important;
   color: #f23d7f !important;
-  font-weight: 500 !important;
+  font-weight: 600 !important;
+  cursor: pointer;
+  transition: transform 0.3s ease, text-shadow 0.3s ease, color 0.3s ease;
 }
 
 .logoutLink:hover {
   color: #f23d7f !important;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+  transform: translateX(10px);
+  transition: transform 0.3s ease;
 }
 
 .yourAreaLink {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   transition: color 0.4s ease, text-shadow 0.4s ease;
   font-size: 2.1rem !important;
-  font-weight: 500 !important;
+  font-weight: 600 !important;
+  cursor: pointer;
+  transition: transform 0.3s ease, text-shadow 0.3s ease, color 0.3s ease;
 }
 
 .yourAreaLink:hover {
   color: #f23d7f !important;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+  transform: translateX(10px);
+  transition: transform 0.3s ease;
 }
 
 .projectsLink {
@@ -102,12 +126,16 @@
   transition: color 0.4s ease, text-shadow 0.4s ease;
   background-color: inherit !important;
   font-size: 2.1rem !important;
-  font-weight: 500 !important;
+  font-weight: 600 !important;
+  cursor: pointer;
+  transition: transform 0.3s ease, text-shadow 0.3s ease, color 0.3s ease;
 }
 
 .projectsLink:hover {
   color: #f23d7f !important;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+  transform: translateX(10px);
+  transition: transform 0.3s ease;
 }
 
 .navbarSpacer {

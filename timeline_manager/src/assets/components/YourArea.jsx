@@ -409,10 +409,12 @@ function YourArea() {
             </Col>
           </Row>
 
-          <Row className="w-100">
+          <Row className="px-2">
             <Col md={7}>
               <Form.Group controlId="formAvatar">
-                <Form.Label sm="3">Profile Pic:</Form.Label>
+                <Form.Label className="profilePicDescribe mb-2" sm="3">
+                  Profile Pic:
+                </Form.Label>
                 <Form.Control
                   type="file"
                   onChange={(e) => setAvatarFile(e.target.files[0])}
@@ -426,7 +428,7 @@ function YourArea() {
             >
               {avatarError && <p className="text-danger">{avatarError}</p>}
               {avatarSuccess && <p className="text-success">{avatarSuccess}</p>}
-              <div className="w-100">
+              <div className="w-100 text-center">
                 <Button
                   className="uploadAvatarButton p-0"
                   type="button"
@@ -437,8 +439,8 @@ function YourArea() {
                     "Uploading..."
                   ) : (
                     <div className="uploadButtonBox d-flex flex-row align-items-center">
-                      <p className="m-0">UPLOAD</p>
-                      <i className="uploadButton1 bi bi-caret-right-fill ms-3"></i>
+                      <p className="uploadButtonText m-0">UPLOAD</p>
+                      <i className="uploadButton bi bi-caret-right-fill"></i>
                     </div>
                   )}
                 </Button>
