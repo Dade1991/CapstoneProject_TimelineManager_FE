@@ -9,30 +9,16 @@ import "./Project.css"
 import { useNavigate } from "react-router-dom"
 
 function Project() {
+  const { token } = useContext(AuthContext)
+  const { projectId } = useParams()
   const navigateHome = useNavigate()
   const navigatePersonalPJT = useNavigate()
-  const { projectId } = useParams()
-
-  const { token } = useContext(AuthContext)
 
   const [projectData, setProjectData] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-
   const [categories, setCategories] = useState([])
   const [tasks, setTasks] = useState([])
-
-  // Add Member
-
-  // const [showAddMemberModal, setShowAddMemberModal] = useState(false)
-
-  // const handleShowAddMember = () => setShowAddMemberModal(true)
-  // const handleCloseAddMember = () => setShowAddMemberModal(false)
-
-  // const handleAddMemberSubmit = (memberData) => {
-  //   console.log("Nuovo membro aggiunto:", memberData)
-  //   handleCloseAddMember()
-  // }
 
   useEffect(() => {
     if (!projectId || !token) return

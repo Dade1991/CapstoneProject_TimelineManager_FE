@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom"
 import "./YourArea.css"
 import { AuthContext } from "../../AuthContext"
 
+// BASE64 - decodifica token per estraaione payload
+
 function parseJwt(token) {
   try {
     const base64Url = token.split(".")[1]
@@ -26,29 +28,33 @@ function parseJwt(token) {
 
 function YourArea() {
   const navigatePersonalPJT = useNavigate()
+
   const [name, setName] = useState("")
   const [surname, setSurname] = useState("")
   const [nickname, setNickname] = useState("")
   const [email, setEmail] = useState("")
+  // ------------
   const [avatar, setAvatar] = useState("")
   const [avatarFile, setAvatarFile] = useState(null)
   const [avatarError, setAvatarError] = useState(null)
   const [avatarSuccess, setAvatarSuccess] = useState(null)
-
+  // ------------
   const [oldPassword, setOldPassword] = useState("")
   const [newPassword, setNewPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
-
-  const [error, setError] = useState(null)
-  const [success, setSuccess] = useState(null)
   const [passwordError, setPasswordError] = useState(null)
   const [passwordSuccess, setPasswordSuccess] = useState(null)
-
+  // ------------
+  const [error, setError] = useState(null)
+  const [success, setSuccess] = useState(null)
   const [loading, setLoading] = useState(false)
 
-  const { token } = useContext(AuthContext)
   const payload = token ? parseJwt(token) : null
   const userId = payload ? payload.sub : null
+
+  const { token } = useContext(AuthContext)
+
+  // default avatar
 
   const defaultUiAvatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(
     name
@@ -111,7 +117,7 @@ function YourArea() {
       email,
     }
 
-    // UPDATE USER
+    // update dello user
 
     fetch(`http://localhost:3001/api/users/${userId}`, {
       method: "PUT",
@@ -155,7 +161,7 @@ function YourArea() {
 
     setLoading(true)
 
-    // UPDATE USER PASSWORD
+    // update della password
 
     fetch(`http://localhost:3001/api/users/${userId}/password`, {
       method: "PUT",
@@ -187,7 +193,7 @@ function YourArea() {
       .finally(() => setLoading(false))
   }
 
-  // UPLOAD USER PROFILE AVATAR
+  // update avatar
 
   const handleAvatarUpload = () => {
     if (!avatarFile || !token || !userId) {

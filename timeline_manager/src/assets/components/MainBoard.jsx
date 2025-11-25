@@ -8,6 +8,8 @@ import CategoryModalUpdate from "./CategoryModalUpdate"
 import TaskModalUpdate from "./TaskModalUpdate"
 import "./MainBoard.css"
 
+// colori per pills status
+
 const priorityStyles = {
   VERY_LOW: {
     backgroundColor: "#d3f9d8",
@@ -36,30 +38,20 @@ const priorityStyles = {
   },
 }
 
-// tasks, setTasks
-
 function MainBoard({ project, categories, setCategories }) {
   const { token } = useContext(AuthContext)
 
   const [categoryTasks, setCategoryTasks] = useState({})
   const [selectedCategoryId, setSelectedCategoryId] = useState(null)
-
   const [showTaskCreateModal, setShowTaskCreateModal] = useState(false)
   const [showCategoryModal, setShowCategoryModal] = useState(false)
   const [showTaskEditModal, setShowTaskEditModal] = useState(false)
   const [taskCategoryId, setTaskCategoryId] = useState(null)
-
   const [categoryToEdit, setCategoryToEdit] = useState(null)
   const [taskToEdit, setTaskToEdit] = useState(null)
   const [showCategoryUpdateModal, setShowCategoryUpdateModal] = useState(false)
 
-  // Carica categorie e task per Id progetto
-
-  // useEffect(() => {
-  //   console.log("Categories:", categories)
-  //   console.log("Tasks:", tasks)
-  //   console.log("Tasks details:", JSON.stringify(tasks, null, 2))
-  // }, [categories, tasks])
+  // render all'avvio con categoria vuota di "default" o pre-esistenti
 
   useEffect(() => {
     if (!token || !project) return
@@ -110,17 +102,6 @@ function MainBoard({ project, categories, setCategories }) {
       .catch(console.error)
   }, [token, project, setCategories])
 
-  //   fetch(`http://localhost:3001/api/projects/${project.projectId}/tasks`, {
-  //     headers: { Authorization: `Bearer ${token}` },
-  //   })
-  //     .then((res) => {
-  //       if (!res.ok) throw new Error("Error during Task loading.")
-  //       return res.json()
-  //     })
-  //     .then(task)
-  //     .catch(console.error)
-  // }, [token, project, setCategories, setTasks])
-
   // ---------- TASK ----------
 
   // Gestione modale creazione task
@@ -149,26 +130,7 @@ function MainBoard({ project, categories, setCategories }) {
     setTaskToEdit(null)
   }
 
-  // Fetch task del progetto
-
-  // useEffect(() => {
-  //   if (!token || !project || selectedCategoryId === null) return
-
-  //   fetch(
-  //     `http://localhost:3001/api/projects/${project.projectId}/categories/${selectedCategoryId}/tasks`,
-  //     {
-  //       headers: { Authorization: `Bearer ${token}` },
-  //     }
-  //   )
-  //     .then((res) => {
-  //       if (!res.ok) throw new Error("Error during Task loading.")
-  //       return res.json()
-  //     })
-  //     .then(setTasks)
-  //     .catch(console.error)
-  // }, [token, project, selectedCategoryId])
-
-  // ========== HELPER ==========
+  // ========== HELPER x TASK ==========
 
   // ricarica solo i tasks di una categoria (dopo update/creazione)
 
@@ -187,7 +149,7 @@ function MainBoard({ project, categories, setCategories }) {
       .catch(console.error)
   }
 
-  // Salvataggio nuova task
+  // salvataggio nuova task
 
   function saveTask({ title, description, taskExpiryDate, priority }) {
     if (!title.trim()) {
@@ -225,7 +187,7 @@ function MainBoard({ project, categories, setCategories }) {
       .catch((e) => alert(e.message))
   }
 
-  // Modifica task esistente
+  // modifica task esistente
 
   async function updateTask(taskData) {
     const taskId = taskData.taskId
@@ -256,7 +218,7 @@ function MainBoard({ project, categories, setCategories }) {
     }
   }
 
-  // Delete task
+  // delete task
 
   async function deleteTask(taskId, categoryId) {
     if (!window.confirm("Are you sure you want to delete this task?")) return
@@ -282,7 +244,7 @@ function MainBoard({ project, categories, setCategories }) {
 
   // ---------- CATEGORY ----------
 
-  // Apri modale nuova categoria
+  // getione modale nuova categoria
 
   function openCategoryModal() {
     setShowCategoryModal(true)
@@ -292,7 +254,18 @@ function MainBoard({ project, categories, setCategories }) {
     setShowCategoryModal(false)
   }
 
-  // Salvataggio nuova categoria
+  //gestione modale update categoria
+
+  function openCategoryUpdateModal(category) {
+    setCategoryToEdit(category)
+    setShowCategoryUpdateModal(true)
+  }
+  function closeCategoryUpdateModal() {
+    setShowCategoryUpdateModal(false)
+    setCategoryToEdit(null)
+  }
+
+  // salvataggio nuova categoria
 
   async function saveCategory({ categoryName, categoryColor }) {
     if (!categoryName.trim()) {
@@ -328,18 +301,7 @@ function MainBoard({ project, categories, setCategories }) {
     }
   }
 
-  // Apertura e chiusura modale update categoria
-
-  function openCategoryUpdateModal(category) {
-    setCategoryToEdit(category)
-    setShowCategoryUpdateModal(true)
-  }
-  function closeCategoryUpdateModal() {
-    setShowCategoryUpdateModal(false)
-    setCategoryToEdit(null)
-  }
-
-  // Salvataggio update categoria
+  // salvataggio update categoria
 
   async function updateCategory({ categoryId, categoryName, categoryColor }) {
     if (!categoryName.trim()) {
@@ -374,7 +336,7 @@ function MainBoard({ project, categories, setCategories }) {
     }
   }
 
-  // Delete della categoria
+  // delete della categoria
 
   async function deleteCategory(categoryId) {
     if (!window.confirm("Are you sure you want to delete this category?"))

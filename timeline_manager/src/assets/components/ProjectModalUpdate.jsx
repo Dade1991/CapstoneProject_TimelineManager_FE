@@ -11,6 +11,8 @@ const ProjectModalUpdate = ({ show, handleClose, onSubmit, project }) => {
     let mounted = true
 
     if (project && mounted) {
+      // indagare sull'errore e sul perchè funziona comunque
+
       setTitle(project.projectName || "")
       setDescription(project.projectDescription || "")
       setExpiryDate(
@@ -81,16 +83,15 @@ const ProjectModalUpdate = ({ show, handleClose, onSubmit, project }) => {
               type="date"
               value={expiryDate}
               onChange={(e) => setExpiryDate(e.target.value)}
-              required
             />
           </Form.Group>
           <Modal.Footer className="modalColor">
             <div className="d-flex flex-row">
               <Button className="modalCloseButton me-2" onClick={handleClose}>
-                CLOSE
+                Close
               </Button>
               <Button className="modalSaveButton" type="submit">
-                UPDATE
+                EDIT
               </Button>
             </div>
           </Modal.Footer>

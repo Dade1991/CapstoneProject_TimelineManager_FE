@@ -9,6 +9,8 @@ function CategoryModalUpdate({ show, handleClose, category, onSubmit }) {
 
   useEffect(() => {
     if (category) {
+      // indagare sull'errore e sul perchè funziona comunque
+
       setCategoryName(category.categoryName || "")
       setCategoryColor(category.categoryColor || "#000000")
     }

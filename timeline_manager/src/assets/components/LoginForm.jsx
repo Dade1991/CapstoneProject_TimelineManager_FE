@@ -9,13 +9,12 @@ import { useContext } from "react"
 import "./LoginForm.css"
 
 function LoginForm() {
+  const { setToken } = useContext(AuthContext)
   const navigate = useNavigate()
+
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-
   const [error, setError] = useState("")
-
-  const { setToken } = useContext(AuthContext)
 
   const handleSubmit = (e) => {
     e.preventDefault()

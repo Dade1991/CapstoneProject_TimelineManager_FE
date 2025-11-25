@@ -10,6 +10,8 @@ const TaskModalUpdate = ({ show, handleClose, onSubmit, task }) => {
 
   useEffect(() => {
     if (task) {
+      // indagare sull'errore e sul perchè funziona comunque
+
       setTitle(task.taskTitle || "")
       setDescription(task.taskDescription || "")
       setDueDate(task.taskExpiryDate || "")
@@ -70,7 +72,7 @@ const TaskModalUpdate = ({ show, handleClose, onSubmit, task }) => {
               value={priority}
               onChange={(e) => setPriority(e.target.value)}
             >
-              <option value="VERY_LOW">LOW</option>
+              <option value="VERY_LOW">VERY LOW</option>
               <option value="LOW">LOW</option>
               <option value="MEDIUM">MEDIUM</option>
               <option value="HIGH">HIGH</option>

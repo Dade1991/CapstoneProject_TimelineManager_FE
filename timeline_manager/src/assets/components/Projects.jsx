@@ -7,6 +7,7 @@ import React, { useState, useEffect, useContext } from "react"
 import { AuthContext } from "../../AuthContext"
 import ProjectModalForm from "./ProjectModalForm"
 import ProjectModalUpdate from "./ProjectModalUpdate"
+import MemberModal from "./MemberModal"
 import "./Projects.css"
 
 function Projects() {
@@ -22,9 +23,12 @@ function Projects() {
   const [error, setError] = useState(null)
 
   const [showProjectModal, setShowProjectModal] = useState(false)
-
   const [selectedProject, setSelectedProject] = useState(null)
   const [showUpdateModal, setShowUpdateModal] = useState(false)
+  const [allUsers, setAllUsers] = useState([])
+  const [showMemberModal, setShowMemberModal] = useState(false)
+  const [selectedProjectForMembers, setSelectedProjectForMembers] =
+    useState(null)
 
   const handleShowProject = () => setShowProjectModal(true)
   const handleCloseProject = () => setShowProjectModal(false)
@@ -43,6 +47,17 @@ function Projects() {
     navigateProject(`/project/${projectId}`)
   }
 
+  const handleShowMemberModal = (project) => {
+    setSelectedProjectForMembers(project)
+    setShowMemberModal(true)
+    fetchAllUsers()
+  }
+
+  const handleCloseMemberModal = () => {
+    setSelectedProjectForMembers(null)
+    setShowMemberModal(false)
+  }
+
   function parseJwt(token) {
     try {
       const base64Url = token.split(".")[1]
@@ -55,6 +70,8 @@ function Projects() {
 
   const payload = token ? parseJwt(token) : null
   const userId = payload?.sub
+
+  // ---------- PROJECTS ----------
 
   // PRIMO MONTAGGIO
 
@@ -178,7 +195,9 @@ function Projects() {
       })
   }
 
-  // GET PROJECT MEMBERS
+  // ---------- MEMBERS ----------
+
+  // recupera membri del progetto
 
   const fetchProjectMembers = (projectId) => {
     if (!token) return
@@ -196,6 +215,75 @@ function Projects() {
         }))
       )
       .catch(console.error)
+  }
+
+  // recupera tutti gli utenti "amici", in realtà di tutta l'app (dovrebbero essre gli amici ma non ho tempo)
+
+  const fetchAllUsers = () => {
+    if (!token) return
+    fetch("http://localhost:3001/api/users", {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && Array.isArray(data.content)) {
+          setAllUsers(data.content)
+        } else {
+          setAllUsers([])
+          console.error("Unexpected data format for users:", data)
+        }
+      })
+      .catch(console.error)
+  }
+
+  // aggiungi un membro al progetto
+
+  const onAddMember = (user, role) => {
+    if (!selectedProjectForMembers) return
+
+    fetch(
+      `http://localhost:3001/api/projects/${selectedProjectForMembers.projectId}/members`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ userId: user.userId, role }),
+      }
+    )
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to add member.")
+        return res.json()
+      })
+      .then(() => {
+        fetchProjectMembers(selectedProjectForMembers.projectId)
+      })
+      .catch((err) => alert(err.message))
+  }
+
+  // cambia la authority del membro da aggiungere
+
+  const onUpdateMemberRole = (projectId, userId, newRole) => {
+    fetch(
+      `http://localhost:3001/api/projects/${projectId}/members/${userId}/role`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ newRole }),
+      }
+    )
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to update member role")
+        return res.json()
+      })
+      .then(() => {
+        fetchProjectMembers(projectId)
+      })
+      .catch((err) => alert(err.message))
   }
 
   // COMPONENT
@@ -333,7 +421,7 @@ function Projects() {
                           {expandedProjects[proj.projectId]
                             ? "HIDE MEMBERS"
                             : "SHOW MEMBERS"}{" "}
-                          <i class="bi bi-caret-down-fill"></i>
+                          <i className="bi bi-caret-down-fill"></i>
                         </Button>
                       </div>
                     </Col>
@@ -351,7 +439,10 @@ function Projects() {
                         >
                           EDIT
                         </Button>
-                        <Button className="addMemberButton mb-2">
+                        <Button
+                          className="addMemberButton mb-2"
+                          onClick={() => handleShowMemberModal(proj)}
+                        >
                           MEMBERS
                         </Button>
                         <Button
@@ -427,6 +518,16 @@ function Projects() {
                         </div>
                       </div>
                     )}
+                  {showMemberModal && selectedProjectForMembers && (
+                    <MemberModal
+                      show={showMemberModal}
+                      handleClose={handleCloseMemberModal}
+                      allUsers={allUsers || []}
+                      onAddMember={onAddMember}
+                      onUpdateMemberRole={onUpdateMemberRole}
+                      projectId={selectedProjectForMembers.projectId}
+                    />
+                  )}
                 </li>
               ))}
             </ul>
@@ -470,6 +571,7 @@ function Projects() {
                 handleClose={handleCloseProject}
                 onSubmit={handleProjectSubmit}
               />
+
               {showUpdateModal && (
                 <ProjectModalUpdate
                   show={showUpdateModal}
