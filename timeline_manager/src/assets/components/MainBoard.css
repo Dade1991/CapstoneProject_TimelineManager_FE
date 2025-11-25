@@ -33,8 +33,6 @@
   color: white;
 }
 
-/* ----------------------------- */
-
 .addCategoryButton {
   position: relative;
   min-width: 250px;
@@ -69,8 +67,6 @@
   z-index: 1;
 }
 
-/* ----------------------------- */
-
 .addTaskButton {
   position: relative;
   background-color: #6aa4b7 !important;
@@ -101,8 +97,6 @@
   position: relative;
   z-index: 1;
 }
-
-/* ----------------------------- */
 
 .categoryTitle {
   font-family: "Bruno Ace SC", sans-serif;

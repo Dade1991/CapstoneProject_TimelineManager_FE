@@ -37,7 +37,7 @@ const MemberModal = ({
           {users.map((user) => (
             <li
               key={user.userId}
-              className="d-flex align-items-center justify-content-between mb-2"
+              className="memberLi d-flex align-items-center justify-content-between mb-2"
             >
               <div className="d-flex flex-row justify-content-center align-items-center">
                 <div className="avatarBoxMember">
@@ -47,13 +47,15 @@ const MemberModal = ({
                     alt={user.userFullName}
                   />
                 </div>
-                <p className="memberFullName ms-2 m-0">
-                  {user.name} {user.surname}
-                </p>
+                <div className="memberFullNameDiv ">
+                  <p className="memberFullName ms-2 m-0">
+                    {user.name} {user.surname}
+                  </p>
+                </div>
               </div>
-              <div className="d-flex flex-row justify-content-center align-items-center">
+              <div className="d-flex flex-row justify-content-center align-items-center me-1">
                 <select
-                  className="me-2"
+                  className="memberDropdown me-2"
                   value={selectedRoles[user.userId] || ""}
                   onChange={(e) => {
                     const newRole = e.target.value

@@ -104,7 +104,7 @@ function MainBoard({ project, categories, setCategories }) {
 
   // ---------- TASK ----------
 
-  // Gestione modale creazione task
+  // gestione modale creazione task
 
   function openTaskCreateModal(categoryId) {
     setTaskCategoryId(categoryId)
@@ -116,7 +116,7 @@ function MainBoard({ project, categories, setCategories }) {
     setTaskCategoryId(null)
   }
 
-  // Gestione modale edit task
+  // gestione modale edit task
 
   function openTaskEditModal(task) {
     setTaskToEdit(task)
@@ -424,7 +424,7 @@ function MainBoard({ project, categories, setCategories }) {
                 className="colorCODING my-4"
                 style={{
                   backgroundColor: category.categoryColor,
-                  textShadow: `2px 2px 6px ${category.categoryColor}90`,
+                  boxShadow: `2px 2px 6px #000000`,
                 }}
               ></div>
 

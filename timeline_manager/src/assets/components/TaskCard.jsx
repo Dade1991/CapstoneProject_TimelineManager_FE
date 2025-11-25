@@ -11,8 +11,8 @@ const statusOptions = [
   { label: "PAUSED", value: 5 },
   { label: "WAITING_FEEDBACK", value: 6 },
   { label: "BLOCKED", value: 7 },
-  { label: "COMPLETED", value: 8 },
-  { label: "CANCELLED", value: 9 },
+  { label: "CANCELLED", value: 8 },
+  { label: "COMPLETED", value: 9 },
 ]
 
 function TaskCard({

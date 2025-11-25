@@ -22,7 +22,8 @@ const TaskModalForm = ({ show, handleClose, onSubmit }) => {
 
     console.log("SONO UN LOG SFIGATO:", taskExpiryDate)
 
-    // Pulire o reset form se vuoi
+    // pulire o reset form
+
     setTitle("")
     setDescription("")
     setTaskExpiryDate("")

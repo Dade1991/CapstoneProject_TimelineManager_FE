@@ -15,6 +15,7 @@ function Projects() {
   const navigateProject = useNavigate()
 
   const { token } = useContext(AuthContext)
+  const { user } = useContext(AuthContext)
 
   const [projectMembers, setProjectMembers] = useState({})
   const [expandedProjects, setExpandedProjects] = useState({})
@@ -29,6 +30,9 @@ function Projects() {
   const [showMemberModal, setShowMemberModal] = useState(false)
   const [selectedProjectForMembers, setSelectedProjectForMembers] =
     useState(null)
+
+  const [editingUserId, setEditingUserId] = useState(null)
+  const [selectedRole, setSelectedRole] = useState("")
 
   const handleShowProject = () => setShowProjectModal(true)
   const handleCloseProject = () => setShowProjectModal(false)
@@ -57,6 +61,10 @@ function Projects() {
     setSelectedProjectForMembers(null)
     setShowMemberModal(false)
   }
+
+  // const handleMemberDelete =(member)=>{
+  //   s
+  // }
 
   function parseJwt(token) {
     try {
@@ -208,12 +216,13 @@ function Projects() {
         if (!res.ok) throw new Error("Error fetching members")
         return res.json()
       })
-      .then((members) =>
+      .then((members) => {
+        console.log("Membri aggiornati ricevuti:", members)
         setProjectMembers((prev) => ({
           ...prev,
           [projectId]: members,
         }))
-      )
+      })
       .catch(console.error)
   }
 
@@ -254,6 +263,10 @@ function Projects() {
     )
       .then((res) => {
         if (!res.ok) throw new Error("Failed to add member.")
+        if (res.status === 201) {
+          // 201 Created with empty body, non fare res.json()
+          return null
+        }
         return res.json()
       })
       .then(() => {
@@ -286,24 +299,89 @@ function Projects() {
       .catch((err) => alert(err.message))
   }
 
+  // elimina il membro dal progetto
+
+  const handleDeleteMember = (projectId, userId) => {
+    if (!userId) {
+      alert("Invalid user ID to delete")
+      return
+    }
+    fetch(`http://localhost:3001/api/projects/${projectId}/members/${userId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Failed to remove member.")
+        }
+      })
+      .then(() => {
+        setProjectMembers((prev) => {
+          const updateMembers = prev[projectId].filter(
+            (member) => member.userId !== userId
+          )
+          return { ...prev, [projectId]: updateMembers }
+        })
+      })
+      .catch((err) => alert(err.message))
+  }
+
+  // --------------------------------------------------------------------------------
+
+  // const handleProjectDelete = (projectId) => {
+  //   if (!window.confirm("Are you sure you want to delete this project?")) {
+  //     return
+  //   }
+
+  //   fetch(`http://localhost:3001/api/projects/${projectId}`, {
+  //     method: "DELETE",
+  //     headers: {
+  //       Authorization: `Bearer ${token}`,
+  //       "Content-Type": "application/json",
+  //     },
+  //   })
+  //     .then((res) => {
+  //       if (!res.ok) {
+  //         throw new Error("Failed to delete project")
+  //       }
+  //       setProjects((prev) =>
+  //         prev.filter((proj) => proj.projectId !== projectId)
+  //       )
+  //     })
+  //     .catch((err) => {
+  //       alert("Error deleting project: " + err.message)
+  //     })
+  // }
+
+  // --------------------------------------------------------------------------------
+
   // COMPONENT
 
   return (
     <>
       <Navbar expand="lg" className="projectNavbar frosted-glass-project">
-        <Container fluid className="d-flex justify-content-end">
+        <Container fluid className="d-flex justify-content-between">
           {/* <Navbar.Brand href="#">Logo</Navbar.Brand> */}
-          <Button
-            className="returnHomeButton"
-            onClick={() => {
-              navigateHome("/Home")
-            }}
-          >
-            <div className="d-flex flex-row">
-              <p className="returnDetails m-0 me-2">Hompage</p>
-              <i className="returnIcon bi bi-arrow-return-left"></i>
-            </div>
-          </Button>
+          <div className="d-flex flex-row align-items-baseline">
+            <p className="loggedText m-0 me-2">Logged as</p>
+            <p className="loggedNickname m-0">{user.nickname}</p>
+          </div>
+          <div>
+            <Button
+              className="returnHomeButton"
+              onClick={() => {
+                navigateHome("/Home")
+              }}
+            >
+              <div className="d-flex flex-row">
+                <p className="returnDetails m-0 me-2">Hompage</p>
+                <i className="returnIcon bi bi-arrow-return-left"></i>
+              </div>
+            </Button>
+          </div>
         </Container>
       </Navbar>
 
@@ -336,7 +414,15 @@ function Projects() {
               )}
               {/* ___________________________________________________________________________________________________________________________ */}
               {projects.map((proj) => (
-                <li key={proj.projectId} className="singleProjectList p-3 mb-4">
+                <li
+                  key={proj.projectId}
+                  className="singleProjectList px-3 pb-2 mb-4"
+                >
+                  {proj.creatorId === user.userId && (
+                    <div className="creatorSPECIALindicator m-0 d-inline p-2">
+                      <i className="creatorIcon bi bi-star-fill"></i>
+                    </div>
+                  )}
                   <Row className="d-flex flex-row">
                     <Col md={10} className="projectLi align-items-center">
                       <div className="w-100">
@@ -427,12 +513,12 @@ function Projects() {
                     </Col>
                     <Col
                       md={2}
-                      className="d-flex flex-column align-items-center"
+                      className="d-flex flex-column align-items-center p-0 px-2"
                     >
-                      <p className="projectSettingText mb-2">
+                      <p className="projectSettingText mb-2 text-center">
                         PROJECT SETTINGS
                       </p>
-                      <div className="d-flex flex-column align-bottom">
+                      <div className="d-flex flex-column align-bottom w-100">
                         <Button
                           className="modalSaveButton mb-2"
                           onClick={() => handleShowUpdate(proj)}
@@ -440,7 +526,7 @@ function Projects() {
                           EDIT
                         </Button>
                         <Button
-                          className="addMemberButton mb-2"
+                          className="memberButton mb-2"
                           onClick={() => handleShowMemberModal(proj)}
                         >
                           MEMBERS
@@ -474,22 +560,66 @@ function Projects() {
                                     />
                                   </div>
                                 </Col>
-                                <Col md={8} className="ps-2">
+                                <Col md={9} className="ps-2">
                                   <div className="">
                                     <div className="nicknameText">
                                       {member.userFullName}
                                     </div>
-                                    <div className="projectInfosText">
-                                      Role_{" "}
-                                      <strong className="roleText m-0">
-                                        {member.role}
-                                      </strong>
-                                      <Button
-                                        // onClick={}
-                                        className="memberEditButton"
-                                      >
-                                        <i className="memberIcon bi bi-pencil-square"></i>
-                                      </Button>
+                                    <div className="projectInfosText d-flex flex-row">
+                                      <p className="m-0 me-2">Role_</p>
+                                      {editingUserId === member.userId ? (
+                                        <>
+                                          <select
+                                            className="memberDropdown"
+                                            value={selectedRole}
+                                            onChange={(e) =>
+                                              setSelectedRole(e.target.value)
+                                            }
+                                          >
+                                            <option value="GUEST">Guest</option>
+                                            <option value="ADMIN">Admin</option>
+                                            <option value="CREATOR">
+                                              Creator
+                                            </option>
+                                          </select>
+                                          <Button
+                                            className="roleEditSaveButton ms-2"
+                                            onClick={() => {
+                                              onUpdateMemberRole(
+                                                proj.projectId,
+                                                member.userId,
+                                                selectedRole
+                                              )
+                                              setEditingUserId(null)
+                                            }}
+                                          >
+                                            UPGRADE
+                                          </Button>
+                                          <Button
+                                            className="roleEditCancelButton ms-2"
+                                            onClick={() =>
+                                              setEditingUserId(null)
+                                            }
+                                          >
+                                            CLOSE
+                                          </Button>
+                                        </>
+                                      ) : (
+                                        <>
+                                          <strong className="roleText m-0 me-2">
+                                            {member.role}
+                                          </strong>
+                                          <Button
+                                            className="memberEditButton"
+                                            onClick={() => {
+                                              setEditingUserId(member.userId)
+                                              setSelectedRole(member.role)
+                                            }}
+                                          >
+                                            <i className="memberIcon bi bi-pencil-square"></i>
+                                          </Button>
+                                        </>
+                                      )}
                                     </div>
                                   </div>
                                   {/* <div className="projectInfosText">
@@ -500,17 +630,25 @@ function Projects() {
                                   </div> */}
                                 </Col>
                                 <Col
-                                  className="d-flex justify-content-end align-items-center"
-                                  md={2}
+                                  className="d-flex justify-content-center p-2"
+                                  md={1}
                                 >
-                                  <div className="">
-                                    <Button
-                                      // onClick={}
-                                      className="memberDeleteButton"
-                                    >
-                                      <i className="memberIcon bi bi-trash2-fill"></i>
-                                    </Button>
-                                  </div>
+                                  <Button
+                                    // onClick={}
+                                    className="memberDeleteButton"
+                                    onClick={() =>
+                                      handleDeleteMember(
+                                        proj.projectId,
+                                        member.userId
+                                      )
+                                    }
+                                  >
+                                    <div>
+                                      <p className="removeMemberText m-0">
+                                        REMOVE
+                                      </p>
+                                    </div>
+                                  </Button>
                                 </Col>
                               </li>
                             ))}

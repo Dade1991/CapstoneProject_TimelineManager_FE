@@ -141,7 +141,7 @@
   border-color: #f2e0d0 !important;
 }
 
-.addMemberButton {
+.memberButton {
   background-color: #6aa4b7 !important;
   font-size: 1.4rem !important;
   font-weight: 700 !important;
@@ -155,8 +155,6 @@
   color: #a82562;
   text-shadow: 2px 2px 5px #f2e0d0;
 }
-
-/* _________________ */
 
 .descriptionSubtitle {
   font-size: 1.7em;
@@ -191,8 +189,6 @@
   z-index: -10;
   pointer-events: none;
 }
-
-/* _________________ */
 
 .descriptionTitle {
   font-size: 1.4rem;
@@ -266,7 +262,6 @@
   border-radius: 6px;
   background-color: beige;
   display: -webkit-box;
-  /* -webkit-line-clamp: 3; */
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -382,4 +377,58 @@
 
 .projectCounter {
   border-right: 1px solid #cdc5bd;
+}
+
+.creatorSPECIALindicator {
+  position: relative !important;
+  top: -10px !important;
+  left: 2px;
+  background-color: #a00b50;
+  border-radius: 50px;
+  color: white;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7) !important;
+}
+
+.creatorIcon {
+  font-size: 1rem;
+}
+
+.roleEditSaveButton {
+  background-color: #6aa4b7 !important;
+  font-size: 1.2rem !important;
+  font-weight: 700 !important;
+  border-color: #f2e0d0 !important;
+}
+
+.roleEditCancelButton {
+  background-color: #d98299 !important;
+  font-size: 1.2rem !important;
+  font-weight: 700 !important;
+  border-color: #f2e0d0 !important;
+}
+
+.memberDropdown {
+  background-color: #6aa4b7;
+  color: white;
+  border-radius: 5px;
+}
+
+.removeMemberText {
+  position: relative;
+  transform: rotate(270deg);
+  top: 20px;
+}
+
+.loggedText {
+  font-weight: 700;
+}
+.loggedNickname {
+  font-family: "Bruno Ace SC", sans-serif;
+  color: #a82562 !important;
+  font-size: 1.5rem !important;
+  font-weight: 600 !important;
+}
+
+.creatorIcon {
+  color: yellow;
 }

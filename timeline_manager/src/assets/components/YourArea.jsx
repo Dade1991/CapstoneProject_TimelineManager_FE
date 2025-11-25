@@ -27,6 +27,7 @@ function parseJwt(token) {
 }
 
 function YourArea() {
+  const { token } = useContext(AuthContext)
   const navigatePersonalPJT = useNavigate()
 
   const [name, setName] = useState("")
@@ -51,8 +52,6 @@ function YourArea() {
 
   const payload = token ? parseJwt(token) : null
   const userId = payload ? payload.sub : null
-
-  const { token } = useContext(AuthContext)
 
   // default avatar
 

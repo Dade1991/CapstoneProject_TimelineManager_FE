@@ -74,8 +74,32 @@
   border-color: #f2e0d0 !important;
 }
 
+.memberFullNameDiv {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .memberFullName {
   font-size: 1.2rem !important;
   font-weight: 700 !important;
   border-color: #f2e0d0 !important;
 }
+
+.memberDropdown {
+  background-color: #69b7bf;
+  color: white;
+  border-radius: 5px;
+}
+
+.memberLi {
+  background-color: #f2e0d0;
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+/* .creatorIcon {
+  color: yellow;
+} */

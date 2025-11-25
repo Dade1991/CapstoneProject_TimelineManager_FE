@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom"
 
 function Project() {
   const { token } = useContext(AuthContext)
+  const { user } = useContext(AuthContext)
   const { projectId } = useParams()
   const navigateHome = useNavigate()
   const navigatePersonalPJT = useNavigate()
@@ -101,9 +102,14 @@ function Project() {
     <>
       <Navbar expand="lg" className="projectNavbar frosted-glass-project">
         {projectData && (
-          <Navbar.Brand className="projectNavbarTitle mx-3">
-            {projectData.projectName}
-          </Navbar.Brand>
+          // <Navbar.Brand className="projectNavbarTitle mx-3">
+          // </Navbar.Brand>
+          <div className="d-flex flex-row align-items-baseline w-100">
+            <p className="loggedText m-0 me-2">Logged as</p>
+            <p className="loggedNickname m-0">{user.nickname} </p>{" "}
+            <p className="loggedText m-0 mx-2"> PROJECT</p>
+            <p className="projectNavbarTitle m-0">{projectData.projectName}</p>
+          </div>
         )}
         <Container fluid className="d-flex justify-content-end">
           <div>
