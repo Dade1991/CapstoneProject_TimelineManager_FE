@@ -88,3 +88,21 @@
   font-weight: 700 !important;
   border-color: white !important;
 }
+
+.reopenTaskButtonDiv {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 200;
+}
+
+.reopenTaskButton {
+  background-color: #6aa4b7 !important;
+  border-color: beige !important;
+  color: beige !important;
+  font-size: 1.4rem !important;
+  font-weight: 700 !important;
+  z-index: 400 !important;
+  opacity: 1 !important;
+}

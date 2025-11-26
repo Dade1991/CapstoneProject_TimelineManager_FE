@@ -358,14 +358,72 @@ function MainBoard({ project, categories, setCategories }) {
     }
   }
 
+  // ---------- COMPLETION/RE-OPEN TASK----------
+
+  // flag di completamento task
+
+  async function completeTask(categoryId, taskId) {
+    try {
+      const res = await fetch(
+        `http://localhost:3001/api/projects/${project.projectId}/tasks/${taskId}/complete`,
+        {
+          method: `POST`,
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
+      if (!res.ok) throw new Error("Error completing task.")
+      await res.json()
+      reloadCategoryTasks(categoryId)
+    } catch (e) {
+      console.log("CLOSED", taskId)
+
+      alert(e.message)
+    }
+  }
+
+  // riapertura task
+
+  async function reopenTask(categoryId, taskId) {
+    try {
+      const res = await fetch(
+        `http://localhost:3001/api/projects/${project.projectId}/tasks/${taskId}/reopening`,
+        {
+          method: `PATCH`,
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
+      if (!res.ok) throw new Error("Error during task reopening.")
+      await res.json()
+      reloadCategoryTasks(categoryId)
+    } catch (e) {
+      console.log("REOPEN", taskId)
+      alert(e.message)
+    }
+  }
+
   // ---------- STATUS ----------
 
-  const handleStatusChange = async (taskId, newStatusId) => {
-    if (!selectedCategoryId) {
+  const handleStatusChange = async (taskId, newStatusId, categoryId) => {
+    if (!categoryId) {
+      console.warn("Missing categoryId for status change", {
+        taskId,
+        newStatusId,
+      })
       return
     }
+
+    // ----------------------------------------------------------------------------
+
+    console.log("[MainBoard] status change", {
+      taskId,
+      newStatusId,
+      categoryId,
+    })
+
+    // ----------------------------------------------------------------------------
+
     await fetch(
-      `http://localhost:3001/api/projects/${project.projectId}/categories/${selectedCategoryId}/tasks/${taskId}/status/${newStatusId}`,
+      `http://localhost:3001/api/projects/${project.projectId}/tasks/${taskId}/status/${newStatusId}`,
       {
         method: "PATCH",
         headers: {
@@ -432,12 +490,26 @@ function MainBoard({ project, categories, setCategories }) {
                 <TaskCard
                   key={task.taskId}
                   task={task}
+                  priorityStyles={priorityStyles}
                   onDelete={() =>
                     deleteTask(task.taskId, task.categories?.[0]?.categoryId)
                   }
                   onUpdate={() => openTaskEditModal(task)}
-                  priorityStyles={priorityStyles}
-                  onStatusChange={handleStatusChange}
+                  onStatusChange={(taskId, newStatusId) =>
+                    handleStatusChange(taskId, newStatusId, category.categoryId)
+                  }
+                  onComplete={(taskId, newChecked) => {
+                    const categoryId = task.categories?.[0]?.categoryId
+                    if (!categoryId) {
+                      alert("Category ID undefined for this task.")
+                      return
+                    }
+                    if (newChecked) {
+                      completeTask(categoryId, taskId)
+                    } else {
+                      reopenTask(categoryId, taskId)
+                    }
+                  }}
                 />
               ))}
 

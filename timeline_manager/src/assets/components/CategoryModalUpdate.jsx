@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react"
 import { Modal, Button, Form } from "react-bootstrap"
 import "./ProjectModals.css"
 
+// colori per category
+
 const availableColors = [
   "#FF5733",
   "#33FFCE",

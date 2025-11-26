@@ -1,6 +1,7 @@
 import { Container, Row, Col } from "react-bootstrap"
 import Button from "react-bootstrap/Button"
 import Card from "react-bootstrap/Card"
+import { useState, useEffect } from "react"
 import "./TaskCard.css"
 
 const statusOptions = [
@@ -21,18 +22,65 @@ function TaskCard({
   onUpdate,
   priorityStyles,
   onStatusChange,
+  onComplete,
+  onReopen,
 }) {
   const priorityStyle = priorityStyles[task.taskPriority] || {}
+  const [checkedComplete, setCheckedComplete] = useState(false)
+  const cardStyleComplete = checkedComplete
+    ? { opacity: 0.5, position: "relative" }
+    : {}
+  const cardStyleReopen = checkedComplete ? { pointerEvents: "none" } : {}
 
   const handleStatusChange = (e) => {
     onStatusChange(task.taskId, Number(e.target.value))
   }
 
+  const handleReopenClick = (e) => {
+    e.stopPropagation()
+    setCheckedComplete(false)
+    if (onReopen) onReopen(task.taskId)
+  }
+
+  const handleCheckboxChange = () => {
+    const newChecked = !checkedComplete
+    setCheckedComplete(newChecked)
+    if (newChecked) {
+      onComplete(task.taskId, newChecked)
+    } else {
+      if (onReopen) onReopen(task.taskId)
+    }
+  }
+
+  useEffect(() => {
+    setCheckedComplete(task.isCompleted || false)
+  }, [task.taskId, task.isCompleted])
+
   return (
     <>
-      <Card className="cardMainContainer mb-4">
-        <Card.Body className="taskCard">
+      <Card className="cardMainContainer mb-4" style={cardStyleComplete}>
+        <Card.Body className="taskCard" style={cardStyleReopen}>
           {" "}
+          {/* ------------------------------------------ */}
+          {checkedComplete && (
+            <div
+              className="reopenTaskButtonDiv"
+              style={{
+                pointerEvents: "auto",
+              }}
+            >
+              {/* ------------------------------------------ */}
+              <Button
+                className="reopenTaskButton"
+                onClick={handleReopenClick}
+                style={{
+                  pointerEvents: "auto",
+                }}
+              >
+                Reopen
+              </Button>
+            </div>
+          )}
           <Card.Text className="taskCardText m-0">Task: </Card.Text>
           <Card.Title className="taskCardTextTitle m-0">
             {task.taskTitle}
@@ -97,11 +145,11 @@ function TaskCard({
           <hr className="brInterruption my-2" />
           <div className="d-flex flex-row justify-content-between align-items-center">
             <div className="form-check me-3">
-              {/* <input
+              <input
                 className="form-check-input"
                 type="checkbox"
-                checked={task.isCompleted}
-                onChange={onToggleComplete}
+                checked={checkedComplete}
+                onChange={handleCheckboxChange}
                 id={`check-${task.taskId}`}
               />
               <label
@@ -109,7 +157,7 @@ function TaskCard({
                 htmlFor={`check-${task.taskId}`}
               >
                 Complete
-              </label> */}
+              </label>
             </div>
             <div className="d-flex flex-row align-items-center">
               <Button onClick={onDelete} className="taskCardDeleteButton me-1">

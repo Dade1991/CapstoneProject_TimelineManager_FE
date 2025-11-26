@@ -2,6 +2,19 @@ import React, { useState } from "react"
 import { Modal, Button, Form } from "react-bootstrap"
 import "./ProjectModals.css"
 
+// colori per category
+
+const availableColors = [
+  "#FF5733",
+  "#33FFCE",
+  "#3375FF",
+  "#FF33B8",
+  "#33FF57",
+  "#FFC733",
+  "#9933FF",
+  "#33FFF6",
+]
+
 function AddCategoryModal({ show, handleClose, onSubmit }) {
   const [categoryName, setCategoryName] = useState("")
   const [categoryColor, setCategoryColor] = useState("#000000")
@@ -49,14 +62,31 @@ function AddCategoryModal({ show, handleClose, onSubmit }) {
           <Form.Group controlId="categoryColor">
             <Form.Label className="d-flex flex-row align-items-center">
               Category Color{" "}
-              <p className="advertiser ms-2 m-0">(click the square below)</p>
+              <p className="advertiser ms-2 m-0">
+                (choose a color for your Category)
+              </p>
             </Form.Label>
-            <Form.Control
-              type="color"
-              value={categoryColor}
-              onChange={(e) => setCategoryColor(e.target.value)}
-              disabled={isSubmitting}
-            />
+            <div className="d-flex flex-wrap mt-2">
+              {availableColors.map((color) => (
+                <div
+                  key={color}
+                  onClick={() => !isSubmitting && setCategoryColor(color)}
+                  style={{
+                    backgroundColor: color,
+                    width: 30,
+                    height: 30,
+                    marginRight: 10,
+                    borderRadius: 4,
+                    cursor: isSubmitting ? "not-allowed" : "pointer",
+                    border:
+                      categoryColor === color
+                        ? "3px solid #000"
+                        : "1px solid  #f2e0d0",
+                  }}
+                  title={color}
+                />
+              ))}
+            </div>
           </Form.Group>
         </Modal.Body>
         <Modal.Footer className="modalColor">
