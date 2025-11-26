@@ -8,6 +8,7 @@ import { AuthContext } from "../../AuthContext"
 import ProjectModalForm from "./ProjectModalForm"
 import ProjectModalUpdate from "./ProjectModalUpdate"
 import MemberModal from "./MemberModal"
+import HomeFooter from "./HomeFooter"
 import "./Projects.css"
 
 function Projects() {
@@ -97,6 +98,7 @@ function Projects() {
         return res.json()
       })
       .then((data) => {
+        console.log("Projects data received:", data)
         setProjects(data)
         setError(null)
       })
@@ -126,8 +128,6 @@ function Projects() {
         return res.json()
       })
       .then((newProject) => {
-        console.log(newProject)
-
         setProjects((prev) => [...prev, newProject])
         handleCloseProject()
       })
@@ -217,7 +217,6 @@ function Projects() {
         return res.json()
       })
       .then((members) => {
-        console.log("Membri aggiornati ricevuti:", members)
         setProjectMembers((prev) => ({
           ...prev,
           [projectId]: members,
@@ -328,35 +327,6 @@ function Projects() {
       })
       .catch((err) => alert(err.message))
   }
-
-  // --------------------------------------------------------------------------------
-
-  // const handleProjectDelete = (projectId) => {
-  //   if (!window.confirm("Are you sure you want to delete this project?")) {
-  //     return
-  //   }
-
-  //   fetch(`http://localhost:3001/api/projects/${projectId}`, {
-  //     method: "DELETE",
-  //     headers: {
-  //       Authorization: `Bearer ${token}`,
-  //       "Content-Type": "application/json",
-  //     },
-  //   })
-  //     .then((res) => {
-  //       if (!res.ok) {
-  //         throw new Error("Failed to delete project")
-  //       }
-  //       setProjects((prev) =>
-  //         prev.filter((proj) => proj.projectId !== projectId)
-  //       )
-  //     })
-  //     .catch((err) => {
-  //       alert("Error deleting project: " + err.message)
-  //     })
-  // }
-
-  // --------------------------------------------------------------------------------
 
   // COMPONENT
 
@@ -520,22 +490,22 @@ function Projects() {
                       </p>
                       <div className="d-flex flex-column align-bottom w-100">
                         <Button
-                          className="modalSaveButton mb-2"
+                          className="modalSaveButton mb-2 d-flex justify-content-center align-items-center"
                           onClick={() => handleShowUpdate(proj)}
                         >
-                          EDIT
+                          <p className="m-0">EDIT</p>
                         </Button>
                         <Button
-                          className="memberButton mb-2"
+                          className="memberButton mb-2 d-flex justify-content-center align-items-center"
                           onClick={() => handleShowMemberModal(proj)}
                         >
-                          MEMBERS
+                          <p className="m-0">MEMBERS</p>
                         </Button>
                         <Button
-                          className="modalDeleteButton"
+                          className="modalDeleteButton d-flex justify-content-center align-items-center"
                           onClick={() => handleProjectDelete(proj.projectId)}
                         >
-                          DELETE
+                          <p className="m-0">DELETE</p>
                         </Button>
                       </div>
                     </Col>

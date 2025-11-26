@@ -20,10 +20,10 @@ function HomeNavbar() {
       className="homeNavbar frosted-glass-homeNavbar ms-5 py-4 ps-5 pe-3"
     >
       <Container>
-        <Navbar.Brand className="d-lg-none" href="#">
+        {/* <Navbar.Brand className="d-lg-none" href="#">
           Logo
-        </Navbar.Brand>
-        <Navbar.Toggle aria-controls="navbarScroll" />
+        </Navbar.Brand> */}
+        {/* <Navbar.Toggle aria-controls="navbarScroll" /> */}
         <Navbar.Collapse className="d-flex flex-column" id="navbarScroll">
           <Nav className="me-auto my-2 my-lg-0 d-flex flex-column" navbarScroll>
             <div className="d-flex flex-row align-items-center my-2">
@@ -50,9 +50,10 @@ function HomeNavbar() {
                 Contact us
               </Link>
             </div>
-            <div className="d-flex flex-row align-items-center my-2">
-              <i className="linkIconSymbol bi bi-box-arrow-in-right"></i>
-              {isAuthenticated ? (
+
+            {isAuthenticated ? (
+              <div className="d-flex flex-row align-items-center my-2">
+                <i className="linkIconSymbol bi bi-box-arrow-in-left"></i>
                 <Button
                   className="logoutLink nav-link"
                   onClick={() => {
@@ -62,30 +63,38 @@ function HomeNavbar() {
                 >
                   Logout
                 </Button>
-              ) : (
+              </div>
+            ) : (
+              <div className="d-flex flex-row align-items-center my-2">
+                <i className="linkIconSymbol bi bi-box-arrow-in-right"></i>
                 <Link className="loginLink nav-link" to="/LoginForm">
                   Login
                 </Link>
-              )}
-            </div>
-            <div className="d-flex flex-row align-items-center my-2">
-              <i className="linkIconSymbol bi bi-person-circle"></i>
-              <Link className="yourAreaLink nav-link" to="/YourArea">
-                Your Area
-              </Link>
-            </div>
-            <div className="d-flex flex-row align-items-center my-2">
-              <i className="linkIconSymbol bi bi-diagram-3"></i>
-              <Button
-                onClick={() => {
-                  navigatePJT("/Projects")
-                }}
-                className="projectsLink nav-link"
-                to="/Projects"
-              >
-                Projects
-              </Button>
-            </div>
+              </div>
+            )}
+
+            {isAuthenticated && (
+              <>
+                <div className="d-flex flex-row align-items-center my-2">
+                  <i className="linkIconSymbol bi bi-person-circle"></i>
+                  <Link className="yourAreaLink nav-link" to="/YourArea">
+                    Your Area
+                  </Link>
+                </div>
+                <div className="d-flex flex-row align-items-center my-2">
+                  <i className="linkIconSymbol bi bi-diagram-3"></i>
+                  <Button
+                    onClick={() => {
+                      navigatePJT("/Projects")
+                    }}
+                    className="projectsLink nav-link"
+                    to="/Projects"
+                  >
+                    Projects
+                  </Button>
+                </div>
+              </>
+            )}
           </Nav>
           {/* <Form className="homeSearchForm d-flex mt-5 pb-3">
             <Form.Control

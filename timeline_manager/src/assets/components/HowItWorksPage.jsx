@@ -19,7 +19,7 @@ function HowItWorksPage() {
         </div>
         <hr className="brInterruptionBIG my-4" />
         <div className="flex-grow-1">
-          <p className="textDocumentation mb-2">
+          <p className="textDocumentation mb-4">
             Timeline Management is a smart app designed to help individuals,
             teams, and organizations plan, coordinate, and oversee projects
             efficiently. It provides a clear visual timeline where tasks,

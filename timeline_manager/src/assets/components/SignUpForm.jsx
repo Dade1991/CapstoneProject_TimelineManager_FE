@@ -8,13 +8,12 @@ import "./SignUpForm.css"
 
 function SignUpForm() {
   const navigate = useNavigate()
+
   const [name, setName] = useState("")
   const [surname, setSurname] = useState("")
   const [nickname, setNickname] = useState("")
-  // const [avatar, setAvatar] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
 
@@ -110,19 +109,6 @@ function SignUpForm() {
                   />
                 </Col>
               </Form.Group>
-              {/* <Form.Group controlId="formAvatar">
-                <Form.Label className="yourAreaDescribe" sm="3">
-                  AVATAR:
-                </Form.Label>
-                <Col sm="12">
-                  <Form.Control
-                    type="text"
-                    placeholder="Insert your AVATAR here..."
-                    value={avatar}
-                    onChange={(e) => setAvatar(e.target.value)}
-                  />
-                </Col>
-              </Form.Group> */}
               <Form.Group controlId="formEmail">
                 <Form.Label className="yourAreaDescribe" sm="3">
                   E-mail:

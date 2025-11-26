@@ -41,7 +41,7 @@
     transform: translateX(0) rotate(180deg);
   }
   100% {
-    transform: translateX(+65%) rotate(180deg);
+    transform: translateX(+33%) rotate(180deg);
   }
 }
 

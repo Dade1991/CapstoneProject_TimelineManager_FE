@@ -12,8 +12,6 @@
   overflow: hidden;
 }
 
-/* ___________ */
-
 .welcomeText {
   font-family: "Bruno Ace SC", sans-serif;
   font-size: 2rem;
@@ -57,8 +55,6 @@
   margin-bottom: 0px;
 }
 
-/* ________ */
-
 .wrapper {
   width: 100%;
   height: auto;
@@ -66,8 +62,8 @@
 }
 
 .frosted-glass {
-  background-color: rgba(255, 255, 255, 0.3); /* sfondo semitrasparente */
-  backdrop-filter: blur(10px); /* effetto sfocatura */
-  -webkit-backdrop-filter: blur(10px); /* supporto Safari */
-  border: 1px solid rgba(255, 255, 255, 0.4); /* bordo leggero */
+  background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
 }

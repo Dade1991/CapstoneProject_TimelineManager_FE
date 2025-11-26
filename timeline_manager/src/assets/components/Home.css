@@ -29,3 +29,16 @@
   left: 202px;
   bottom: 32px;
 }
+
+.welcomeBackText {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #f2e0d0;
+  text-shadow: 2px 2px 5px #a82562;
+}
+.welcomeBacNickname {
+  font-family: "Bruno Ace SC", sans-serif;
+  font-size: 1.8rem;
+  color: #a82562;
+  text-shadow: 2px 2px 5px #f2e0d0;
+}

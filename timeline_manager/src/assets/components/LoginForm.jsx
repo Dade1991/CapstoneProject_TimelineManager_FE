@@ -27,14 +27,13 @@ function LoginForm() {
     })
       .then(async (res) => {
         const body = await res.json()
-        console.log("Risposta completa dal backend:", body)
+        console.log("BACK-END Response:", body)
         if (!res.ok) {
           throw new Error(body.message || "Errore login")
         }
         return body
       })
       .then((data) => {
-        console.log(data.accessToken)
         setToken(data.accessToken)
         localStorage.setItem("token", data.accessToken)
         navigate("/home")

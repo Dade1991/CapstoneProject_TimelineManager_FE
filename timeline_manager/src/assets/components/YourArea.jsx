@@ -61,12 +61,8 @@ function YourArea() {
     surname
   )}&background=6aa4b7&color=8b1a52&rounded=true&size=128`
 
-  console.log("userId exctract from token:", userId)
-  console.log("Token:", token)
-
   useEffect(() => {
     if (!token || !userId) {
-      console.log("Token or userId not present, skip fetching.")
       return
     }
 
@@ -82,7 +78,6 @@ function YourArea() {
         return res.json()
       })
       .then((data) => {
-        console.log("questi sono data: ", data)
         setName(data.name || "")
         setSurname(data.surname || "")
         setNickname(data.nickname || "")

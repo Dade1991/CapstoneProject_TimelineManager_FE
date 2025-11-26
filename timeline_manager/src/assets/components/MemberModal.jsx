@@ -33,6 +33,7 @@ const MemberModal = ({
         <Modal.Title className="modalTextTitle">YOUR FRIENDs</Modal.Title>
       </Modal.Header>
       <Modal.Body className="modalColor">
+        <p>Select friends to work with:</p>
         <ul className="scrollableUserList">
           {users.map((user) => (
             <li

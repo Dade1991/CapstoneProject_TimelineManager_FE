@@ -67,8 +67,6 @@ function MainBoard({ project, categories, setCategories }) {
         return res.json()
       })
       .then((data) => {
-        console.log("LOADING", data)
-
         if (data.length === 0) {
           const defaultCat = {
             categoryId: -1,

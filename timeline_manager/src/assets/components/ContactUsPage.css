@@ -49,10 +49,10 @@
 }
 
 .frosted-glass {
-  background-color: rgba(255, 255, 255, 0.3); /* sfondo semitrasparente */
-  backdrop-filter: blur(10px); /* effetto sfocatura */
-  -webkit-backdrop-filter: blur(10px); /* supporto Safari */
-  border: 1px solid rgba(255, 255, 255, 0.4); /* bordo leggero */
+  background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
 .contactUsText {
