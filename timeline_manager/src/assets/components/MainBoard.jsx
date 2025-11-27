@@ -730,20 +730,8 @@ function MainBoard({ project, categories, setCategories }) {
                   {tasks.length === 0 && (
                     <div
                       id={`empty-${category.categoryId}`}
-                      style={{
-                        height: "500px",
-                        border: "1px dashed #ccc",
-                        borderRadius: "8px",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        color: "#aaa",
-                        fontStyle: "italic",
-                        pointerEvents: "auto",
-                        zIndex: 1050,
-                        position: "relative",
-                        background: "#ff00003b",
-                      }}
+                      className="emptyDrop d-flex justify-content-center align-items-center"
+                      // style={{}}
                     >
                       Drop tasks HERE!!
                     </div>
