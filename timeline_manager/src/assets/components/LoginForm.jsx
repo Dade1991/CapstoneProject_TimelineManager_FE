@@ -124,7 +124,7 @@ function LoginForm() {
               size="lg"
               className="signupButton mt-5"
             >
-              SING-UP
+              <p className="signupButtonText m-0">SING-UP !!</p>
             </Button>
           </div>
         </div>

@@ -34,11 +34,6 @@
   font-weight: 700;
 }
 
-.signUpButton {
-  font-size: 1.8em;
-  font-weight: 700;
-}
-
 .loginButton {
   background-color: #a82562 !important;
   font-size: 1.2rem !important;
@@ -51,6 +46,10 @@
   font-size: 1.2rem !important;
   font-weight: 700 !important;
   border-color: #f2e0d0 !important;
+}
+
+.signupButtonText {
+  font-size: 1.9rem !important;
 }
 
 .gifDiv {
