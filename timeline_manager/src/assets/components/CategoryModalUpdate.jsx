@@ -5,19 +5,22 @@ import "./ProjectModals.css"
 // colori per category
 
 const availableColors = [
-  "#FF5733",
   "#33FFCE",
-  "#3375FF",
-  "#FF33B8",
-  "#33FF57",
+  "#E52B50	",
+  "#ffffffff",
   "#FFC733",
-  "#9933FF",
-  "#33FFF6",
+  "#2ec4ffff",
+  "#FF33B8",
+  "#a82562",
+  "#eeff00ff",
+  "#4f28fcff",
+  "#02ff57ff",
+  "#000000",
 ]
 
 function CategoryModalUpdate({ show, handleClose, category, onSubmit }) {
   const [categoryName, setCategoryName] = useState("")
-  const [categoryColor, setCategoryColor] = useState("#000000")
+  const [categoryColor, setCategoryColor] = useState("#FFC733")
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   useEffect(() => {
@@ -25,7 +28,7 @@ function CategoryModalUpdate({ show, handleClose, category, onSubmit }) {
       // indagare sull'errore e sul perchè funziona comunque
 
       setCategoryName(category.categoryName || "")
-      setCategoryColor(category.categoryColor || "#000000")
+      setCategoryColor(category.categoryColor || "#FFC733")
     }
   }, [category])
 

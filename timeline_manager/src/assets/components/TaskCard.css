@@ -106,3 +106,8 @@
   z-index: 400 !important;
   opacity: 1 !important;
 }
+
+.dndIcon {
+  font-size: 1.2rem;
+  color: #f0aa9a !important;
+}

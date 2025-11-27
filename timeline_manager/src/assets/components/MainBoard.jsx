@@ -48,7 +48,7 @@ const priorityStyles = {
     border: "2px solid #721c24",
   },
   CRITICAL: {
-    backgroundColor: "#c82333",
+    backgroundColor: "#c50619ff",
     color: "white",
     border: "2px solid white",
   },
@@ -255,7 +255,7 @@ function MainBoard({ project, categories, setCategories }) {
           const defaultCat = {
             categoryId: -1,
             categoryName: "Default",
-            categoryColor: "#000000",
+            categoryColor: "#FFC733",
           }
           setCategories([defaultCat])
           setSelectedCategoryId(defaultCat.categoryId)
@@ -595,17 +595,6 @@ function MainBoard({ project, categories, setCategories }) {
       })
       return
     }
-
-    // ----------------------------------------------------------------------------
-
-    console.log("[MainBoard] status change", {
-      taskId,
-      newStatusId,
-      categoryId,
-    })
-
-    // ----------------------------------------------------------------------------
-
     await fetch(
       `http://localhost:3001/api/projects/${project.projectId}/tasks/${taskId}/status/${newStatusId}`,
       {
@@ -643,7 +632,7 @@ function MainBoard({ project, categories, setCategories }) {
                   <h4
                     className="categoryTitle pe-4 m-0"
                     style={{
-                      color: category.categoryColor || "#a82562",
+                      color: category.categoryColor || "#FFC733",
                       textShadow: `2px 2px 6px #000000`,
                     }}
                   >
@@ -679,8 +668,6 @@ function MainBoard({ project, categories, setCategories }) {
                   }}
                 ></div>
 
-                {/* <hr className="brInterruption my-3" /> */}
-
                 <SortableContext
                   items={
                     taskIds.length > 0
@@ -711,20 +698,15 @@ function MainBoard({ project, categories, setCategories }) {
                           category.categoryId
                         )
                       }
-                      onComplete={(taskId, newChecked) => {
-                        const categoryId = task.categories?.[0]?.categoryId
-                        if (!categoryId) {
-                          alert("Category ID undefined for this task.")
-                          return
-                        }
-                        if (newChecked) {
-                          completeTask(categoryId, taskId)
-                        } else {
-                          reopenTask(categoryId, taskId)
-                        }
-                      }}
+                      onComplete={(taskId) =>
+                        completeTask(category.categoryId, taskId)
+                      }
+                      onReopen={(taskId) =>
+                        reopenTask(category.categoryId, taskId)
+                      }
                     />
                   ))}
+
                   {/* quando una category rimane vuota, crea un box per il DND delle tasks */}
 
                   {tasks.length === 0 && (

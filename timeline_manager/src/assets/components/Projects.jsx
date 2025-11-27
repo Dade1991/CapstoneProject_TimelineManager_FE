@@ -63,10 +63,6 @@ function Projects() {
     setShowMemberModal(false)
   }
 
-  // const handleMemberDelete =(member)=>{
-  //   s
-  // }
-
   function parseJwt(token) {
     try {
       const base64Url = token.split(".")[1]

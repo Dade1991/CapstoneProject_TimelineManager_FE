@@ -36,32 +36,43 @@ function TaskCard({
     onStatusChange(task.taskId, Number(e.target.value))
   }
 
-  const handleReopenClick = (e) => {
-    e.stopPropagation()
-    setCheckedComplete(false)
-    if (onReopen) onReopen(task.taskId)
-  }
+  // const handleReopenClick = (e) => {
+  //   e.stopPropagation()
+  //   setCheckedComplete(false)
+  //   if (onReopen) onReopen(task.taskId)
+  // }
 
   const handleCheckboxChange = () => {
     const newChecked = !checkedComplete
-    setCheckedComplete(newChecked)
+
     if (newChecked) {
-      onComplete(task.taskId, newChecked)
+      // ✅ COMPLETE
+      setCheckedComplete(true)
+      if (onComplete) {
+        onComplete(task.taskId) // ← MODIFICATO: solo taskId
+      }
     } else {
-      if (onReopen) onReopen(task.taskId)
+      // ✅ REOPEN - resetta data completamento backend
+      setCheckedComplete(false)
+      if (onReopen) {
+        onReopen(task.taskId) // ← MODIFICATO: solo taskId
+      }
     }
   }
 
   useEffect(() => {
-    setCheckedComplete(task.isCompleted || false)
-  }, [task.taskId, task.isCompleted])
+    const isComplete =
+      task.isCompleted === true ||
+      (task.statusId && task.statusId === 9) ||
+      task.taskStatus === "COMPLETED"
+    setCheckedComplete(isComplete)
+  }, [task])
 
   return (
     <>
       <Card className="cardMainContainer mb-4" style={cardStyleComplete}>
         <Card.Body className="taskCard" style={cardStyleReopen}>
           {" "}
-          {/* ------------------------------------------ */}
           {checkedComplete && (
             <div
               className="reopenTaskButtonDiv"
@@ -69,10 +80,9 @@ function TaskCard({
                 pointerEvents: "auto",
               }}
             >
-              {/* ------------------------------------------ */}
               <Button
                 className="reopenTaskButton"
-                onClick={handleReopenClick}
+                onClick={() => onReopen?.(task.taskId)}
                 style={{
                   pointerEvents: "auto",
                 }}
@@ -81,10 +91,17 @@ function TaskCard({
               </Button>
             </div>
           )}
-          <Card.Text className="taskCardText m-0">Task: </Card.Text>
-          <Card.Title className="taskCardTextTitle m-0">
-            {task.taskTitle}
-          </Card.Title>
+          <div className="d-flex flex-row ">
+            <div className="flex-grow-1">
+              <Card.Text className="taskCardText m-0">Task: </Card.Text>
+              <Card.Title className="taskCardTextTitle m-0">
+                {task.taskTitle}
+              </Card.Title>
+            </div>
+            <div className="d-flex justify-content-end align-content-end">
+              <i className="dndIcon bi bi-arrows-move"></i>
+            </div>
+          </div>
           <hr className="brInterruption my-2" />
           <div className="d-flex flex-row justify-content-between align-items-center">
             <Card.Text className="taskCardText m-0">Task Priority:</Card.Text>
