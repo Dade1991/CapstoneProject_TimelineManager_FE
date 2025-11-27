@@ -596,14 +596,13 @@ function MainBoard({ project, categories, setCategories }) {
       return
     }
     await fetch(
-      `http://localhost:3001/api/projects/${project.projectId}/tasks/${taskId}/status/${newStatusId}`,
+      `http://localhost:3001/api/projects/${project.projectId}/tasks/${taskId}/statusUpdate/${newStatusId}`,
       {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ statusId: newStatusId }),
       }
     )
     reloadCategoryTasks(selectedCategoryId)
