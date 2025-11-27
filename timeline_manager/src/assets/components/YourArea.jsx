@@ -70,7 +70,6 @@ function YourArea() {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then(async (res) => {
-        console.log("Status response:", res.status, res.ok)
         if (!res.ok) {
           const errorText = await res.text()
           throw new Error("Failed to load profile data: " + errorText)

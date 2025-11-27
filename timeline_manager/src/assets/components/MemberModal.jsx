@@ -20,6 +20,9 @@ const MemberModal = ({
     const role = selectedRoles[user.userId]
     if (role) {
       onAddMember(user, role)
+      alert(
+        `"${user.name} ${user.surname}" added with Role: ${role.toUpperCase()}!`
+      )
     } else {
       alert("Select a role before adding user")
     }

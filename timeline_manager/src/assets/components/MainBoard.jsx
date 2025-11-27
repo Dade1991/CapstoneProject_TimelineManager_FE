@@ -609,8 +609,6 @@ function MainBoard({ project, categories, setCategories }) {
       await res.json()
       reloadCategoryTasks(categoryId)
     } catch (e) {
-      console.log("CLOSED", taskId)
-
       alert(e.message)
     }
   }
@@ -630,7 +628,6 @@ function MainBoard({ project, categories, setCategories }) {
       await res.json()
       reloadCategoryTasks(categoryId)
     } catch (e) {
-      console.log("REOPEN", taskId)
       alert(e.message)
     }
   }

@@ -33,8 +33,6 @@ const TaskModalUpdate = ({ show, handleClose, onSubmit, task }) => {
         : [],
     }
     onSubmit(taskData)
-    console.log("TASK UPDATE: " + JSON.stringify(taskData, null, 2))
-
     setTitle("")
     setDescription("")
     setDueDate("")

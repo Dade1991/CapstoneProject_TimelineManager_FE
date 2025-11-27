@@ -94,7 +94,6 @@ function Projects() {
         return res.json()
       })
       .then((data) => {
-        console.log("Projects data received:", data)
         setProjects(data)
         setError(null)
       })
@@ -462,10 +461,6 @@ function Projects() {
                               [proj.projectId]: !prev[proj.projectId],
                             }))
                             if (!projectMembers[proj.projectId]) {
-                              console.log(
-                                "FETCHING MEMBERS FOR",
-                                proj.projectId
-                              )
                               fetchProjectMembers(proj.projectId)
                             }
                           }}

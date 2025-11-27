@@ -27,7 +27,6 @@ function LoginForm() {
     })
       .then(async (res) => {
         const body = await res.json()
-        console.log("BACK-END Response:", body)
         if (!res.ok) {
           throw new Error(body.message || "Errore login")
         }
