@@ -1,12 +1,28 @@
 import { Container, Button, Form, Modal, Row, Col } from "react-bootstrap"
 import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../../AuthContext"
-import TaskCard from "./TaskCard"
+// --------------------------------------
+import {
+  DndContext,
+  useSensor,
+  PointerSensor,
+  useSensors,
+  DragOverlay,
+} from "@dnd-kit/core"
+import {
+  SortableContext,
+  arrayMove,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable"
+import { CSS } from "@dnd-kit/utilities"
+// --------------------------------------
 import TaskModalForm from "./TaskModalForm"
 import AddCategoryModal from "./AddCategoryModal"
 import CategoryModalUpdate from "./CategoryModalUpdate"
 import TaskModalUpdate from "./TaskModalUpdate"
+import SortableTaskCard from "../../SortableTaskCard"
 import "./MainBoard.css"
+import "./DND.css"
 
 // colori per pills status
 
@@ -50,6 +66,174 @@ function MainBoard({ project, categories, setCategories }) {
   const [categoryToEdit, setCategoryToEdit] = useState(null)
   const [taskToEdit, setTaskToEdit] = useState(null)
   const [showCategoryUpdateModal, setShowCategoryUpdateModal] = useState(false)
+
+  // ==================================== logica per DND ====================================
+
+  // setup DND Kit sensor
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    })
+  )
+
+  const [activeId, setActiveId] = useState(null)
+
+  //  ---------------------------------------------------------------------------------------
+
+  // UX DND-Kit updgrade
+
+  function handleDragStart(event) {
+    setActiveId(event.active.id)
+  }
+
+  function handleDragCancel() {
+    setActiveId(null)
+  }
+
+  function findTaskById(id) {
+    for (const category of categories) {
+      const tasks = categoryTasks[category.categoryId] || []
+      const found = tasks.find((t) => t.taskId === id)
+      if (found) return found
+    }
+    return null
+  }
+
+  // Aiuto: trova categoria task per id
+
+  function findCategoryIdOfTask(taskId) {
+    // Gestisce placeholder come empty-ategoryId>
+    if (typeof taskId === "string" && taskId.startsWith("empty-")) {
+      const catId = parseInt(taskId.replace("empty-", ""), 10)
+      return !isNaN(catId) ? catId : null
+    }
+
+    for (const category of categories) {
+      const tasks = categoryTasks[category.categoryId] || []
+      if (tasks.some((t) => t.taskId === taskId)) return category.categoryId
+    }
+    return null
+  }
+
+  //  ---------------------------------------------------------------------------------------
+
+  async function handleDragEnd(event) {
+    const { active, over } = event
+    setActiveId(null)
+
+    if (!over) return
+
+    const activeCategoryId = findCategoryIdOfTask(active.id)
+    const overCategoryId = findCategoryIdOfTask(over.id)
+    if (!activeCategoryId || !overCategoryId) return
+
+    if (activeCategoryId === overCategoryId) {
+      // riordino interno stessa categoria (non cambia categoria)
+
+      const taskIds = (categoryTasks[activeCategoryId] || []).map(
+        (t) => t.taskId
+      )
+      const oldIndex = taskIds.indexOf(active.id)
+      const newIndex = taskIds.indexOf(over.id)
+      if (oldIndex !== -1 && newIndex !== -1 && oldIndex !== newIndex) {
+        const newTaskIds = arrayMove(taskIds, oldIndex, newIndex)
+        const newTasksOrder = newTaskIds.map((id) =>
+          categoryTasks[activeCategoryId].find((t) => t.taskId === id)
+        )
+        setCategoryTasks((prev) => ({
+          ...prev,
+          [activeCategoryId]: newTasksOrder,
+        }))
+        await updateTaskOrder(activeCategoryId, newTaskIds)
+      }
+      return
+    }
+
+    // spostamento tra categorie diverse
+
+    try {
+      await updateTaskCategory(active.id, overCategoryId)
+
+      const sourceTasks = [...(categoryTasks[activeCategoryId] || [])]
+      const targetTasks = [...(categoryTasks[overCategoryId] || [])]
+
+      const movingTaskIndex = sourceTasks.findIndex(
+        (t) => t.taskId === active.id
+      )
+      if (movingTaskIndex === -1) return
+
+      const [movingTask] = sourceTasks.splice(movingTaskIndex, 1)
+
+      // trova l'indice di 'over.id' in targetTasks (posizione di inserimento)
+
+      const overIndex = targetTasks.findIndex((t) => t.taskId === over.id)
+      if (overIndex === -1) {
+        // Se over.id non è presente (es. placeholder vuoto), appendi in fondo
+
+        targetTasks.push(movingTask)
+      } else {
+        targetTasks.splice(overIndex, 0, movingTask)
+      }
+
+      setCategoryTasks((prev) => ({
+        ...prev,
+        [activeCategoryId]: sourceTasks,
+        [overCategoryId]: targetTasks,
+      }))
+
+      const newTargetTaskIds = targetTasks.map((t) => t.taskId)
+      await updateTaskOrder(overCategoryId, newTargetTaskIds)
+    } catch (error) {
+      alert("Error during DND movement: " + error.message)
+    }
+  }
+
+  // FETCH DND - funzione che chiamerà API per aggiornare ordine task
+
+  async function updateTaskOrder(categoryId, orderedTaskIds) {
+    try {
+      const res = await fetch(
+        `http://localhost:3001/api/projects/${project.projectId}/categories/${categoryId}/tasks/dnd`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ orderedTaskIds }),
+        }
+      )
+      if (!res.ok) throw new Error("Error updating task order.")
+    } catch (e) {
+      alert(e.message)
+    }
+  }
+
+  // FETCH DND - funzione che chiamerà API per aggiornare category
+
+  async function updateTaskCategory(taskId, newCategoryId) {
+    try {
+      const res = await fetch(
+        `http://localhost:3001/api/projects/${project.projectId}/tasks/${taskId}/category/${newCategoryId}`,
+        {
+          method: "PATCH",
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
+      if (!res.ok) {
+        const err = await res.text()
+        throw new Error(err || "Failed to update task category")
+      }
+    } catch (error) {
+      console.error("Error updating task category:", error)
+      throw error
+    }
+  }
+
+  // ==================================== FINE - DND ====================================
 
   // render all'avvio con categoria vuota di "default" o pre-esistenti
 
@@ -438,131 +622,201 @@ function MainBoard({ project, categories, setCategories }) {
 
   return (
     <>
-      <Container fluid className="mainBoard m-2 d-flex flex-row py-4">
-        {categories.map((category) => {
-          const tasks = categoryTasks[category.categoryId] || []
+      <DndContext
+        sensors={sensors}
+        onDragStart={handleDragStart}
+        onDragEnd={handleDragEnd}
+        onDragCancel={handleDragCancel}
+      >
+        <Container fluid className="mainBoard m-2 d-flex flex-row py-4">
+          {categories.map((category) => {
+            const tasks = categoryTasks[category.categoryId] || []
+            const taskIds = tasks.map((t) => t.taskId)
 
-          return (
-            <div key={category.categoryId} className="category-column">
-              <div className="d-flex flex-row justify-content-between align-items-center">
-                <h4
-                  className="categoryTitle pe-4 m-0"
-                  style={{
-                    color: category.categoryColor || "#000000",
-                    textShadow: `2px 2px 6px #000000`,
-                  }}
-                >
-                  {category.categoryName}
-                </h4>
-                <div className="d-flex flex-column">
-                  <div className="d-flex flex-row align-items-center justify-content-between mb-1">
-                    <p className="buttonDescription m-0 me-2">EDIT</p>
-                    <Button
-                      onClick={() => openCategoryUpdateModal(category)}
-                      className="categoryEditButton"
-                    >
-                      <i className="categoryIcon bi bi-pencil-square"></i>
-                    </Button>
-                  </div>
-                  <div className="d-flex flex-row align-items-center justify-content-between">
-                    <p className="buttonDescription m-0 me-2">DELETE</p>
-                    <Button
-                      onClick={() => deleteCategory(category.categoryId)}
-                      className="categoryDeleteButton"
-                    >
-                      <i className="categoryIcon bi bi-trash2-fill"></i>
-                    </Button>
-                  </div>
-                </div>
-              </div>
-
+            return (
               <div
-                className="colorCODING my-4"
-                style={{
-                  backgroundColor: category.categoryColor,
-                  boxShadow: `2px 2px 6px #000000`,
-                }}
-              ></div>
-
-              {/* <hr className="brInterruption my-3" /> */}
-
-              {tasks.map((task) => (
-                <TaskCard
-                  key={task.taskId}
-                  task={task}
-                  priorityStyles={priorityStyles}
-                  onDelete={() =>
-                    deleteTask(task.taskId, task.categories?.[0]?.categoryId)
-                  }
-                  onUpdate={() => openTaskEditModal(task)}
-                  onStatusChange={(taskId, newStatusId) =>
-                    handleStatusChange(taskId, newStatusId, category.categoryId)
-                  }
-                  onComplete={(taskId, newChecked) => {
-                    const categoryId = task.categories?.[0]?.categoryId
-                    if (!categoryId) {
-                      alert("Category ID undefined for this task.")
-                      return
-                    }
-                    if (newChecked) {
-                      completeTask(categoryId, taskId)
-                    } else {
-                      reopenTask(categoryId, taskId)
-                    }
-                  }}
-                />
-              ))}
-
-              <Button
-                className="addTaskButton mt-2"
-                onClick={() => openTaskCreateModal(category.categoryId)}
+                key={category.categoryId}
+                className="category-column p-3"
+                data-category-id={category.categoryId}
               >
-                <div className="d-flex flex-row justify-content-center align-items-center">
-                  <i className="plusButtonIconTask bi bi-plus-circle"></i>
-                  <p className="m-0 ms-2">Add Task</p>
+                <div className="d-flex flex-row justify-content-between align-items-center">
+                  <h4
+                    className="categoryTitle pe-4 m-0"
+                    style={{
+                      color: category.categoryColor || "#a82562",
+                      textShadow: `2px 2px 6px #000000`,
+                    }}
+                  >
+                    {category.categoryName}
+                  </h4>
+                  <div className="d-flex flex-column">
+                    <div className="d-flex flex-row align-items-center justify-content-between mb-1">
+                      <p className="buttonDescription m-0 me-2">EDIT</p>
+                      <Button
+                        onClick={() => openCategoryUpdateModal(category)}
+                        className="categoryEditButton"
+                      >
+                        <i className="categoryIcon bi bi-pencil-square"></i>
+                      </Button>
+                    </div>
+                    <div className="d-flex flex-row align-items-center justify-content-between">
+                      <p className="buttonDescription m-0 me-2">DELETE</p>
+                      <Button
+                        onClick={() => deleteCategory(category.categoryId)}
+                        className="categoryDeleteButton"
+                      >
+                        <i className="categoryIcon bi bi-trash2-fill"></i>
+                      </Button>
+                    </div>
+                  </div>
                 </div>
-              </Button>
+
+                <div
+                  className="colorCODING my-4"
+                  style={{
+                    backgroundColor: category.categoryColor,
+                    boxShadow: `2px 2px 6px #000000`,
+                  }}
+                ></div>
+
+                {/* <hr className="brInterruption my-3" /> */}
+
+                <SortableContext
+                  items={
+                    taskIds.length > 0
+                      ? taskIds
+                      : [`empty-${category.categoryId}`]
+                  }
+                  strategy={verticalListSortingStrategy}
+                >
+                  {tasks.map((task) => (
+                    <SortableTaskCard
+                      className={`task-card-wrapper ${
+                        activeId === task.taskId ? "dragging" : ""
+                      }`}
+                      key={task.taskId}
+                      task={task}
+                      priorityStyles={priorityStyles}
+                      onDelete={() =>
+                        deleteTask(
+                          task.taskId,
+                          task.categories?.[0]?.categoryId
+                        )
+                      }
+                      onUpdate={() => openTaskEditModal(task)}
+                      onStatusChange={(taskId, newStatusId) =>
+                        handleStatusChange(
+                          taskId,
+                          newStatusId,
+                          category.categoryId
+                        )
+                      }
+                      onComplete={(taskId, newChecked) => {
+                        const categoryId = task.categories?.[0]?.categoryId
+                        if (!categoryId) {
+                          alert("Category ID undefined for this task.")
+                          return
+                        }
+                        if (newChecked) {
+                          completeTask(categoryId, taskId)
+                        } else {
+                          reopenTask(categoryId, taskId)
+                        }
+                      }}
+                    />
+                  ))}
+                  {/* quando una category rimane vuota, crea un box per il DND delle tasks */}
+
+                  {tasks.length === 0 && (
+                    <div
+                      id={`empty-${category.categoryId}`}
+                      style={{
+                        height: "500px",
+                        border: "1px dashed #ccc",
+                        borderRadius: "8px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        color: "#aaa",
+                        fontStyle: "italic",
+                        pointerEvents: "auto",
+                        zIndex: 1050,
+                        position: "relative",
+                        background: "#ff00003b",
+                      }}
+                    >
+                      Drop tasks HERE!!
+                    </div>
+                  )}
+                </SortableContext>
+
+                <Button
+                  className="addTaskButton mt-2"
+                  onClick={() => openTaskCreateModal(category.categoryId)}
+                >
+                  <div className="d-flex flex-row justify-content-center align-items-center">
+                    <i className="plusButtonIconTask bi bi-plus-circle"></i>
+                    <p className="m-0 ms-2">Add Task</p>
+                  </div>
+                </Button>
+              </div>
+            )
+          })}
+          <div className="addCategoryButtonDiv">
+            <Button
+              className="addCategoryButton ms-2 p-3"
+              onClick={openCategoryModal}
+            >
+              <div className="d-flex flex-row justify-content-center align-items-center">
+                <i className="plusButtonIconCategory bi bi-plus-circle"></i>
+                <p className="m-0 ms-2">Add Category</p>
+              </div>
+            </Button>
+          </div>
+        </Container>
+
+        <DragOverlay>
+          {activeId ? (
+            <div className="drag-overlay" style={{ pointerEvents: "none" }}>
+              <SortableTaskCard
+                task={findTaskById(activeId)}
+                priorityStyles={priorityStyles}
+                className="drag-overlay"
+                onDelete={() => {}}
+                onUpdate={() => {}}
+                onStatusChange={() => {}}
+                onComplete={() => {}}
+              />
             </div>
-          )
-        })}
-        <div className="addCategoryButtonDiv">
-          <Button
-            className="addCategoryButton ms-2 p-3"
-            onClick={openCategoryModal}
-          >
-            <div className="d-flex flex-row justify-content-center align-items-center">
-              <i className="plusButtonIconCategory bi bi-plus-circle"></i>
-              <p className="m-0 ms-2">Add Category</p>
-            </div>
-          </Button>
-        </div>
-      </Container>
+          ) : null}
+        </DragOverlay>
 
-      <AddCategoryModal
-        show={showCategoryModal}
-        handleClose={closeCategoryModal}
-        onSubmit={saveCategory}
-      />
+        <AddCategoryModal
+          show={showCategoryModal}
+          handleClose={closeCategoryModal}
+          onSubmit={saveCategory}
+        />
 
-      <CategoryModalUpdate
-        show={showCategoryUpdateModal}
-        handleClose={closeCategoryUpdateModal}
-        category={categoryToEdit}
-        onSubmit={updateCategory}
-      />
+        <CategoryModalUpdate
+          show={showCategoryUpdateModal}
+          handleClose={closeCategoryUpdateModal}
+          category={categoryToEdit}
+          onSubmit={updateCategory}
+        />
 
-      <TaskModalForm
-        show={showTaskCreateModal}
-        handleClose={closeTaskCreateModal}
-        onSubmit={saveTask}
-      />
+        <TaskModalForm
+          show={showTaskCreateModal}
+          handleClose={closeTaskCreateModal}
+          onSubmit={saveTask}
+        />
 
-      <TaskModalUpdate
-        show={showTaskEditModal}
-        handleClose={closeTaskEditModal}
-        task={taskToEdit}
-        onSubmit={updateTask}
-      />
+        <TaskModalUpdate
+          show={showTaskEditModal}
+          handleClose={closeTaskEditModal}
+          task={taskToEdit}
+          onSubmit={updateTask}
+        />
+      </DndContext>
     </>
   )
 }

@@ -1,0 +1,60 @@
+/* 
+.drag-overlay {
+  transform-origin: center center;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
+  border-radius: 8px;
+  user-select: none;
+  background-color: white;
+}
+
+#drop-zone-placeholder {
+  transition: all 0.3s ease;
+}
+
+#drop-zone-placeholder:hover {
+  border-color: #1976d2 !important;
+  background-color: #f5faff;
+}
+
+.category-column {
+  min-height: 400px;
+  position: relative;
+}
+
+.drop-zone:hover {
+  border: 2px dashed #1976d2 !important;
+  background-color: #e3f2fd !important;
+}
+
+.category-column {
+  min-height: 400px;
+  transition: all 0.3s ease;
+}
+
+.category-column:hover {
+  box-shadow: 0 0 15px rgba(25, 118, 210, 0.3);
+}
+
+.drop-zone {
+  pointer-events: none !important;
+} */
+
+.category-column {
+  min-height: 400px;
+  transition: all 0.3s ease;
+  pointer-events: auto;
+  position: relative;
+}
+
+.category-column:hover {
+  background-color: #6007f018;
+  border: 1px dashed #8e4bfada;
+}
+
+/* Feedback visivo durante drag */
+.category-column.drag-over {
+  background-color: #6007f018 !important;
+  border-color: #8e4bfada !important;
+}
+
+/* ------------------- */
