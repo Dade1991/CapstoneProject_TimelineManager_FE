@@ -130,7 +130,7 @@ function TaskCard({
                 className={`dropdownStatusChange px-1 ${
                   statusClassMap[task.statusId] || ""
                 }`}
-                value={task.statusId}
+                value={task.statusId || statusOptions[0].value}
                 onChange={handleStatusChange}
               >
                 {statusOptions.map((status) => (

@@ -8,8 +8,8 @@ import {
   PointerSensor,
   useSensors,
   DragOverlay,
-  pointerWithin,
-  // closestCenter,
+  // pointerWithin,
+  closestCenter,
 } from "@dnd-kit/core"
 import {
   SortableContext,
@@ -171,6 +171,7 @@ function MainBoard({ project, categories, setCategories }) {
 
   async function handleDragEnd(event) {
     const { active, over } = event
+    console.log("handleDragEnd", { active, over })
     setActiveId(null)
 
     if (!over) return
@@ -665,7 +666,7 @@ function MainBoard({ project, categories, setCategories }) {
         onDragOver={handleDragOver}
         onDragEnd={handleDragEnd}
         onDragCancel={handleDragCancel}
-        collisionDetection={pointerWithin}
+        collisionDetection={closestCenter}
       >
         <Container fluid className="mainBoard m-2 d-flex flex-row py-4">
           {categories.map((category) => {

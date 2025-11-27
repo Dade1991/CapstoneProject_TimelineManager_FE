@@ -30,6 +30,12 @@
   background: #2600ff2c;
 }
 
+.emptyDrop:hover,
+.category-column.drag-over .emptyDrop {
+  background-color: #6007f018;
+  border-color: #8e4bfada;
+}
+
 .dragOverlayWrapper {
   pointer-events: none !important;
   opacity: 0.5 !important;
