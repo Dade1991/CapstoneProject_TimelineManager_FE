@@ -21,6 +21,7 @@
 }
 
 .dropdownStatusChange {
+  font-weight: 600 !important;
   background-color: beige;
   border: 1px solid #d9829983 !important;
   border-radius: 6px;
@@ -110,4 +111,42 @@
 .dndIcon {
   font-size: 1.2rem;
   color: #f0aa9a !important;
+}
+
+.dropdownStatusChangeMENU {
+  font-weight: 600 !important;
+  background-color: beige;
+}
+
+.status-TO-DO {
+  color: rgb(5, 209, 192);
+}
+
+.status-IN_PROGRESS {
+  color: rgb(5, 209, 192);
+}
+
+.status-IN_REVIEW {
+  color: rgb(93, 0, 214);
+}
+
+.status-UNDER_TESTING {
+  color: rgb(93, 0, 214);
+}
+
+.status-PAUSED {
+  color: rgb(255, 197, 7);
+}
+
+.status-WAITING_FEEDBACK {
+  color: rgb(255, 197, 7);
+}
+
+.status-BLOCKED {
+  color: rgb(179, 0, 0);
+}
+
+.status-CANCELLED {
+  background-color: rgb(179, 0, 0);
+  color: white;
 }

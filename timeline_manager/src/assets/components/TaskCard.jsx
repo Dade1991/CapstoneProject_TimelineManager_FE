@@ -5,16 +5,26 @@ import { useState, useEffect } from "react"
 import "./TaskCard.css"
 
 const statusOptions = [
-  { label: "TO-DO", value: 1 },
-  { label: "IN_PROGRESS", value: 2 },
-  { label: "IN_REVIEW", value: 3 },
-  { label: "UNDER_TESTING", value: 4 },
-  { label: "PAUSED", value: 5 },
-  { label: "WAITING_FEEDBACK", value: 6 },
-  { label: "BLOCKED", value: 7 },
-  { label: "CANCELLED", value: 8 },
-  { label: "COMPLETED", value: 9 },
+  { label: "TO-DO", value: 1, className: "status-TO-DO" },
+  { label: "IN_PROGRESS", value: 2, className: "status-IN_PROGRESS" },
+  { label: "IN_REVIEW", value: 3, className: "status-IN_REVIEW" },
+  { label: "UNDER_TESTING", value: 4, className: "status-UNDER_TESTING" },
+  { label: "PAUSED", value: 5, className: "status-PAUSED" },
+  { label: "WAITING_FEEDBACK", value: 6, className: "status-WAITING_FEEDBACK" },
+  { label: "BLOCKED", value: 7, className: "status-BLOCKED" },
+  { label: "CANCELLED", value: 8, className: "status-CANCELLED" },
 ]
+
+const statusClassMap = {
+  1: "status-TO-DO",
+  2: "status-IN_PROGRESS",
+  3: "status-IN_REVIEW",
+  4: "status-UNDER_TESTING",
+  5: "status-PAUSED",
+  6: "status-WAITING_FEEDBACK",
+  7: "status-BLOCKED",
+  8: "status-CANCELLED",
+}
 
 function TaskCard({
   task,
@@ -36,26 +46,18 @@ function TaskCard({
     onStatusChange(task.taskId, Number(e.target.value))
   }
 
-  // const handleReopenClick = (e) => {
-  //   e.stopPropagation()
-  //   setCheckedComplete(false)
-  //   if (onReopen) onReopen(task.taskId)
-  // }
-
   const handleCheckboxChange = () => {
     const newChecked = !checkedComplete
 
     if (newChecked) {
-      // ✅ COMPLETE
       setCheckedComplete(true)
       if (onComplete) {
-        onComplete(task.taskId) // ← MODIFICATO: solo taskId
+        onComplete(task.taskId)
       }
     } else {
-      // ✅ REOPEN - resetta data completamento backend
       setCheckedComplete(false)
       if (onReopen) {
-        onReopen(task.taskId) // ← MODIFICATO: solo taskId
+        onReopen(task.taskId)
       }
     }
   }
@@ -125,13 +127,15 @@ function TaskCard({
             <Card.Text className="taskCardText m-0">Status</Card.Text>
             <div className="taskCardTextDescription m-0">
               <select
-                className="dropdownStatusChange px-1"
+                className={`dropdownStatusChange px-1 ${
+                  statusClassMap[task.statusId] || ""
+                }`}
                 value={task.statusId}
                 onChange={handleStatusChange}
               >
                 {statusOptions.map((status) => (
                   <option
-                    className="dropdownStatusChangeMENU"
+                    className={`dropdownStatusChangeMENU ${status.className}`}
                     key={status.value}
                     value={status.value}
                   >
