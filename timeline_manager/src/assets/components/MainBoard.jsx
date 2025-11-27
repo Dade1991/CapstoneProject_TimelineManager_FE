@@ -8,6 +8,8 @@ import {
   PointerSensor,
   useSensors,
   DragOverlay,
+  pointerWithin,
+  // closestCenter,
 } from "@dnd-kit/core"
 import {
   SortableContext,
@@ -105,7 +107,8 @@ function MainBoard({ project, categories, setCategories }) {
   // Aiuto: trova categoria task per id
 
   function findCategoryIdOfTask(taskId) {
-    // Gestisce placeholder come empty-ategoryId>
+    // gestisce placeholder come empty-categoryId>
+
     if (typeof taskId === "string" && taskId.startsWith("empty-")) {
       const catId = parseInt(taskId.replace("empty-", ""), 10)
       return !isNaN(catId) ? catId : null
@@ -119,6 +122,52 @@ function MainBoard({ project, categories, setCategories }) {
   }
 
   //  ---------------------------------------------------------------------------------------
+
+  function handleDragOver(event) {
+    const { active, over } = event
+    if (!over) return
+
+    const activeId = active.id
+    const overId = over.id
+
+    const activeCategoryId = findCategoryIdOfTask(activeId)
+    const overCategoryId = findCategoryIdOfTask(overId)
+
+    // se mancano categorie o ci si trova nella stessa categoria, animazione interna
+    if (
+      !activeCategoryId ||
+      !overCategoryId ||
+      activeCategoryId === overCategoryId
+    ) {
+      return
+    }
+
+    // anteprima spostamento tra colonne (solo stato frontend, niente API)
+
+    setCategoryTasks((prev) => {
+      const sourceTasks = [...(prev[activeCategoryId] || [])]
+      const targetTasks = [...(prev[overCategoryId] || [])]
+
+      const activeIndex = sourceTasks.findIndex((t) => t.taskId === activeId)
+      if (activeIndex === -1) return prev
+
+      const [movingTask] = sourceTasks.splice(activeIndex, 1)
+
+      // posizione nella colonna target
+      const overIndex = targetTasks.findIndex((t) => t.taskId === overId)
+      if (overIndex === -1) {
+        targetTasks.push(movingTask)
+      } else {
+        targetTasks.splice(overIndex, 0, movingTask)
+      }
+
+      return {
+        ...prev,
+        [activeCategoryId]: sourceTasks,
+        [overCategoryId]: targetTasks,
+      }
+    })
+  }
 
   async function handleDragEnd(event) {
     const { active, over } = event
@@ -171,7 +220,7 @@ function MainBoard({ project, categories, setCategories }) {
 
       const overIndex = targetTasks.findIndex((t) => t.taskId === over.id)
       if (overIndex === -1) {
-        // Se over.id non è presente (es. placeholder vuoto), appendi in fondo
+        // se over.id non è presente (es. placeholder vuoto), appendi in fondo alla categoria
 
         targetTasks.push(movingTask)
       } else {
@@ -613,8 +662,10 @@ function MainBoard({ project, categories, setCategories }) {
       <DndContext
         sensors={sensors}
         onDragStart={handleDragStart}
+        onDragOver={handleDragOver}
         onDragEnd={handleDragEnd}
         onDragCancel={handleDragCancel}
+        collisionDetection={pointerWithin}
       >
         <Container fluid className="mainBoard m-2 d-flex flex-row py-4">
           {categories.map((category) => {
@@ -746,11 +797,11 @@ function MainBoard({ project, categories, setCategories }) {
 
         <DragOverlay>
           {activeId ? (
-            <div className="drag-overlay" style={{ pointerEvents: "none" }}>
+            <div className="dragOverlayWrapper">
               <SortableTaskCard
                 task={findTaskById(activeId)}
                 priorityStyles={priorityStyles}
-                className="drag-overlay"
+                className="dragOverlayCard"
                 onDelete={() => {}}
                 onUpdate={() => {}}
                 onStatusChange={() => {}}
