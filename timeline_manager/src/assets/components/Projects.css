@@ -432,3 +432,27 @@
 .creatorIcon {
   color: yellow;
 }
+
+.homeSearchField {
+  border-radius: 50px !important;
+  width: 250px;
+}
+
+.homeSearchButton {
+  border-radius: 50% !important;
+  position: relative;
+  right: 40px;
+  background-color: #69b7bf !important;
+  border-color: #69b7bf !important;
+}
+
+.searchText {
+  /* font-family: "Bruno Ace SC", sans-serif; */
+  font-size: 1.5rem !important;
+  font-weight: 700;
+  color: #a82562 !important;
+}
+
+.homeSearchIcon {
+  font-size: 0.9rem;
+}

@@ -35,6 +35,8 @@ function Projects() {
   const [editingUserId, setEditingUserId] = useState(null)
   const [selectedRole, setSelectedRole] = useState("")
 
+  const [searchBoxAreaQuery, setSearchBoxAreaQuery] = useState("")
+
   const handleShowProject = () => setShowProjectModal(true)
   const handleCloseProject = () => setShowProjectModal(false)
 
@@ -323,6 +325,15 @@ function Projects() {
       .catch((err) => alert(err.message))
   }
 
+  const filteredProjects =
+    searchBoxAreaQuery.trim().length === 0
+      ? projects
+      : projects.filter((proj) =>
+          proj.projectName
+            ?.toLowerCase()
+            .includes(searchBoxAreaQuery.trim().toLowerCase())
+        )
+
   // COMPONENT
 
   return (
@@ -378,7 +389,7 @@ function Projects() {
                 </li>
               )}
               {/* ___________________________________________________________________________________________________________________________ */}
-              {projects.map((proj) => (
+              {filteredProjects.map((proj) => (
                 <li
                   key={proj.projectId}
                   className="singleProjectList px-3 py-2 mb-4"
@@ -516,7 +527,7 @@ function Projects() {
                                   <div className="avatarBox">
                                     <img
                                       className="avatarImg"
-                                      src={member.avatarUrl || "/default.png"}
+                                      src={member.avatarUrl}
                                       alt={member.userFullName}
                                     />
                                   </div>
@@ -650,14 +661,21 @@ function Projects() {
               <hr className="brInterruption my-3" />
               <div className="">
                 <div>
-                  <h3>Search</h3>
+                  <h3 className="searchText mb-3 text-center">
+                    Search thru your Projects:
+                  </h3>
                 </div>
-                <Form className="homeSearchForm d-flex pb-3">
+                <Form
+                  className="homeSearchForm d-flex pb-3"
+                  onSubmit={(e) => e.preventDefault()}
+                >
                   <Form.Control
                     type="search"
                     placeholder="Project name here..."
                     className="homeSearchField"
                     aria-label="Search"
+                    value={searchBoxAreaQuery}
+                    onChange={(e) => setSearchBoxAreaQuery(e.target.value)}
                   />
                   <Button className="homeSearchButton d-flex justify-content-center align-items-center">
                     <i className="homeSearchIcon bi bi-search"></i>

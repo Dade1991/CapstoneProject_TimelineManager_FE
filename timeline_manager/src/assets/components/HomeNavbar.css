@@ -140,31 +140,9 @@
   border-top: 5px solid black !important;
 }
 
-.homeSearchField {
-  border-radius: 50px !important;
-  width: 250px;
-}
-
-.homeSearchButton {
-  border-radius: 50% !important;
-  position: relative;
-  right: 40px;
-  background-color: #69b7bf !important;
-  border-color: #69b7bf !important;
-}
-
-.homeSearchIcon {
-  font-size: 0.9rem;
-}
-
 .frosted-glass-homeNavbar {
-  background-color: rgba(
-    255,
-    255,
-    255,
-    0.664
-  ) !important; /* sfondo semitrasparente */
-  backdrop-filter: blur(10px); /* effetto sfocatura */
-  -webkit-backdrop-filter: blur(10px); /* supporto Safari */
-  border: 1px solid rgba(255, 255, 255, 0.4); /* bordo leggero */
+  background-color: rgba(255, 255, 255, 0.664) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
 }
