@@ -218,12 +218,14 @@ function Projects() {
         return res.json()
       })
       .then((members) => {
-        setProjectMembers((prev) => ({
-          ...prev,
-          [projectId]: members,
-        }))
+        setProjectMembers((prev) => {
+          const newState = { ...prev, [projectId]: members }
+          return newState
+        })
       })
-      .catch(console.error)
+      .catch((err) => {
+        console.error(err.message)
+      })
   }
 
   // recupera tutti gli utenti "amici", in realtà di tutta l'app (dovrebbero essre gli amici ma non ho tempo)
@@ -263,10 +265,7 @@ function Projects() {
     )
       .then((res) => {
         if (!res.ok) throw new Error("Failed to add member.")
-        if (res.status === 201) {
-          // 201 Created with empty body, non fare res.json()
-          return null
-        }
+        if (res.status === 201) return null
         return res.json()
       })
       .then(() => {
@@ -317,14 +316,8 @@ function Projects() {
         if (!res.ok) {
           throw new Error("Failed to remove member.")
         }
-      })
-      .then(() => {
-        setProjectMembers((prev) => {
-          const updateMembers = prev[projectId].filter(
-            (member) => member.userId !== userId
-          )
-          return { ...prev, [projectId]: updateMembers }
-        })
+
+        return fetchProjectMembers(projectId)
       })
       .catch((err) => alert(err.message))
   }
