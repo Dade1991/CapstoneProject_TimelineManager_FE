@@ -184,3 +184,54 @@
   background-color: rgb(179, 0, 0);
   color: white;
 }
+
+/* ----------------------------------------------- */
+
+/* impostazioni testo descrizione task */
+
+.taskDescText {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.2;
+  margin-bottom: 0;
+}
+
+/* Espanso: rimuove troncamento */
+
+.taskDescExpanded {
+  display: block !important;
+  -webkit-line-clamp: unset !important;
+  overflow: visible !important;
+}
+
+/* Gradient overlay */
+
+.taskDescGradient {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 24px;
+  background: linear-gradient(transparent, rgb(196, 196, 164));
+  pointer-events: none;
+}
+
+/* Pulsanti */
+
+.readMoreBtn {
+  position: absolute;
+  bottom: 4px;
+  right: 8px;
+  background-color: none !important;
+  border: none !important;
+  padding: 2px 8px;
+  font-size: 0.9rem !important;
+  color: #a82562 !important;
+}
+
+.readMoreBtn:hover {
+  color: #6aa4b7 !important;
+  background-color: none !important;
+}

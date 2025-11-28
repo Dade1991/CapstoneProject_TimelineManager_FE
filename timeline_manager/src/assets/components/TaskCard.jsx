@@ -45,6 +45,7 @@ function TaskCard({
   const [checkedComplete, setCheckedComplete] = useState(false)
   const cardStyleComplete = checkedComplete ? { position: "relative" } : {}
   const cardStyleReopen = checkedComplete ? { pointerEvents: "none" } : {}
+  const [expanded, setExpanded] = useState(false)
 
   const handleStatusChange = (e) => {
     onStatusChange(task.taskId, Number(e.target.value))
@@ -157,9 +158,37 @@ function TaskCard({
           </div>
           <hr className="brInterruption my-2" />
           <Card.Text className="taskCardText m-0">Task Description:</Card.Text>
-          <Card.Text className="taskCardTextDescriptionSPECIAL p-2 m-0">
-            {task.taskDescription}
-          </Card.Text>
+          <div className="taskCardTextDescriptionSPECIAL position-relative p-2 m-0">
+            <Card.Text
+              className={`taskDescText ${expanded ? "taskDescExpanded" : ""}`}
+              style={{ whiteSpace: "pre-wrap" }}
+            >
+              {task.taskDescription || ""}
+            </Card.Text>
+            {task.taskDescription &&
+              task.taskDescription.length > 50 &&
+              !expanded && (
+                <>
+                  <div className="taskDescGradient" />
+                  <Button
+                    className="readMoreBtn"
+                    variant="link"
+                    onClick={() => setExpanded(true)}
+                  >
+                    <i className="bi bi-caret-down-fill"></i>
+                  </Button>
+                </>
+              )}
+            {expanded && (
+              <Button
+                className="readMoreBtn mt-1"
+                variant="link"
+                onClick={() => setExpanded(false)}
+              >
+                <i className="bi bi-caret-up-fill"></i>
+              </Button>
+            )}
+          </div>
           <hr className="brInterruption my-2" />
           <div className="d-flex flex-row justify-content-between align-items-center">
             <Card.Text className="taskCardText m-0">Task's Creator:</Card.Text>

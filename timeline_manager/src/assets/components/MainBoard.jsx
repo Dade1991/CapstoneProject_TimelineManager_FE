@@ -687,24 +687,34 @@ function MainBoard({ project, categories, setCategories }) {
   // ---------- STATUS ----------
 
   const handleStatusChange = async (taskId, newStatusId, categoryId) => {
-    if (!categoryId) {
-      console.warn("Missing categoryId for status change", {
-        taskId,
-        newStatusId,
-      })
-      return
-    }
-    await fetch(
-      `http://localhost:3001/api/projects/${project.projectId}/tasks/${taskId}/statusUpdate/${newStatusId}`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
+    if (!categoryId) return
+
+    setCategoryTasks((prev) => {
+      const catTasks = prev[categoryId] || []
+      const updatedTasks = catTasks.map((t) =>
+        t.taskId === taskId ? { ...t, statusId: newStatusId } : t
+      )
+      return {
+        ...prev,
+        [categoryId]: updatedTasks,
       }
-    )
-    reloadCategoryTasks(selectedCategoryId)
+    })
+    try {
+      const res = await fetch(
+        `http://localhost:3001/api/projects/${project.projectId}/tasks/${taskId}/statusUpdate/${newStatusId}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      if (!res.ok) throw new Error("Error updating status")
+    } catch (e) {
+      alert(e.message)
+      reloadCategoryTasks(categoryId)
+    }
   }
 
   return (

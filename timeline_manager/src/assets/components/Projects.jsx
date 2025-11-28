@@ -51,7 +51,11 @@ function Projects() {
   }
 
   const handleOpenProject = (projectId) => {
-    navigateProject(`/project/${projectId}`)
+    navigateProject(`/project/${projectId}`, {
+      state: {
+        projectMembers: projectMembers[projectId] || [],
+      },
+    })
   }
 
   const handleShowMemberModal = (project) => {
