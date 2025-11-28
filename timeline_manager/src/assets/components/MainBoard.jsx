@@ -107,7 +107,7 @@ function MainBoard({ project, categories, setCategories }) {
   // Aiuto: trova categoria task per id
 
   function findCategoryIdOfTask(taskId) {
-    // gestisce placeholder come empty-categoryId>
+    // gestisce placeholder come <empty-categoryId>
 
     if (typeof taskId === "string" && taskId.startsWith("empty-")) {
       const catId = parseInt(taskId.replace("empty-", ""), 10)
@@ -137,9 +137,7 @@ function MainBoard({ project, categories, setCategories }) {
       <div
         ref={setNodeRef}
         className={`emptyDrop d-flex justify-content-center align-items-center p-4 ${
-          isOver
-            ? "emptyDropOver" /*"bg-success bg-opacity-25 border-success"*/
-            : "emptyDropInactive" /*"bg-light border-secondary"*/
+          isOver ? "emptyDropOver" : "emptyDropInactive"
         }`}
       >
         <div className="text-center">
@@ -165,6 +163,7 @@ function MainBoard({ project, categories, setCategories }) {
     const overCategoryId = findCategoryIdOfTask(overId)
 
     // se mancano categorie o ci si trova nella stessa categoria, animazione interna
+
     if (
       !activeCategoryId ||
       !overCategoryId ||
@@ -173,7 +172,7 @@ function MainBoard({ project, categories, setCategories }) {
       return
     }
 
-    // anteprima spostamento tra colonne (solo stato frontend, niente API)
+    // anteprima spostamento tra colonne (solo stato frontend, niente API Calls)
 
     setCategoryTasks((prev) => {
       const sourceTasks = [...(prev[activeCategoryId] || [])]
@@ -204,11 +203,8 @@ function MainBoard({ project, categories, setCategories }) {
   async function handleDragEnd(event) {
     const { active, over } = event
     if (!over) {
-      console.log("❌ Nessun 'over' (rilascio fuori da zona droppabile)")
       return
     }
-    console.log("OVER RAW:", over)
-    console.log("OVER DATA:", over.data)
 
     const activeId = active.id
     const overIdRaw = over.id
@@ -268,18 +264,15 @@ function MainBoard({ project, categories, setCategories }) {
       }))
 
       await updateTaskOrder(activeCategoryId, newTaskIds)
-      console.log("Riordino salvato:", newTaskIds)
       return
     }
 
     try {
-      // PRIMA: Aggiorna categoria backend
+      // PRIMA: aggiorna categoria backend
 
-      console.log("Invio PATCH category...")
       await updateTaskCategory(activeId, overCategoryId)
-      console.log("Categoria task aggiornata!")
 
-      // DOPO: Ricarica entrambe le categorie
+      // DOPO: ricarica entrambe le categorie
 
       await Promise.all([
         reloadCategoryTasks(activeCategoryId),
@@ -320,8 +313,6 @@ function MainBoard({ project, categories, setCategories }) {
 
   async function updateTaskCategory(taskId, newCategoryId) {
     const url = `http://localhost:3001/api/projects/${project.projectId}/tasks/${taskId}/category/${newCategoryId}`
-    console.log("🌐 PATCH URL:", url)
-    console.log("🔑 Token length:", token ? token.length : 0)
 
     const res = await fetch(url, {
       method: "PATCH",
@@ -333,10 +324,8 @@ function MainBoard({ project, categories, setCategories }) {
 
     if (!res.ok) {
       const errText = await res.text()
-      console.error("❌ PATCH Error body:", errText)
       throw new Error(`PATCH ${res.status}: ${errText || "Unknown error"}`)
     }
-    console.log("✅ PATCH OK (nessun body)")
     return
   }
 
@@ -424,23 +413,15 @@ function MainBoard({ project, categories, setCategories }) {
   // ricarica solo i tasks di una categoria (dopo update/creazione)
 
   function reloadCategoryTasks(categoryId) {
-    console.log("🔄 reloadCategoryTasks", categoryId)
     return fetch(
       `http://localhost:3001/api/projects/${project.projectId}/categories/${categoryId}/tasks`,
       { headers: { Authorization: `Bearer ${token}` } }
     )
       .then((res) => {
-        console.log("📡 GET tasks categoria", categoryId, "status:", res.status)
         if (!res.ok) throw new Error("GET tasks failed")
         return res.json()
       })
       .then((tasks) => {
-        console.log(
-          "✅ Tasks caricati categoria",
-          categoryId,
-          ":",
-          tasks.map((t) => t.taskId)
-        )
         setCategoryTasks((prev) => ({
           ...prev,
           [categoryId]: tasks,
@@ -448,7 +429,6 @@ function MainBoard({ project, categories, setCategories }) {
         return tasks
       })
       .catch((err) => {
-        console.error("❌ reloadCategoryTasks error:", categoryId, err)
         throw err
       })
   }
@@ -740,10 +720,6 @@ function MainBoard({ project, categories, setCategories }) {
         <Container fluid className="mainBoard m-2 d-flex flex-row py-4">
           {categories.map((category) => {
             const tasks = categoryTasks[category.categoryId] || []
-            console.log(
-              `🔍 Categoria ${category.categoryId} (${category.categoryName}): ${tasks.length} tasks`,
-              tasks.map((t) => t.taskId)
-            )
             const taskIds = tasks.map((t) => t.taskId)
 
             return (
