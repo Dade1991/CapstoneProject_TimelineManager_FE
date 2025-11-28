@@ -51,7 +51,7 @@ function Project() {
 
   function handleSaveProject(categories, tasks) {
     if (!Array.isArray(categories) || !Array.isArray(tasks)) {
-      alert("Dati non caricati correttamente!")
+      alert("Data not loaded correctly!")
       return
     }
     if (!projectData || !token) {

@@ -35,6 +35,10 @@ function TaskCard({
   onComplete,
   onReopen,
 }) {
+  if (!task) {
+    console.error("TaskCard_ task è undefined")
+    return null
+  }
   const priorityStyle = priorityStyles[task.taskPriority] || {}
   const [checkedComplete, setCheckedComplete] = useState(false)
   const cardStyleComplete = checkedComplete

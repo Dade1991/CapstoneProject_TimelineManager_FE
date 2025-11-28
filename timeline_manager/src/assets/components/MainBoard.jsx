@@ -8,7 +8,7 @@ import {
   PointerSensor,
   useSensors,
   DragOverlay,
-  // pointerWithin,
+  useDroppable,
   closestCenter,
 } from "@dnd-kit/core"
 import {
@@ -120,8 +120,39 @@ function MainBoard({ project, categories, setCategories }) {
     }
     return null
   }
+  //  ---------------------------------------------------------------------------------------
+
+  // FUNZIONE DI DRAG: FONDAMENTALE PER LA RIUSCITA CORRETTA DEL D&D TRA TASK DI UNA CATEGORIA E CATEGORIE VUOTE
+
+  function EmptyDropZone({ categoryId }) {
+    const { setNodeRef, isOver } = useDroppable({
+      id: `empty-${categoryId}`,
+      data: {
+        type: "category-drop",
+        categoryId: categoryId,
+      },
+    })
+
+    return (
+      <div
+        ref={setNodeRef}
+        className={`emptyDrop d-flex justify-content-center align-items-center p-4 ${
+          isOver
+            ? "emptyDropOver" /*"bg-success bg-opacity-25 border-success"*/
+            : "emptyDropInactive" /*"bg-light border-secondary"*/
+        }`}
+      >
+        <div className="text-center">
+          <i className="dropTaskBoxIcon bi bi-plus-circle-dotted"></i>
+          <div className="dropTaskBox">Drop tasks HERE !</div>
+        </div>
+      </div>
+    )
+  }
 
   //  ---------------------------------------------------------------------------------------
+
+  // FUNZIONE DI DRAG: FONDAMENTALE PER LA RIUSCITA CORRETTA DEL D&D TRA TASK DI UNA CATEGORIA E TRA TASK TRA CATEGORIE
 
   function handleDragOver(event) {
     const { active, over } = event
@@ -154,6 +185,7 @@ function MainBoard({ project, categories, setCategories }) {
       const [movingTask] = sourceTasks.splice(activeIndex, 1)
 
       // posizione nella colonna target
+
       const overIndex = targetTasks.findIndex((t) => t.taskId === overId)
       if (overIndex === -1) {
         targetTasks.push(movingTask)
@@ -171,73 +203,95 @@ function MainBoard({ project, categories, setCategories }) {
 
   async function handleDragEnd(event) {
     const { active, over } = event
-    console.log("handleDragEnd", { active, over })
+    if (!over) {
+      console.log("❌ Nessun 'over' (rilascio fuori da zona droppabile)")
+      return
+    }
+    console.log("OVER RAW:", over)
+    console.log("OVER DATA:", over.data)
+
+    const activeId = active.id
+    const overIdRaw = over.id
+
+    // categoria di ARRIVO: dove sto droppando
+
+    const overCategoryId =
+      over.data?.current?.categoryId != null
+        ? over.data.current.categoryId
+        : null
+
+    // categoria vista da dnd-kit al momento del drop (già aggiornata da handleDragOver)
+
+    const currentCategoryIdFromState = findCategoryIdOfTask(activeId)
+
+    const originalCategoryIdFromTask =
+      findTaskById(activeId)?.categories?.[0]?.categoryId ?? null
+
+    // categoria ORIGINALE: da dove è partita la task
+
+    const activeCategoryId =
+      originalCategoryIdFromTask &&
+      originalCategoryIdFromTask !== overCategoryId
+        ? originalCategoryIdFromTask
+        : currentCategoryIdFromState
+
     setActiveId(null)
 
-    if (!over) return
-
-    const activeCategoryId = findCategoryIdOfTask(active.id)
-    const overCategoryId = findCategoryIdOfTask(over.id)
-    if (!activeCategoryId || !overCategoryId) return
-
-    if (activeCategoryId === overCategoryId) {
-      // riordino interno stessa categoria (non cambia categoria)
-
-      const taskIds = (categoryTasks[activeCategoryId] || []).map(
-        (t) => t.taskId
-      )
-      const oldIndex = taskIds.indexOf(active.id)
-      const newIndex = taskIds.indexOf(over.id)
-      if (oldIndex !== -1 && newIndex !== -1 && oldIndex !== newIndex) {
-        const newTaskIds = arrayMove(taskIds, oldIndex, newIndex)
-        const newTasksOrder = newTaskIds.map((id) =>
-          categoryTasks[activeCategoryId].find((t) => t.taskId === id)
-        )
-        setCategoryTasks((prev) => ({
-          ...prev,
-          [activeCategoryId]: newTasksOrder,
-        }))
-        await updateTaskOrder(activeCategoryId, newTaskIds)
-      }
+    if (!activeCategoryId || !overCategoryId) {
       return
     }
 
-    // spostamento tra categorie diverse
+    // STESSO CONTAINER: solo riordino
 
-    try {
-      await updateTaskCategory(active.id, overCategoryId)
-
-      const sourceTasks = [...(categoryTasks[activeCategoryId] || [])]
-      const targetTasks = [...(categoryTasks[overCategoryId] || [])]
-
-      const movingTaskIndex = sourceTasks.findIndex(
-        (t) => t.taskId === active.id
+    if (activeCategoryId === overCategoryId) {
+      const taskIds = (categoryTasks[activeCategoryId] || []).map(
+        (t) => t.taskId
       )
-      if (movingTaskIndex === -1) return
-
-      const [movingTask] = sourceTasks.splice(movingTaskIndex, 1)
-
-      // trova l'indice di 'over.id' in targetTasks (posizione di inserimento)
-
-      const overIndex = targetTasks.findIndex((t) => t.taskId === over.id)
-      if (overIndex === -1) {
-        // se over.id non è presente (es. placeholder vuoto), appendi in fondo alla categoria
-
-        targetTasks.push(movingTask)
-      } else {
-        targetTasks.splice(overIndex, 0, movingTask)
+      const newIndex = taskIds.indexOf(
+        typeof overIdRaw === "string" && overIdRaw.startsWith("empty-")
+          ? activeId
+          : overIdRaw
+      )
+      const oldIndex = taskIds.indexOf(activeId)
+      if (oldIndex === -1 || newIndex === -1 || oldIndex === newIndex) {
+        return
       }
+
+      const newTaskIds = arrayMove(taskIds, oldIndex, newIndex)
+      const newTasksOrder = newTaskIds.map((id) =>
+        categoryTasks[activeCategoryId].find((t) => t.taskId === id)
+      )
 
       setCategoryTasks((prev) => ({
         ...prev,
-        [activeCategoryId]: sourceTasks,
-        [overCategoryId]: targetTasks,
+        [activeCategoryId]: newTasksOrder,
       }))
 
-      const newTargetTaskIds = targetTasks.map((t) => t.taskId)
-      await updateTaskOrder(overCategoryId, newTargetTaskIds)
+      await updateTaskOrder(activeCategoryId, newTaskIds)
+      console.log("Riordino salvato:", newTaskIds)
+      return
+    }
+
+    try {
+      // PRIMA: Aggiorna categoria backend
+
+      console.log("Invio PATCH category...")
+      await updateTaskCategory(activeId, overCategoryId)
+      console.log("Categoria task aggiornata!")
+
+      // DOPO: Ricarica entrambe le categorie
+
+      await Promise.all([
+        reloadCategoryTasks(activeCategoryId),
+        reloadCategoryTasks(overCategoryId),
+      ])
     } catch (error) {
-      alert("Error during DND movement: " + error.message)
+      await Promise.all([
+        reloadCategoryTasks(activeCategoryId),
+        reloadCategoryTasks(overCategoryId),
+      ])
+
+      alert(`Drag failed: ${error.message}.`)
     }
   }
 
@@ -265,22 +319,25 @@ function MainBoard({ project, categories, setCategories }) {
   // FETCH DND - funzione che chiamerà API per aggiornare category
 
   async function updateTaskCategory(taskId, newCategoryId) {
-    try {
-      const res = await fetch(
-        `http://localhost:3001/api/projects/${project.projectId}/tasks/${taskId}/category/${newCategoryId}`,
-        {
-          method: "PATCH",
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      )
-      if (!res.ok) {
-        const err = await res.text()
-        throw new Error(err || "Failed to update task category")
-      }
-    } catch (error) {
-      console.error("Error updating task category:", error)
-      throw error
+    const url = `http://localhost:3001/api/projects/${project.projectId}/tasks/${taskId}/category/${newCategoryId}`
+    console.log("🌐 PATCH URL:", url)
+    console.log("🔑 Token length:", token ? token.length : 0)
+
+    const res = await fetch(url, {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+
+    if (!res.ok) {
+      const errText = await res.text()
+      console.error("❌ PATCH Error body:", errText)
+      throw new Error(`PATCH ${res.status}: ${errText || "Unknown error"}`)
     }
+    console.log("✅ PATCH OK (nessun body)")
+    return
   }
 
   // ==================================== FINE - DND ====================================
@@ -367,18 +424,33 @@ function MainBoard({ project, categories, setCategories }) {
   // ricarica solo i tasks di una categoria (dopo update/creazione)
 
   function reloadCategoryTasks(categoryId) {
-    fetch(
+    console.log("🔄 reloadCategoryTasks", categoryId)
+    return fetch(
       `http://localhost:3001/api/projects/${project.projectId}/categories/${categoryId}/tasks`,
       { headers: { Authorization: `Bearer ${token}` } }
     )
-      .then((res) => res.json())
-      .then((tasks) =>
+      .then((res) => {
+        console.log("📡 GET tasks categoria", categoryId, "status:", res.status)
+        if (!res.ok) throw new Error("GET tasks failed")
+        return res.json()
+      })
+      .then((tasks) => {
+        console.log(
+          "✅ Tasks caricati categoria",
+          categoryId,
+          ":",
+          tasks.map((t) => t.taskId)
+        )
         setCategoryTasks((prev) => ({
           ...prev,
           [categoryId]: tasks,
         }))
-      )
-      .catch(console.error)
+        return tasks
+      })
+      .catch((err) => {
+        console.error("❌ reloadCategoryTasks error:", categoryId, err)
+        throw err
+      })
   }
 
   // salvataggio nuova task
@@ -668,6 +740,10 @@ function MainBoard({ project, categories, setCategories }) {
         <Container fluid className="mainBoard m-2 d-flex flex-row py-4">
           {categories.map((category) => {
             const tasks = categoryTasks[category.categoryId] || []
+            console.log(
+              `🔍 Categoria ${category.categoryId} (${category.categoryName}): ${tasks.length} tasks`,
+              tasks.map((t) => t.taskId)
+            )
             const taskIds = tasks.map((t) => t.taskId)
 
             return (
@@ -731,6 +807,7 @@ function MainBoard({ project, categories, setCategories }) {
                       }`}
                       key={task.taskId}
                       task={task}
+                      categoryId={category.categoryId}
                       priorityStyles={priorityStyles}
                       onDelete={() =>
                         deleteTask(
@@ -758,13 +835,7 @@ function MainBoard({ project, categories, setCategories }) {
                   {/* quando una category rimane vuota, crea un box per il DND delle tasks */}
 
                   {tasks.length === 0 && (
-                    <div
-                      id={`empty-${category.categoryId}`}
-                      className="emptyDrop d-flex justify-content-center align-items-center"
-                      // style={{}}
-                    >
-                      Drop tasks HERE!!
-                    </div>
+                    <EmptyDropZone categoryId={category.categoryId} />
                   )}
                 </SortableContext>
 
