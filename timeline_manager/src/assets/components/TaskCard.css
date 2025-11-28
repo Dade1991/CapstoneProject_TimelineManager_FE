@@ -90,6 +90,15 @@
   border-color: white !important;
 }
 
+/* ----------------------------- */
+
+.cardDimOverlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(22, 5, 54, 0.507);
+  z-index: 1;
+}
+
 .reopenTaskButtonDiv {
   position: absolute;
   top: 50%;
@@ -99,18 +108,43 @@
 }
 
 .reopenTaskButton {
-  background-color: #6aa4b7 !important;
-  border-color: beige !important;
+  background-color: rgba(22, 5, 54, 0.616) !important;
+  border-radius: 50px !important;
+  border: 0px none !important;
   color: beige !important;
-  font-size: 1.4rem !important;
   font-weight: 700 !important;
   z-index: 400 !important;
   opacity: 1 !important;
+  box-shadow: 1.5px 1.5px 0 #000, -1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000,
+    -1.5px 1.5px 0 #000;
 }
+
+.reopenTaskText {
+  color: #f23d7f;
+  font-size: 1.3rem !important;
+  text-shadow: 1.5px 1.5px 0 #000, -1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000,
+    -1.5px 1.5px 0 #000;
+}
+
+.checkCompleteText {
+  color: #00ff9d;
+  text-shadow: 1.5px 1.5px 0 #000, -1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000,
+    -1.5px 1.5px 0 #000;
+}
+
+.checkCompleteIcon {
+  color: #00ff9d;
+  font-size: 7rem !important;
+  text-shadow: 1.5px 1.5px 0 #000, -1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000,
+    -1.5px 1.5px 0 #000;
+}
+
+/* ----------------------------- */
 
 .dndIcon {
   font-size: 1.2rem;
   color: #f0aa9a !important;
+  opacity: 1 !important;
 }
 
 .dropdownStatusChangeMENU {

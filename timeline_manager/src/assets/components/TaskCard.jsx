@@ -36,14 +36,14 @@ function TaskCard({
   onReopen,
 }) {
   if (!task) {
-    console.error("TaskCard_ task è undefined")
-    return null
+    console.error("TaskCard: task is undefined")
   }
-  const priorityStyle = priorityStyles[task.taskPriority] || {}
+  const priorityStyle =
+    task && priorityStyles[task.taskPriority]
+      ? priorityStyles[task.taskPriority]
+      : {}
   const [checkedComplete, setCheckedComplete] = useState(false)
-  const cardStyleComplete = checkedComplete
-    ? { opacity: 0.5, position: "relative" }
-    : {}
+  const cardStyleComplete = checkedComplete ? { position: "relative" } : {}
   const cardStyleReopen = checkedComplete ? { pointerEvents: "none" } : {}
 
   const handleStatusChange = (e) => {
@@ -66,6 +66,8 @@ function TaskCard({
     }
   }
 
+  // indagare sull'errore e sul perchè funziona comunque
+
   useEffect(() => {
     const isComplete =
       task.isCompleted === true ||
@@ -77,23 +79,27 @@ function TaskCard({
   return (
     <>
       <Card className="cardMainContainer mb-4" style={cardStyleComplete}>
+        {checkedComplete && <div className="cardDimOverlay" />}
         <Card.Body className="taskCard" style={cardStyleReopen}>
-          {" "}
           {checkedComplete && (
             <div
-              className="reopenTaskButtonDiv"
+              className="reopenTaskButtonDiv h-100 w-100 d-flex flex-column justify-content-center align-items-center"
               style={{
                 pointerEvents: "auto",
               }}
             >
+              <div className="text-center mb-5">
+                <i className="checkCompleteIcon bi bi-check2-circle"></i>
+                <p className="checkCompleteText m-0">Completed</p>
+              </div>
               <Button
-                className="reopenTaskButton"
+                className="reopenTaskButton d-flex flex-row justify-content-center align-items-center p-3"
                 onClick={() => onReopen?.(task.taskId)}
                 style={{
                   pointerEvents: "auto",
                 }}
               >
-                Reopen
+                <p className="reopenTaskText m-0">Reopen TASK</p>
               </Button>
             </div>
           )}
