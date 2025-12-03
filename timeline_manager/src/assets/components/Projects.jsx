@@ -8,7 +8,6 @@ import { AuthContext } from "../../AuthContext"
 import ProjectModalForm from "./ProjectModalForm"
 import ProjectModalUpdate from "./ProjectModalUpdate"
 import MemberModal from "./MemberModal"
-import HomeFooter from "./HomeFooter"
 import "./Projects.css"
 
 function Projects() {
@@ -100,6 +99,7 @@ function Projects() {
         return res.json()
       })
       .then((data) => {
+        console.log("projects from backend", data)
         setProjects(data)
         setError(null)
       })
@@ -422,14 +422,14 @@ function Projects() {
                       <hr className="brInterruption my-2" />
                       <Row>
                         <Col className="projectCounter" md={6}>
-                          <div className="d-flex justify-content-between align-items-center inputDateData">
+                          {/* <div className="d-flex justify-content-between align-items-center inputDateData">
                             <strong className="memberTaskCounters">
                               TOTAL Tasks:
                             </strong>
                             <div className="projectCardTextDescription">
                               {proj.taskCount}
                             </div>
-                          </div>
+                          </div> */}
                           <div className="d-flex justify-content-between align-items-center inputDateData">
                             <strong className="memberTaskCounters">
                               Members:
